@@ -1,0 +1,17 @@
+{
+  "short_name": "Kwantify",
+  "name": "Kwantify: Road to the millionaire club",
+  "description": "Expense tracker",
+  "start_url": "/",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#3367D6",
+  "icons": [
+    {
+      "src": "/image.png",
+      "type": "image/png",
+      "sizes": "900x900"
+    }
+  ]
+}
