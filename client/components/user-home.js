@@ -28,9 +28,17 @@ class UserHome extends React.Component {
         <h3>Welcome, {email}</h3>
         <CreateLink />
         <VictoryPie
-          padAngle={10}
+          padAngle={5}
           innerRadius={20}
           radius={50}
+          colorScale={[
+            'rgb(119,203,255)',
+            'rgb(255,132,132)',
+            'rgb(188,126,164)',
+            'rgb(131,186,176)',
+            'rgb(255,168,65)',
+            'rgb(197,197,197)'
+          ]}
           data={sampleData}
           // width={400}
           // height={400}
