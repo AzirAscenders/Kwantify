@@ -108,22 +108,24 @@ router.post('/get_access_token', (req, res, next) => {
 
 router.get('/transactions/get', async (req, res, next) => {
   try {
-    // const user = await User.findByPk(req.user.dataValues.id)
-    const accessTokens = await Account.findAll({
-      attributes: ['accessToken'],
-      distinct: true
+    const accessTokens = await Account.findOne({
+      where: {userId: req.user.dataValues.id},
+      include: {model: Institution}
     })
-    // const transactions = [];
-    // const today = moment().format('YYYY-MM-DD')
-    // const past = moment().subtract(90, 'days').format('YYYY-MM-DD')
 
-    // const response = await client
-    //   .getTransactions(user.accessToken, past, today, {})
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    // const transactions = response.transactions
-    res.json(accessTokens)
+    const today = moment().format('YYYY-MM-DD')
+    const past = moment()
+      .subtract(90, 'days')
+      .format('YYYY-MM-DD')
+
+    const response = await client
+      .getTransactions(accessTokens.institution.accessToken, past, today, {})
+      .catch(err => {
+        console.log(err)
+      })
+    const transactions = response.transactions
+
+    res.json(transactions)
   } catch (err) {
     next(err)
   }
