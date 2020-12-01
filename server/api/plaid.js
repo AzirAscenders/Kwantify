@@ -3,6 +3,7 @@ const {User} = require('../db/models')
 const plaid = require('plaid')
 const {CLIENT_ID, SECRET} = require('../../secrets')
 const moment = require('moment')
+// const cron = require('node-cron')
 
 module.exports = router
 
@@ -11,6 +12,24 @@ const client = new plaid.Client({
   secret: process.env.PLAID_SECRET || SECRET,
   env: plaid.environments.sandbox
 })
+
+// call plaid /transaction/get every ___ hours (Tier 2)
+// cron.schedule('*/5 * * * * *', async () => {
+//   const users = await User.findAll()
+//   users.map(async (user) => {
+//     if (user.accessToken) {
+//       const today = moment().format('YYYY-MM-DD')
+//       const past = moment().subtract(5, 'days').format('YYYY-MM-DD')
+//       const response = await client
+//         .getTransactions(user.accessToken, past, today, {})
+//         .catch((err) => {
+//           console.log(err)
+//         })
+//       const transactions = response.transactions
+//       console.log(transactions)
+//     }
+//   })
+// })
 
 router.post('/get_link_token', async (req, res, next) => {
   try {
