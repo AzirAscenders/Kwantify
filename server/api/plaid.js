@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Account} = require('../db/models')
 const plaid = require('plaid')
 const {CLIENT_ID, SECRET} = require('../../secrets')
 const moment = require('moment')
@@ -54,7 +54,7 @@ router.post('/get_link_token', async (req, res, next) => {
 })
 
 router.post('/get_access_token', (req, res, next) => {
-  const {public_token, userId} = req.body
+  const {public_token, userId, metadata} = req.body
 
   client.exchangePublicToken(public_token, async (err, tokenRes) => {
     if (err) {
@@ -65,12 +65,32 @@ router.post('/get_access_token', (req, res, next) => {
       })
     }
 
-    console.log(tokenRes)
-
     const {access_token, item_id} = tokenRes
-
+    // we need institutionId and userId to check in accounts model if the account exsits or not
+    // if it exists update only the access token
+    // if it doesn't create new account inside the accounts model assigned to that user
     const user = await User.findByPk(userId)
-    await user.update({accessToken: access_token, itemId: item_id})
+    console.log(metadata)
+
+    metadata.accounts.map(async account => {
+      let dbAccount = await Account.findOne({
+        where: {userId, institutionId: metadata.institution.institution_id}
+      })
+
+      if (dbAccount) {
+        await dbAccount.update({accessToken: access_token, itemId: item_id})
+      } else {
+        dbAccount = await Account.create({
+          name: account.name,
+          accountId: account.id,
+          accessToken: access_token,
+          itemId: item_id,
+          institutionId: metadata.institution.institution_id,
+          institutionName: metadata.institution.name
+        })
+        dbAccount.setUser(userId)
+      }
+    })
     res.json(access_token)
   })
 })

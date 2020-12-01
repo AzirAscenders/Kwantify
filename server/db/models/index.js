@@ -2,6 +2,7 @@ const User = require('./user')
 const Transaction = require('./transaction')
 const Item = require('./item')
 const Budget = require('./budget')
+const Account = require('./account')
 
 // Associations //
 User.hasMany(Transaction)
@@ -13,6 +14,9 @@ Item.belongsTo(Transaction)
 User.hasOne(Budget)
 Budget.belongsTo(User)
 
+User.hasMany(Account)
+Account.belongsTo(User)
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -23,5 +27,6 @@ module.exports = {
   User,
   Transaction,
   Item,
-  Budget
+  Budget,
+  Account
 }

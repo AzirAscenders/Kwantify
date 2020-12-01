@@ -9,23 +9,32 @@ const Account = db.define('account', {
       notEmpty: true
     }
   },
-  account_id: {
-    type: Sequelize.STRING,
+  accountId: {
+    type: Sequelize.TEXT,
     allowNull: false
   },
-  current_balance: {
-    type: Sequelize.INTEGER
+  currentBalance: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   },
   accessToken: {
     type: Sequelize.TEXT
   },
   itemId: {
     type: Sequelize.TEXT
+  },
+  // We can think about if we want to create another model for institution in the upcoming tiers
+  institutionId: {
+    type: Sequelize.STRING
+  },
+  institutionName: {
+    type: Sequelize.STRING
   }
 })
 
 Account.beforeCreate(account => {
-  account.current_balance = Math.round(+account.current_balance * 100)
+  if (account.currentBalance)
+    account.currentBalance = Math.round(+account.currentBalance * 100)
 })
 
 module.exports = Account

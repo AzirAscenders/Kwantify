@@ -23,12 +23,14 @@ const linkTransactions = transactions => ({
  */
 export const generateLinkTransactions = (
   public_token,
-  userId
+  userId,
+  metadata
 ) => async dispatch => {
   try {
     const res = await axios.post('/api/plaid/get_access_token', {
       public_token,
-      userId
+      userId,
+      metadata
     })
     dispatch(linkTransactions(res.data))
   } catch (err) {
