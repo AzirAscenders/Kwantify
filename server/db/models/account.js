@@ -16,19 +16,6 @@ const Account = db.define('account', {
   currentBalance: {
     type: Sequelize.INTEGER,
     allowNull: true
-  },
-  accessToken: {
-    type: Sequelize.TEXT
-  },
-  itemId: {
-    type: Sequelize.TEXT
-  },
-  // We can think about if we want to create another model for institution in the upcoming tiers
-  institutionId: {
-    type: Sequelize.STRING
-  },
-  institutionName: {
-    type: Sequelize.STRING
   }
 })
 

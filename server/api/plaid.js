@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Account} = require('../db/models')
+const {User, Account, Institution} = require('../db/models')
 const plaid = require('plaid')
 const {CLIENT_ID, SECRET} = require('../../secrets')
 const moment = require('moment')
@@ -69,26 +69,37 @@ router.post('/get_access_token', (req, res, next) => {
     // we need institutionId and userId to check in accounts model if the account exsits or not
     // if it exists update only the access token
     // if it doesn't create new account inside the accounts model assigned to that user
-    const user = await User.findByPk(userId)
+    // const user = await User.findByPk(userId)
     console.log(metadata)
+
+    let dbInstitution = await Institution.findOne({
+      where: {institutionId: metadata.institution.institution_id}
+    })
+
+    if (!dbInstitution) {
+      dbInstitution = await Institution.create({
+        institutionId: metadata.institution.institution_id,
+        institutionName: metadata.institution.name,
+        accessToken: access_token,
+        itemId: item_id
+      })
+    }
 
     metadata.accounts.map(async account => {
       let dbAccount = await Account.findOne({
-        where: {userId, institutionId: metadata.institution.institution_id}
+        where: {userId, institutionId: dbInstitution.id}
       })
 
       if (dbAccount) {
-        await dbAccount.update({accessToken: access_token, itemId: item_id})
+        await dbInstitution.update({accessToken: access_token, itemId: item_id})
       } else {
         dbAccount = await Account.create({
           name: account.name,
-          accountId: account.id,
-          accessToken: access_token,
-          itemId: item_id,
-          institutionId: metadata.institution.institution_id,
-          institutionName: metadata.institution.name
+          accountId: account.id
         })
+
         dbAccount.setUser(userId)
+        dbAccount.setInstitution(dbInstitution.id)
       }
     })
     res.json(access_token)
@@ -97,18 +108,22 @@ router.post('/get_access_token', (req, res, next) => {
 
 router.get('/transactions/get', async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.user.dataValues.id)
-    const today = moment().format('YYYY-MM-DD')
-    const past = moment()
-      .subtract(90, 'days')
-      .format('YYYY-MM-DD')
-    const response = await client
-      .getTransactions(user.accessToken, past, today, {})
-      .catch(err => {
-        console.log(err)
-      })
-    const transactions = response.transactions
-    res.json(transactions)
+    // const user = await User.findByPk(req.user.dataValues.id)
+    const accessTokens = await Account.findAll({
+      attributes: ['accessToken'],
+      distinct: true
+    })
+    // const transactions = [];
+    // const today = moment().format('YYYY-MM-DD')
+    // const past = moment().subtract(90, 'days').format('YYYY-MM-DD')
+
+    // const response = await client
+    //   .getTransactions(user.accessToken, past, today, {})
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // const transactions = response.transactions
+    res.json(accessTokens)
   } catch (err) {
     next(err)
   }
