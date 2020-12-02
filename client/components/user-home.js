@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {VictoryPie, VictoryLabel} from 'victory'
+// import {VictoryPie, VictoryLabel} from 'victory'
+import {Pie} from '@nivo/pie'
 import {fetchLink} from '../store/link'
 import CreateLink from './create-link'
 
@@ -16,34 +17,36 @@ class UserHome extends React.Component {
   render() {
     const {email} = this.props
     const sampleData = [
-      {x: 'Travel', y: 10},
-      {x: 'HealthCare', y: 20},
-      {x: 'Shopping', y: 30},
-      {x: 'Groceries', y: 10},
-      {x: 'Food & Drink', y: 20},
-      {x: 'Entertainment', y: 10}
+      {id: 'Travel', label: 'Travel', value: 227},
+      {id: 'HealthCare', label: 'HealthCare', value: 349},
+      {id: 'Shopping', label: 'Shopping', value: 526},
+      {id: 'Groceries', label: 'Groceries', value: 326},
+      {id: 'Food & Drink', label: 'Food & Drink', value: 564},
+      {id: 'Entertainment', label: 'Entertainment', value: 159}
     ]
     return (
       <div>
         <h3>Welcome, {email}</h3>
         <CreateLink />
-        <VictoryPie
-          padAngle={5}
-          innerRadius={20}
-          radius={50}
-          colorScale={[
-            'rgb(119,203,255)',
-            'rgb(255,132,132)',
-            'rgb(188,126,164)',
-            'rgb(131,186,176)',
-            'rgb(255,168,65)',
-            'rgb(197,197,197)'
-          ]}
+        <Pie
           data={sampleData}
-          // width={400}
-          // height={400}
-          //style={{labels: {fontSize: 10}}}
-          style={{labels: {fontSize: 5, fill: 'red'}}}
+          width={900}
+          height={500}
+          margin={{top: 40, right: 200, bottom: 80, left: 350}}
+          theme={{fontSize: 18}}
+          innerRadius={0.5}
+          padAngle={2}
+          cornerRadius={3}
+          colors={{scheme: 'pastel1'}}
+          borderWidth={3}
+          borderColor={{from: 'color', modifiers: [['darker', 0.2]]}}
+          enableSliceLabels={false}
+          radialLabelsLinkDiagonalLength={24}
+          radialLabelsTextXOffset={7}
+          radialLabelsLinkHorizontalLength={29}
+          sliceLabelsTextColor="#333333"
+          radialLabelsLinkColor={{from: 'color', modifiers: []}}
+          radialLabelsLinkStrokeWidth={2}
         />
       </div>
     )
