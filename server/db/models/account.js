@@ -16,6 +16,12 @@ const Account = db.define('account', {
   currentBalance: {
     type: Sequelize.INTEGER,
     allowNull: true
+  },
+  accessToken: {
+    type: Sequelize.TEXT
+  },
+  itemId: {
+    type: Sequelize.TEXT
   }
 })
 

@@ -7,12 +7,6 @@ const Institution = db.define('institution', {
   },
   institutionName: {
     type: Sequelize.STRING
-  },
-  accessToken: {
-    type: Sequelize.TEXT
-  },
-  itemId: {
-    type: Sequelize.TEXT
   }
 })
 

@@ -3,6 +3,7 @@ const {User, Account, Institution} = require('../db/models')
 const plaid = require('plaid')
 const {CLIENT_ID, SECRET} = require('../../secrets')
 const moment = require('moment')
+const sequelize = require('sequelize')
 // const cron = require('node-cron')
 
 module.exports = router
@@ -79,9 +80,7 @@ router.post('/get_access_token', (req, res, next) => {
     if (!dbInstitution) {
       dbInstitution = await Institution.create({
         institutionId: metadata.institution.institution_id,
-        institutionName: metadata.institution.name,
-        accessToken: access_token,
-        itemId: item_id
+        institutionName: metadata.institution.name
       })
     }
 
@@ -95,7 +94,9 @@ router.post('/get_access_token', (req, res, next) => {
       } else {
         dbAccount = await Account.create({
           name: account.name,
-          accountId: account.id
+          accountId: account.id,
+          accessToken: access_token,
+          itemId: item_id
         })
 
         dbAccount.setUser(userId)
@@ -108,24 +109,28 @@ router.post('/get_access_token', (req, res, next) => {
 
 router.get('/transactions/get', async (req, res, next) => {
   try {
-    const accessTokens = await Account.findOne({
+    // const accessTokens = await Account.findOne({
+    //   where: {userId: req.user.dataValues.id},
+    //   include: {model: Institution}
+    // })
+
+    const accessTokens = await Account.findAll({
       where: {userId: req.user.dataValues.id},
-      include: {model: Institution}
+      attributes: ['accessToken', sequelize.fn('COUNT', sequelize.col('id'))],
+      group: ['accessToken']
     })
 
-    const today = moment().format('YYYY-MM-DD')
-    const past = moment()
-      .subtract(90, 'days')
-      .format('YYYY-MM-DD')
+    // const today = moment().format('YYYY-MM-DD')
+    // const past = moment().subtract(90, 'days').format('YYYY-MM-DD')
 
-    const response = await client
-      .getTransactions(accessTokens.institution.accessToken, past, today, {})
-      .catch(err => {
-        console.log(err)
-      })
-    const transactions = response.transactions
+    // const response = await client
+    //   .getTransactions(accessTokens.institution.accessToken, past, today, {})
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // const transactions = response.transactions
 
-    res.json(transactions)
+    res.json(institutions)
   } catch (err) {
     next(err)
   }
