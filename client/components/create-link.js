@@ -11,10 +11,16 @@ class CreateLink extends React.Component {
         {this.props.link.link_token && (
           <PlaidLink
             token={this.props.link.link_token}
-            onSuccess={public_token =>
+            onSuccess={(
+              public_token,
+              metadata
+              // {institution, accounts, link_session_id}
+            ) =>
               this.props.generateLinkTransactions(
                 public_token,
-                this.props.user.id
+                this.props.user.id,
+                metadata
+                // {institution, accounts, link_session_id}
               )
             }
           >
@@ -38,8 +44,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    generateLinkTransactions: (public_token, userId) =>
-      dispatch(generateLinkTransactions(public_token, userId))
+    generateLinkTransactions: (public_token, userId, metadata) =>
+      dispatch(generateLinkTransactions(public_token, userId, metadata))
   }
 }
 
