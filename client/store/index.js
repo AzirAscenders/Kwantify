@@ -5,8 +5,9 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import link from './link'
 import linkTransactions from './link-transactions'
+import accountsReducer from './accounts'
 
-const reducer = combineReducers({user, link, linkTransactions})
+const reducer = combineReducers({user, link, linkTransactions, accountsReducer})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
