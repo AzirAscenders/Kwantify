@@ -18,7 +18,6 @@ class Accounts extends React.Component {
         uniqueBankName.push(bankName[i])
       }
     }
-    console.log('IWEJROIEJW', uniqueBankName)
 
     return (
       <div>
