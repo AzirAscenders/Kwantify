@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchAllAcounts} from '../store/accounts'
+import {fetchAllAccounts} from '../store/accounts'
 
 class Accounts extends React.Component {
   componentDidMount() {
@@ -8,21 +8,49 @@ class Accounts extends React.Component {
   }
 
   render() {
-    const accounts = this.props.accounts
-    return <div>{accounts ? <div /> : <div>Loading</div>}</div>
+    const accounts = this.props.accounts || []
+    const bankName = accounts.map(
+      account => account.institution.institutionName
+    )
+    const uniqueBankName = []
+    for (let i = 0; i < bankName.length; i++) {
+      if (!uniqueBankName.includes(bankName[i])) {
+        uniqueBankName.push(bankName[i])
+      }
+    }
+    console.log('IWEJROIEJW', uniqueBankName)
+
+    return (
+      <div>
+        {accounts.length ? (
+          uniqueBankName.map((bank, idx) => (
+            <div key={idx}>
+              <h2>{bank}</h2>
+              {accounts.map(account => {
+                if (account.institution.institutionName === bank) {
+                  return <div key={account.id}>{account.name}</div>
+                }
+              })}
+            </div>
+          ))
+        ) : (
+          <div>Loading</div>
+        )}
+      </div>
+    )
   }
 }
 
 const mapState = state => {
   return {
     accounts: state.accounts,
-    user: state.users
+    user: state.user
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchAllAccounts: userId => dispatch(fetchAllAcounts(userId))
+    fetchAllAccounts: userId => dispatch(fetchAllAccounts(userId))
   }
 }
 
