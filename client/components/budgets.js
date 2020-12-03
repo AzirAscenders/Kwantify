@@ -10,13 +10,13 @@ class Budgets extends React.Component {
   constructor() {
     super()
     this.state = {
-      totalSpending: '',
       foodAndDrink: '',
       travel: '',
       entertainment: '',
       healthcare: '',
       shopping: '',
-      groceries: ''
+      groceries: '',
+      update: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -26,17 +26,45 @@ class Budgets extends React.Component {
     this.props.fetchBudget()
   }
 
-  handleSubmit(event) {
+  componentDidUpdate() {
+    const budgets = this.props.budgets
+    if (!this.state.update) {
+      this.setState({
+        foodAndDrink: (budgets.foodAndDrink / 100).toFixed(2),
+        travel: (budgets.travel / 100).toFixed(2),
+        entertainment: (budgets.entertainment / 100).toFixed(2),
+        healthcare: (budgets.healthcare / 100).toFixed(2),
+        shopping: (budgets.shopping / 100).toFixed(2),
+        groceries: (budgets.groceries / 100).toFixed(2),
+        update: true
+      })
+    }
+  }
+
+  async handleSubmit(event) {
     event.preventDefault()
-    const filteredBudget = Object.keys(this.props.budgets).filter(
-      budget => budget !== 'totalSpending'
+    const filteredBudget = Object.keys(this.state).filter(
+      budget => budget !== 'update'
     )
+
     const totalSpending = filteredBudget.reduce(
-      (accumulator, budget) => accumulator + this.props.budgets[budget],
+      (accumulator, budget) => accumulator + Number(this.state[budget]),
       0
     )
-    const update = {...this.state, totalSpending}
-    this.props.editBudget(update)
+
+    const update = {...this.state, totalSpending: totalSpending}
+    await this.props.editBudget(update)
+
+    const budgets = this.props.budgets
+    this.setState({
+      foodAndDrink: (budgets.foodAndDrink / 100).toFixed(2),
+      travel: (budgets.travel / 100).toFixed(2),
+      entertainment: (budgets.entertainment / 100).toFixed(2),
+      healthcare: (budgets.healthcare / 100).toFixed(2),
+      shopping: (budgets.shopping / 100).toFixed(2),
+      groceries: (budgets.groceries / 100).toFixed(2),
+      update: true
+    })
   }
 
   handleChange(event) {
@@ -54,7 +82,7 @@ class Budgets extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <Table>
+          <Table size="sm">
             <thead>
               <tr>
                 <th />
@@ -67,6 +95,7 @@ class Budgets extends React.Component {
                 <td>Entertainment</td>
                 <td>{`$ ${(budgets.entertainment / 100 || 0).toFixed(2)}`}</td>
                 <td>
+                  ${' '}
                   <input
                     type="text"
                     name="entertainment"
@@ -79,6 +108,7 @@ class Budgets extends React.Component {
                 <td>Food And Drink</td>
                 <td>{`$ ${(budgets.foodAndDrink / 100 || 0).toFixed(2)}`}</td>
                 <td>
+                  ${' '}
                   <input
                     type="text"
                     name="foodAndDrink"
@@ -91,6 +121,7 @@ class Budgets extends React.Component {
                 <td>Groceries</td>
                 <td>{`$ ${(budgets.groceries / 100 || 0).toFixed(2)}`}</td>
                 <td>
+                  ${' '}
                   <input
                     type="text"
                     name="groceries"
@@ -103,6 +134,7 @@ class Budgets extends React.Component {
                 <td>Healthcare</td>
                 <td>{`$ ${(budgets.healthcare / 100 || 0).toFixed(2)}`}</td>
                 <td>
+                  ${' '}
                   <input
                     type="text"
                     name="healthcare"
@@ -115,6 +147,7 @@ class Budgets extends React.Component {
                 <td>Shopping</td>
                 <td>{`$ ${(budgets.shopping / 100 || 0).toFixed(2)}`}</td>
                 <td>
+                  ${' '}
                   <input
                     type="text"
                     name="shopping"
@@ -127,6 +160,7 @@ class Budgets extends React.Component {
                 <td>Travel</td>
                 <td>{`$ ${(budgets.travel / 100 || 0).toFixed(2)}`}</td>
                 <td>
+                  ${' '}
                   <input
                     type="text"
                     name="travel"
