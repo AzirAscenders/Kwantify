@@ -3,12 +3,11 @@ const {Account, Institution} = require('../db/models')
 
 module.exports = router
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    console.log('REQ BODY', req.body)
     const allAccounts = await Account.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.dataValues.id
       },
       include: {
         model: Institution
