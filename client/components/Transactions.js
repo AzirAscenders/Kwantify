@@ -4,10 +4,10 @@ import {connect} from 'react-redux'
 import {fetchTransactions} from '../store/transactions'
 
 class Transactions extends React.Component {
-  constructor() {
-    super()
-    this.changeOption = this.changeOption.bind(this)
-  }
+  // constructor() {
+  //   super()
+  //   this.changeOption = this.changeOption.bind(this)
+  // }
 
   componentDidMount() {
     this.props.fetchTransactions()
