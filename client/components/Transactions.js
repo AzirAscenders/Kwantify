@@ -27,7 +27,7 @@ class Transactions extends React.Component {
     return (
       <div>
         <h2>All Transactions</h2>
-        <select onChange={this.changeOption}>
+        <select onChange="this.changeOption">
           <option value="all">All</option>
           <option value="currentMonth">Current Month</option>
           <option value="lastMonth">Last Month</option>
