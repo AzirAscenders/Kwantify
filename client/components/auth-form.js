@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Button} from 'react-bootstrap'
 
 /**
  * COMPONENT
@@ -12,20 +13,44 @@ const AuthForm = props => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
+        {name === 'signup' && (
+          <div>
+            <div>
+              <label htmlFor="firstName">
+                <p>First Name</p>
+              </label>
+              <input name="firstName" type="text" />
+            </div>
+            <div>
+              <label htmlFor="lastName">
+                <p>Last Name</p>
+              </label>
+              <input name="lastName" type="text" />
+            </div>
+            <div>
+              <label htmlFor="imageUrl">
+                <p>Image Url</p>
+              </label>
+              <input name="imageUrl" type="text" />
+            </div>
+          </div>
+        )}
         <div>
           <label htmlFor="email">
-            <small>Email</small>
+            <p>Email</p>
           </label>
           <input name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password">
-            <small>Password</small>
+            <p>Password</p>
           </label>
           <input name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <Button variant="outline-primary" type="submit">
+            {displayName}
+          </Button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
@@ -62,9 +87,18 @@ const mapDispatch = dispatch => {
     handleSubmit(evt) {
       evt.preventDefault()
       const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      const formDataObj = {
+        email: evt.target.email.value,
+        password: evt.target.password.value
+      }
+      if (formName === 'signup') {
+        formDataObj.firstName = evt.target.firstName.value
+        formDataObj.lastName = evt.target.lastName.value
+        if (evt.target.imageUrl.value) {
+          formDataObj.imageUrl = evt.target.imageUrl.value
+        }
+      }
+      dispatch(auth(formDataObj, formName))
     }
   }
 }
