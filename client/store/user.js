@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+// import {fetchBudget} from './budgets'
 
 /**
  * ACTION TYPES
@@ -42,6 +43,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
+    // dispatch(fetchBudget())
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

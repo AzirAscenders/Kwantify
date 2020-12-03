@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 // import {VictoryPie, VictoryLabel} from 'victory'
 import {Pie} from '@nivo/pie'
 import {fetchLink} from '../store/link'
+import {fetchBudget} from '../store/budgets'
 import CreateLink from './create-link'
 
 /**
@@ -12,6 +13,7 @@ import CreateLink from './create-link'
 class UserHome extends React.Component {
   componentDidMount() {
     this.props.fetchLink()
+    this.props.fetchBudget()
   }
 
   render() {
@@ -64,7 +66,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchLink: () => dispatch(fetchLink())
+    fetchLink: () => dispatch(fetchLink()),
+    fetchBudget: () => dispatch(fetchBudget())
   }
 }
 
