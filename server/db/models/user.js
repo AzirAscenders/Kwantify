@@ -3,6 +3,25 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  imageUrl: {
+    type: Sequelize.TEXT,
+    defaultValue:
+      'https://media-exp1.licdn.com/dms/image/C4D03AQFBYWQKu6IBwg/profile-displayphoto-shrink_800_800/0?e=1612396800&v=beta&t=r2Z4-huj_OKfVblnNAJAhZojwDzfZqsZT7NoG2ZfyD8'
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
