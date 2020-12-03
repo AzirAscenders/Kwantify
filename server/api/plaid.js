@@ -126,25 +126,24 @@ router.get('/transactions/get', async (req, res, next) => {
       .subtract(90, 'days')
       .format('YYYY-MM-DD')
 
-    // const transactions = accessTokens.map(async (token) => {
-    //   console.log('XXX', token.dataValues.accessToken)
-    //   const response = await client
-    //     .getTransactions(token.dataValues.accessToken, past, today, {})
-    //     .then((result) => result.transactions)
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    //   // return await response.transactions
-    // })
-    // console.log('OOOOO', transactions)
-    const response = await client.getTransactions(
-      accessTokens[0].dataValues.accessToken,
-      past,
-      today,
-      {}
-    )
+    const transactions = accessTokens.map(async token => {
+      const response = await client
+        .getTransactions(token.dataValues.accessToken, past, today, {})
+        .catch(err => {
+          console.log(err)
+        })
+      return response.transactions
+    })
+    Promise.all(transactions)
+    console.log('OOOOO', transactions)
+    // const response = await client.getTransactions(
+    //   accessTokens[0].dataValues.accessToken,
+    //   past,
+    //   today,
+    //   {}
+    // )
 
-    res.json(response.transactions)
+    res.json(transactions)
   } catch (err) {
     next(err)
   }
