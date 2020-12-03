@@ -13,10 +13,10 @@ const getAllAccounts = accounts => ({
 })
 
 //THUNK
-export const fetchAllAccounts = userId => {
+export const fetchAllAccounts = () => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/accounts/${userId}`)
+      const {data} = await axios.get(`/api/accounts/`)
       dispatch(getAllAccounts(data))
     } catch (error) {
       console.error('Fetch All Accounts Error')

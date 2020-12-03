@@ -4,7 +4,7 @@ import {fetchAllAccounts} from '../store/accounts'
 
 class Accounts extends React.Component {
   componentDidMount() {
-    this.props.fetchAllAccounts(this.props.user.id)
+    this.props.fetchAllAccounts()
   }
 
   render() {
@@ -49,7 +49,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchAllAccounts: userId => dispatch(fetchAllAccounts(userId))
+    fetchAllAccounts: () => dispatch(fetchAllAccounts())
   }
 }
 
