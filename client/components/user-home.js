@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 // import {VictoryPie, VictoryLabel} from 'victory'
 import {Pie} from '@nivo/pie'
+// import {Bar} from '@nivo/bar'
+// import { Line } from '@nivo/line'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
@@ -20,21 +22,104 @@ class UserHome extends React.Component {
 
   render() {
     const {email} = this.props
-    const sampleData = [
-      {id: 'Travel', label: 'Travel', value: 227},
-      {id: 'HealthCare', label: 'HealthCare', value: 349},
-      {id: 'Shopping', label: 'Shopping', value: 526},
-      {id: 'Groceries', label: 'Groceries', value: 326},
-      {id: 'Food & Drink', label: 'Food & Drink', value: 564},
-      {id: 'Entertainment', label: 'Entertainment', value: 159}
+
+    const travel = []
+    const healthcare = []
+    const shopping = []
+    const groceries = []
+    const foodAndDrink = []
+    const entertainment = []
+    const others = []
+
+    this.props.transactions.map(bank =>
+      bank.map(transaction => {
+        if (transaction.category[0] === 'Travel') travel.push(transaction)
+        else if (transaction.category[0] === 'Shops') shopping.push(transaction)
+        else if (transaction.category[0] === 'Food and Drink')
+          foodAndDrink.push(transaction)
+        else if (transaction.category[0] === 'Recreation')
+          entertainment.push(transaction)
+        else others.push(transaction)
+      })
+    )
+
+    const data = [
+      {
+        id: 'Travel',
+        label: 'Travel',
+        value:
+          travel.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'HealthCare',
+        label: 'Healthcare',
+        value:
+          healthcare.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'Shopping',
+        label: 'Shopping',
+        value:
+          shopping.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'Groceries',
+        label: 'Groceries',
+        value:
+          groceries.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'Food & Drink',
+        label: 'Food & Drink',
+        value:
+          foodAndDrink.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'Entertainment',
+        label: 'Entertainment',
+        value:
+          entertainment.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      }
+      // {
+      //   id: 'Others',
+      //   label: 'Others',
+      //   value: others.reduce(
+      //     (accumulator, transaction) => accumulator + transaction.amount,
+      //     0
+      //   ),
+      // },
     ]
-    console.log(this.props.transactions)
+
+    console.log(foodAndDrink)
     return (
       <div>
-        <h3>Welcome, {email}</h3>
         <CreateLink />
         <Pie
-          data={sampleData}
+          data={data}
           width={900}
           height={500}
           margin={{top: 40, right: 200, bottom: 80, left: 350}}
@@ -46,12 +131,44 @@ class UserHome extends React.Component {
           borderWidth={3}
           borderColor={{from: 'color', modifiers: [['darker', 0.2]]}}
           enableSliceLabels={false}
+          enableRadialLabels={false}
           radialLabelsLinkDiagonalLength={24}
           radialLabelsTextXOffset={7}
           radialLabelsLinkHorizontalLength={29}
           sliceLabelsTextColor="#333333"
           radialLabelsLinkColor={{from: 'color', modifiers: []}}
           radialLabelsLinkStrokeWidth={2}
+          legends={[
+            {
+              anchor: 'bottom',
+              direction: 'column',
+              justify: false,
+              translateX: 200,
+              translateY: -32,
+              itemsSpacing: 0,
+              itemWidth: 0,
+              itemHeight: 55,
+              itemTextColor: '#999',
+              itemDirection: 'left-to-right',
+              itemOpacity: 1,
+              symbolSize: 18,
+              symbolShape: 'circle',
+              effects: [
+                {
+                  on: 'hover',
+                  style: {
+                    itemTextColor: '#000'
+                  }
+                },
+                {
+                  on: 'mouseEnter',
+                  style: {
+                    itemTextColor: 'white'
+                  }
+                }
+              ]
+            }
+          ]}
         />
       </div>
     )
