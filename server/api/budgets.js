@@ -26,7 +26,20 @@ router.put('/', async (req, res, next) => {
       shopping,
       groceries
     })
-    res.json(update)
+
+    const response = {
+      totalSpending: update.totalSpending,
+      foodAndDrink: update.foodAndDrink,
+      travel: update.travel,
+      entertainment: update.entertainment,
+      healthcare: update.healthcare,
+      shopping: update.shopping,
+      groceries: update.groceries
+    }
+
+    console.log(update)
+    res.json(response)
+    // res.sendStatus()
   } catch (err) {
     next(err)
   }
@@ -37,7 +50,6 @@ router.get('/', async (req, res, next) => {
     const budget = await Budget.findOne({
       where: {userId: req.user.dataValues.id}
     })
-
     const {
       totalSpending,
       foodAndDrink,
@@ -47,7 +59,6 @@ router.get('/', async (req, res, next) => {
       shopping,
       groceries
     } = budget.dataValues
-
     res.json({
       totalSpending,
       foodAndDrink,
