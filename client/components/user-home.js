@@ -7,6 +7,7 @@ import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
 import CreateLink from './create-link'
+import {Transactions} from './Transactions'
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class UserHome extends React.Component {
       {id: 'Food & Drink', label: 'Food & Drink', value: 564},
       {id: 'Entertainment', label: 'Entertainment', value: 159}
     ]
+    console.log(this.props.transactions)
     return (
       <div>
         <h3>Welcome, {email}</h3>
@@ -52,6 +54,7 @@ class UserHome extends React.Component {
           radialLabelsLinkColor={{from: 'color', modifiers: []}}
           radialLabelsLinkStrokeWidth={2}
         />
+        <Transactions transactions={this.props.transactions} />
       </div>
     )
   }
