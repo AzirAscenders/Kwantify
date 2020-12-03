@@ -9,4 +9,4 @@ export {default as Budgets} from './budgets'
 export {Login, Signup} from './auth-form'
 export {default as Accounts} from './Accounts'
 export {default as UserProfile} from './UserProfile'
-
+export {default as Transactions} from './Transactions'

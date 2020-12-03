@@ -28,6 +28,7 @@ class UserHome extends React.Component {
       {id: 'Food & Drink', label: 'Food & Drink', value: 564},
       {id: 'Entertainment', label: 'Entertainment', value: 159}
     ]
+    console.log(this.props.transactions)
     return (
       <div>
         <h3>Welcome, {email}</h3>
