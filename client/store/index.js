@@ -7,8 +7,16 @@ import link from './link'
 import linkTransactions from './link-transactions'
 import budgets from './budgets'
 import accounts from './accounts'
+import transactions from './transactions'
 
-const reducer = combineReducers({user, link, linkTransactions, accounts, budgets})
+const reducer = combineReducers({
+  user,
+  link,
+  linkTransactions,
+  accounts,
+  budgets,
+  transactions
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

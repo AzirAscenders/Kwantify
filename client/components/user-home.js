@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {Pie} from '@nivo/pie'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
+import {fetchTransactions} from '../store/transactions'
 import CreateLink from './create-link'
 
 /**
@@ -14,6 +15,7 @@ class UserHome extends React.Component {
   componentDidMount() {
     this.props.fetchLink()
     this.props.fetchBudget()
+    this.props.fetchTransactions()
   }
 
   render() {
@@ -60,14 +62,17 @@ class UserHome extends React.Component {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    budgets: state.budgets,
+    transactions: state.transactions
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     fetchLink: () => dispatch(fetchLink()),
-    fetchBudget: () => dispatch(fetchBudget())
+    fetchBudget: () => dispatch(fetchBudget()),
+    fetchTransactions: () => dispatch(fetchTransactions())
   }
 }
 
