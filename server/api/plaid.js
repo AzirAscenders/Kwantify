@@ -119,23 +119,27 @@ router.get('/transactions/get', async (req, res, next) => {
       attributes: ['accessToken', sequelize.fn('COUNT', sequelize.col('id'))],
       group: ['accessToken']
     })
-    // console.log('XXXX', accessTokens)
 
     const today = moment().format('YYYY-MM-DD')
     const past = moment()
       .subtract(90, 'days')
       .format('YYYY-MM-DD')
 
-    const transactions = accessTokens.map(async token => {
-      const response = await client
-        .getTransactions(token.dataValues.accessToken, past, today, {})
-        .catch(err => {
-          console.log(err)
-        })
-      return response.transactions
-    })
-    Promise.all(transactions)
-    console.log('OOOOO', transactions)
+    let transactions = []
+
+    await Promise.all(
+      accessTokens.map(async token => {
+        const response = await client
+          .getTransactions(token.dataValues.accessToken, past, today, {})
+          .catch(err => {
+            console.log(err)
+          })
+
+        transactions.push(response.transactions)
+      })
+    )
+    // console.log('XXXX', transactions)
+
     // const response = await client.getTransactions(
     //   accessTokens[0].dataValues.accessToken,
     //   past,
