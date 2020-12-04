@@ -21,7 +21,7 @@ class BudgetsBarGraph extends React.Component {
     const entertainment = []
     const others = []
 
-    this.props.transactions.map(transaction => {
+    this.props.transactions.transactions.map(transaction => {
       if (transaction.category[0] === 'Travel') travel.push(transaction)
       else if (transaction.category[0] === 'Shops') shopping.push(transaction)
       else if (transaction.category[0] === 'Food and Drink')
@@ -183,7 +183,7 @@ class BudgetsBarGraph extends React.Component {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'country',
+          legend: 'Dollar ($)',
           legendPosition: 'middle',
           legendOffset: 32
         }}
@@ -191,7 +191,7 @@ class BudgetsBarGraph extends React.Component {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'food',
+          legend: 'Category',
           legendPosition: 'middle',
           legendOffset: -40
         }}
