@@ -1,33 +1,37 @@
 import React from 'react'
 import {Table} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import {fetchTransactions} from '../store/transactions'
+import {fetchTransactions, selected} from '../store/transactions'
 
 class Transactions extends React.Component {
-  // constructor() {
-  //   super()
-  //   this.changeOption = this.changeOption.bind(this)
-  // }
+  constructor() {
+    super()
+    this.changeOption = this.changeOption.bind(this)
+  }
 
   componentDidMount() {
     this.props.fetchTransactions()
   }
 
-  // changeOption(e) {
-  //   let transactions = this.props.transactions
-  //   if (e.target.value === 'currentMonth') {
-
-  //   } else if (e.target.value === 'lastMonth') {
-  //   } else if(e.target.value === 'twoMonthsAgo'){
-  //   }
-  // }
+  changeOption(e) {
+    const transactions = this.props.transactions
+    if (e.target.value === 'currentMonth') {
+      this.props.selected(transactions.currentMonth)
+    } else if (e.target.value === 'lastMonth') {
+      this.props.selected(transactions.lastMonth)
+    } else if (e.target.value === 'twoMonthsAgo') {
+      this.props.selected(transactions.twoMonthsBefore)
+    } else {
+      this.props.selected(transactions.transactions)
+    }
+  }
 
   render() {
-    const transactions = this.props.transactions
+    const transactions = this.props.transactions.selected
     return (
       <div>
         <h2>All Transactions</h2>
-        <select onChange="this.changeOption">
+        <select onChange={this.changeOption}>
           <option value="all">All</option>
           <option value="currentMonth">Current Month</option>
           <option value="lastMonth">Last Month</option>
@@ -66,7 +70,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchTransactions: () => dispatch(fetchTransactions())
+    fetchTransactions: () => dispatch(fetchTransactions()),
+    selected: transactions => dispatch(selected(transactions))
   }
 }
 
