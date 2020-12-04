@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Pie} from '@nivo/pie'
+import {ResponsivePie} from '@nivo/pie'
 import {fetchTransactions} from '../store/transactions'
 
 class PieChart extends React.Component {
@@ -29,10 +29,30 @@ class PieChart extends React.Component {
 
     const data = [
       {
-        id: 'Travel',
-        label: 'Travel',
+        id: 'Entertainment',
+        label: 'Entertainment',
         value:
-          travel.reduce(
+          entertainment.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'Food & Drink',
+        label: 'Food & Drink',
+        value:
+          foodAndDrink.reduce(
+            (accumulator, transaction) =>
+              accumulator + transaction.amount * 100,
+            0
+          ) / 100
+      },
+      {
+        id: 'Groceries',
+        label: 'Groceries',
+        value:
+          groceries.reduce(
             (accumulator, transaction) =>
               accumulator + transaction.amount * 100,
             0
@@ -59,30 +79,10 @@ class PieChart extends React.Component {
           ) / 100
       },
       {
-        id: 'Groceries',
-        label: 'Groceries',
+        id: 'Travel',
+        label: 'Travel',
         value:
-          groceries.reduce(
-            (accumulator, transaction) =>
-              accumulator + transaction.amount * 100,
-            0
-          ) / 100
-      },
-      {
-        id: 'Food & Drink',
-        label: 'Food & Drink',
-        value:
-          foodAndDrink.reduce(
-            (accumulator, transaction) =>
-              accumulator + transaction.amount * 100,
-            0
-          ) / 100
-      },
-      {
-        id: 'Entertainment',
-        label: 'Entertainment',
-        value:
-          entertainment.reduce(
+          travel.reduce(
             (accumulator, transaction) =>
               accumulator + transaction.amount * 100,
             0
@@ -99,7 +99,7 @@ class PieChart extends React.Component {
     ]
 
     return (
-      <Pie
+      <ResponsivePie
         data={data}
         width={900}
         height={500}
