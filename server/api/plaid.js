@@ -138,16 +138,26 @@ router.get('/transactions/get', async (req, res, next) => {
         transactions.push(response.transactions)
       })
     )
-    // console.log('XXXX', transactions)
+    let combinedTransactions = []
 
-    // const response = await client.getTransactions(
-    //   accessTokens[0].dataValues.accessToken,
-    //   past,
-    //   today,
-    //   {}
-    // )
+    transactions
+      .map(bank => {
+        return bank.filter(
+          transaction =>
+            (transaction.category[0] === 'Transfer' &&
+              transaction.category[1] === 'Debit') ||
+            (transaction.category[0] === 'Payment' &&
+              transaction.category[1] !== 'Credit Card') ||
+            transaction.category[0] === 'Shops' ||
+            transaction.category[0] === 'Food and Drink' ||
+            transaction.category[0] === 'Travel' ||
+            transaction.category[0] === 'Recreation'
+        )
+      })
+      .map(bank => combinedTransactions.push(...bank))
+    combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
 
-    res.json(transactions)
+    res.json(combinedTransactions)
   } catch (err) {
     next(err)
   }
