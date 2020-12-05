@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {Table} from 'react-bootstrap'
 import {connect} from 'react-redux'
@@ -7,10 +8,26 @@ class Transactions extends React.Component {
   constructor() {
     super()
     this.changeOption = this.changeOption.bind(this)
+    this.changeCategory = this.changeCategory.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchTransactions()
+  }
+
+  changeCategory(e) {
+    const transactions = this.props.transactions.transactions
+    if (e.target.value === 'others') {
+      this.props.selected(
+        transactions.filter(element => element.category[0] === 'Payment')
+      )
+    } else if (e.target.value === 'all') {
+      this.props.selected(transactions)
+    } else {
+      this.props.selected(
+        transactions.filter(element => element.category[0] === e.target.value)
+      )
+    }
   }
 
   changeOption(e) {
@@ -31,11 +48,23 @@ class Transactions extends React.Component {
     return (
       <div>
         <h2>All Transactions</h2>
+        <label htmlFor="date">Choose Period:</label>
         <select onChange={this.changeOption}>
           <option value="all">All</option>
           <option value="currentMonth">Current Month</option>
           <option value="lastMonth">Last Month</option>
           <option value="twoMonthsAgo">2 Month Ago</option>
+        </select>
+        <label htmlFor="category">Choose Category:</label>
+        <select onChange={this.changeCategory}>
+          <option value="all">All</option>
+          <option value="Food and Drink">Food And Drinks</option>
+          <option value="Travel">Travel</option>
+          <option value="Recreation">Entertainment</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Shops">Shopping</option>
+          <option value="Groceries">Groceries</option>
+          <option value="others">Others</option>
         </select>
         <Table striped bordered hover>
           <thead>
