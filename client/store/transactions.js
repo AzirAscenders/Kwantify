@@ -14,11 +14,11 @@ const SELECTED = 'SELECTED'
  * INITIAL STATE
  */
 const defaultTransactions = {
+  selected: [],
   transactions: [],
   currentMonth: [],
   lastMonth: [],
-  twoMonthsBefore: [],
-  selected: []
+  twoMonthsBefore: []
 }
 
 /**
@@ -33,6 +33,7 @@ const currentMonthTransactions = transactions => ({
   type: CURRENT_MONTH_TRANSACTIONS,
   transactions
 })
+
 const lastMonthTransactions = transactions => ({
   type: LAST_MONTH_TRANSACTIONS,
   transactions
