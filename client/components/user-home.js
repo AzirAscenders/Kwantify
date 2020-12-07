@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import PieChart from './PieChart'
 import BarGraph from './BarGraph'
 import BudgetsBarGraph from './BudgetsBarGraph'
+import BudgetBullet from './BudgetBullet'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
@@ -28,7 +29,8 @@ class UserHome extends React.Component {
         <CreateLink />
         <PieChart />
         <BarGraph />
-        <BudgetsBarGraph />
+        {/* <BudgetsBarGraph /> */}
+        <BudgetBullet />
       </div>
     )
   }

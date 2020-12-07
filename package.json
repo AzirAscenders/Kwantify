@@ -43,6 +43,7 @@
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
     "@nivo/bar": "^0.66.0",
+    "@nivo/bullet": "^0.66.0",
     "@nivo/core": "^0.66.0",
     "@nivo/line": "^0.66.0",
     "@nivo/pie": "^0.66.0",
