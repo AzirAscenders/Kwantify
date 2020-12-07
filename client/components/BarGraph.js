@@ -4,102 +4,82 @@ import {ResponsiveBar} from '@nivo/bar'
 import {fetchTransactions} from '../store/transactions'
 
 class BarGraph extends React.Component {
-  componentDidMount() {
-    this.props.fetchTransactions()
-  }
+  // componentDidMount() {
+  //   this.props.fetchTransactions()
+  // }
 
   render() {
+    const currentMonth = this.props.transactions.currentMonth
+    const lastMonth = this.props.transactions.lastMonth
+    const twoMonthsAgo = this.props.transactions.twoMonthsBefore
+
+    const expenseCalculator = (month, category) => {
+      return (
+        month.reduce((accum, current) => {
+          if (current.category[0] === category) {
+            accum += current.amount * 100
+          }
+          return accum
+        }, 0) / 100
+      )
+    }
+
     const data = [
       {
-        country: 'AD',
-        burger: 71,
-        burgerColor: 'hsl(325, 70%, 50%)',
-        sandwich: 57,
-        sandwichColor: 'hsl(153, 70%, 50%)',
-        kebab: 85,
-        kebabColor: 'hsl(49, 70%, 50%)',
-        fries: 23,
-        friesColor: 'hsl(274, 70%, 50%)',
-        donut: 95,
-        donutColor: 'hsl(34, 70%, 50%)'
+        month: 'October',
+        Entertainment: expenseCalculator(twoMonthsAgo, 'Recreation'),
+        EntertainmentColor: 'hsl(325, 70%, 50%)',
+        'Food & Drink': expenseCalculator(twoMonthsAgo, 'Food and Drink'),
+        'Food & DrinkColor': 'hsl(153, 70%, 50%)',
+        Groceries: expenseCalculator(twoMonthsAgo, 'Groceries'),
+        GroceriesColor: 'hsl(49, 70%, 50%)',
+        Healthcare: expenseCalculator(twoMonthsAgo, 'Healthcare'),
+        HealthcareColor: 'hsl(274, 70%, 50%)',
+        Shopping: expenseCalculator(twoMonthsAgo, 'Shops'),
+        ShoppingColor: 'hsl(34, 70%, 50%)',
+        Travel: expenseCalculator(twoMonthsAgo, 'Travel'),
+        TravelColor: 'hsl(34, 70%, 50%)'
+        // Others: twoMonthsAgo.reduce((accum, current)=>{
+        //   if(current.category[0] === 'Recreation') {
+        //     accum += current.amount
+        //   }
+        //   return accum
+        // }, 0),
+        // OthersColor: 'hsl(34, 70%, 50%)',
       },
       {
-        country: 'AE',
-        burger: 98,
-        burgerColor: 'hsl(191, 70%, 50%)',
-        sandwich: 112,
-        sandwichColor: 'hsl(155, 70%, 50%)',
-        kebab: 189,
-        kebabColor: 'hsl(17, 70%, 50%)',
-        fries: 69,
-        friesColor: 'hsl(252, 70%, 50%)',
-        donut: 136,
-        donutColor: 'hsl(197, 70%, 50%)'
+        month: 'November',
+        Entertainment: expenseCalculator(lastMonth, 'Recreation'),
+        EntertainmentColor: 'hsl(191, 70%, 50%)',
+        'Food & Drink': expenseCalculator(lastMonth, 'Food and Drink'),
+        'Food & DrinkColor': 'hsl(155, 70%, 50%)',
+        Groceries: expenseCalculator(lastMonth, 'Groceries'),
+        GroceriesColor: 'hsl(17, 70%, 50%)',
+        Healthcare: expenseCalculator(lastMonth, 'Healthcare'),
+        HealthcareColor: 'hsl(252, 70%, 50%)',
+        Shopping: expenseCalculator(lastMonth, 'Shops'),
+        ShoppingColor: 'hsl(197, 70%, 50%)',
+        Travel: expenseCalculator(lastMonth, 'Travel'),
+        TravelColor: 'hsl(34, 70%, 50%)'
+        // Others: 95,
+        // OthersColor: 'hsl(34, 70%, 50%)',
       },
       {
-        country: 'AF',
-        burger: 93,
-        burgerColor: 'hsl(294, 70%, 50%)',
-        sandwich: 27,
-        sandwichColor: 'hsl(95, 70%, 50%)',
-        kebab: 31,
-        kebabColor: 'hsl(269, 70%, 50%)',
-        fries: 79,
-        friesColor: 'hsl(62, 70%, 50%)',
-        donut: 151,
-        donutColor: 'hsl(230, 70%, 50%)'
-      },
-      {
-        country: 'AG',
-        burger: 65,
-        burgerColor: 'hsl(250, 70%, 50%)',
-        sandwich: 83,
-        sandwichColor: 'hsl(266, 70%, 50%)',
-        kebab: 148,
-        kebabColor: 'hsl(222, 70%, 50%)',
-        fries: 178,
-        friesColor: 'hsl(113, 70%, 50%)',
-        donut: 147,
-        donutColor: 'hsl(279, 70%, 50%)'
-      },
-      {
-        country: 'AI',
-        burger: 30,
-        burgerColor: 'hsl(60, 70%, 50%)',
-        sandwich: 111,
-        sandwichColor: 'hsl(9, 70%, 50%)',
-        kebab: 105,
-        kebabColor: 'hsl(279, 70%, 50%)',
-        fries: 106,
-        friesColor: 'hsl(259, 70%, 50%)',
-        donut: 154,
-        donutColor: 'hsl(122, 70%, 50%)'
-      },
-      {
-        country: 'AL',
-        burger: 72,
-        burgerColor: 'hsl(26, 70%, 50%)',
-        sandwich: 118,
-        sandwichColor: 'hsl(72, 70%, 50%)',
-        kebab: 184,
-        kebabColor: 'hsl(126, 70%, 50%)',
-        fries: 28,
-        friesColor: 'hsl(274, 70%, 50%)',
-        donut: 133,
-        donutColor: 'hsl(102, 70%, 50%)'
-      },
-      {
-        country: 'AM',
-        burger: 91,
-        burgerColor: 'hsl(359, 70%, 50%)',
-        sandwich: 16,
-        sandwichColor: 'hsl(17, 70%, 50%)',
-        kebab: 162,
-        kebabColor: 'hsl(346, 70%, 50%)',
-        fries: 183,
-        friesColor: 'hsl(331, 70%, 50%)',
-        donut: 119,
-        donutColor: 'hsl(248, 70%, 50%)'
+        month: 'December',
+        Entertainment: expenseCalculator(currentMonth, 'Recreation'),
+        EntertainmentColor: 'hsl(294, 70%, 50%)',
+        'Food & Drink': expenseCalculator(currentMonth, 'Food and Drink'),
+        'Food & DrinkColor': 'hsl(95, 70%, 50%)',
+        Groceries: expenseCalculator(currentMonth, 'Groceries'),
+        GroceriesColor: 'hsl(269, 70%, 50%)',
+        Healthcare: expenseCalculator(currentMonth, 'Healthcare'),
+        HealthcareColor: 'hsl(62, 70%, 50%)',
+        Shopping: expenseCalculator(currentMonth, 'Shops'),
+        ShoppingColor: 'hsl(230, 70%, 50%)',
+        Travel: expenseCalculator(currentMonth, 'Travel'),
+        TravelColor: 'hsl(34, 70%, 50%)'
+        // Others: 95,
+        // OthersColor: 'hsl(34, 70%, 50%)',
       }
     ]
 
@@ -108,8 +88,16 @@ class BarGraph extends React.Component {
         data={data}
         width={900}
         height={500}
-        keys={['burger', 'sandwich', 'kebab', 'fries', 'donut']}
-        indexBy="country"
+        keys={[
+          'Entertainment',
+          'Food & Drink',
+          'Groceries',
+          'Healthcare',
+          'Shopping',
+          'Travel',
+          'Others'
+        ].reverse()}
+        indexBy="month"
         margin={{top: 50, right: 130, bottom: 50, left: 60}}
         padding={0.3}
         valueScale={{type: 'linear'}}
@@ -138,7 +126,7 @@ class BarGraph extends React.Component {
         fill={[
           {
             match: {
-              id: 'fries'
+              id: 'healthcare'
             },
             id: 'dots'
           },
@@ -156,7 +144,7 @@ class BarGraph extends React.Component {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'country',
+          legend: 'Month',
           legendPosition: 'middle',
           legendOffset: 32
         }}
@@ -164,7 +152,7 @@ class BarGraph extends React.Component {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'food',
+          legend: 'Categories',
           legendPosition: 'middle',
           legendOffset: -40
         }}

@@ -7,10 +7,10 @@ import {fetchTransactions} from '../store/transactions'
 import {fetchBudget} from '../store/budgets'
 
 class BudgetsBarGraph extends React.Component {
-  componentDidMount() {
-    this.props.fetchTransactions()
-    this.props.fetchBudget()
-  }
+  // componentDidMount() {
+  //   this.props.fetchTransactions()
+  //   this.props.fetchBudget()
+  // }
 
   render() {
     const travel = []

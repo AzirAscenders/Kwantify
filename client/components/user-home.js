@@ -9,7 +9,7 @@ import BarGraph from './BarGraph'
 import BudgetsBarGraph from './BudgetsBarGraph'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
-// import {fetchTransactions} from '../store/transactions'
+import {fetchTransactions} from '../store/transactions'
 import CreateLink from './create-link'
 
 /**
@@ -19,7 +19,7 @@ class UserHome extends React.Component {
   componentDidMount() {
     this.props.fetchLink()
     this.props.fetchBudget()
-    // this.props.fetchTransactions()
+    this.props.fetchTransactions()
   }
 
   render() {
@@ -48,8 +48,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchLink: () => dispatch(fetchLink()),
-    fetchBudget: () => dispatch(fetchBudget())
-    // fetchTransactions: () => dispatch(fetchTransactions()),
+    fetchBudget: () => dispatch(fetchBudget()),
+    fetchTransactions: () => dispatch(fetchTransactions())
   }
 }
 

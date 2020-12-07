@@ -4,9 +4,9 @@ import {ResponsivePie} from '@nivo/pie'
 import {fetchTransactions} from '../store/transactions'
 
 class PieChart extends React.Component {
-  componentDidMount() {
-    this.props.fetchTransactions()
-  }
+  // componentDidMount() {
+  //   this.props.fetchTransactions()
+  // }
 
   render() {
     const travel = []
