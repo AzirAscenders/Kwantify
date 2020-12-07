@@ -13,15 +13,18 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "kwantify-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
   - npm test # test the code
   - npm run build-client # make the bundle
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name; see README
+  app: kwantify
+  # the secure key indicates an encrypted value; see README
+  api_key:
+    secure: QGA2gRW3ULk2IiOBnI8MJTucVc3Zaso/Sm/qWiya3DQ9IQYl1RFxuFyBk/uAXWm3K13XNN41pyTPKPN6wGb5kEyBQG0ONrLmL2wFCj5KfxoKj0PsgjAmIDCkGurX19sS03XYSykE8GsBVExUZSEO3fZNf8a3mWzFeVvuR90E4qCXHdM1z7Xu7jO/Klkw7iDUXcGC5YUn5KqOh4KmKslqRFImbQO3whiu9PgU4nUzsT2snRPoeDnKJ4lTLH8bTctahDJTo7kFj/Z0/TEwtOjwl3v+m8EFdllwj9opQMb33qbmNaGQh6HxyQo7J3aJ99gF41LtTTnY2HwiZA1JsFLrSQAA2p3HrJVdU/peCD8K9XXKKJzeGMTshNQvk5ZS59gJxYGjoDpnlOHHMzIINgf0qiqJFwoL7CBFIHNmI4ijFZe3Us9bUpM32oT1LDXP+9Vl2WgkQtW4RmLxeCQ0LKs1I6d0Oqw9i+YOqnp8l5so0smTrKALkdsB7g7Ng/rzznfFrnpz4ah0M3Yg/zfVXYGYPbActE3l8aPJrjA0agNjaTv9ZtQ9cnqixvIVTMg1tD8ksXSJIjZil9iKhl/5b1eJxhiYMzYnva//DVibHl4i0fEtkY0lbwHAPjj274nW/I05vgINqzr2xvcZSgz7RYRLdIvXv0+3fehH/51HL/Rj0es=
