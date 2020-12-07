@@ -9,16 +9,18 @@ const CURRENT_MONTH_TRANSACTIONS = 'CURRENT_MONTH_TRANSACTIONS'
 const LAST_MONTH_TRANSACTIONS = 'LAST_MONTH_TRANSACTIONS'
 const TWO_MONTHS_BEFORE_TRANSACTIONS = 'TWO_MONTHS_BEFORE_TRANSACTIONS'
 const SELECTED = 'SELECTED'
+const FILTERED = 'FILTERED'
 
 /**
  * INITIAL STATE
  */
 const defaultTransactions = {
-  selected: [],
   transactions: [],
   currentMonth: [],
   lastMonth: [],
-  twoMonthsBefore: []
+  twoMonthsBefore: [],
+  selected: [],
+  filtered: []
 }
 
 /**
@@ -38,12 +40,19 @@ const lastMonthTransactions = transactions => ({
   type: LAST_MONTH_TRANSACTIONS,
   transactions
 })
+
 const twoMonthsBeforeTransactions = transactions => ({
   type: TWO_MONTHS_BEFORE_TRANSACTIONS,
   transactions
 })
+
 export const selected = transactions => ({
   type: SELECTED,
+  transactions
+})
+
+export const filtered = transactions => ({
+  type: FILTERED,
   transactions
 })
 
@@ -55,6 +64,7 @@ export const fetchTransactions = () => async dispatch => {
     const res = await axios.get('/api/plaid/transactions/get')
     await dispatch(getTransactions(res.data || defaultTransactions))
     await dispatch(selected(res.data || defaultTransactions))
+    await dispatch(filtered(res.data || defaultTransactions))
     await dispatch(currentMonthTransactions(res.data || defaultTransactions))
     await dispatch(lastMonthTransactions(res.data || defaultTransactions))
     await dispatch(twoMonthsBeforeTransactions(res.data || defaultTransactions))
@@ -113,6 +123,8 @@ export default function(state = defaultTransactions, action) {
       }
     case SELECTED:
       return {...state, selected: action.transactions}
+    case FILTERED:
+      return {...state, filtered: action.transactions}
     default:
       return state
   }

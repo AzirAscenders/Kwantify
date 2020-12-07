@@ -2,11 +2,14 @@
 import React from 'react'
 import {Table} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import {fetchTransactions, selected} from '../store/transactions'
+import {fetchTransactions, selected, filtered} from '../store/transactions'
 
 class Transactions extends React.Component {
   constructor() {
     super()
+    this.state = {
+      category: 'All'
+    }
     this.changeOption = this.changeOption.bind(this)
     this.changeCategory = this.changeCategory.bind(this)
   }
@@ -16,35 +19,60 @@ class Transactions extends React.Component {
   }
 
   changeCategory(e) {
-    const transactions = this.props.transactions.transactions
-    if (e.target.value === 'others') {
-      this.props.selected(
-        transactions.filter(element => element.category[0] === 'Payment')
+    const selectedTransactions = this.props.transactions.selected
+    const category = e.target.value
+    this.setState({category})
+
+    if (category === 'Others') {
+      this.props.filtered(
+        selectedTransactions.filter(
+          element => element.category[0] === 'Payment'
+        )
       )
-    } else if (e.target.value === 'all') {
-      this.props.selected(transactions)
+    } else if (category === 'All') {
+      this.props.filtered(selectedTransactions)
     } else {
-      this.props.selected(
-        transactions.filter(element => element.category[0] === e.target.value)
+      this.props.filtered(
+        selectedTransactions.filter(element => element.category[0] === category)
       )
     }
   }
 
-  changeOption(e) {
-    const transactions = this.props.transactions
+  async changeOption(e) {
+    let transactions = this.props.transactions
+    const category = this.state.category
+
     if (e.target.value === 'currentMonth') {
-      this.props.selected(transactions.currentMonth)
+      await this.props.selected(transactions.currentMonth)
     } else if (e.target.value === 'lastMonth') {
-      this.props.selected(transactions.lastMonth)
+      await this.props.selected(transactions.lastMonth)
     } else if (e.target.value === 'twoMonthsAgo') {
-      this.props.selected(transactions.twoMonthsBefore)
+      await this.props.selected(transactions.twoMonthsBefore)
     } else {
-      this.props.selected(transactions.transactions)
+      await this.props.selected(transactions.transactions)
+    }
+
+    transactions = this.props.transactions
+
+    if (category === 'Others') {
+      this.props.filtered(
+        transactions.selected.filter(
+          element => element.category[0] === 'Payment'
+        )
+      )
+    } else if (category === 'All') {
+      this.props.filtered(transactions.selected)
+    } else {
+      this.props.filtered(
+        transactions.selected.filter(
+          element => element.category[0] === category
+        )
+      )
     }
   }
 
   render() {
-    const transactions = this.props.transactions.selected
+    const transactions = this.props.transactions.filtered
     return (
       <div>
         <h2>All Transactions</h2>
@@ -57,14 +85,14 @@ class Transactions extends React.Component {
         </select>
         <label htmlFor="category">Choose Category:</label>
         <select onChange={this.changeCategory}>
-          <option value="all">All</option>
+          <option value="All">All</option>
           <option value="Food and Drink">Food And Drinks</option>
           <option value="Travel">Travel</option>
           <option value="Recreation">Entertainment</option>
           <option value="Healthcare">Healthcare</option>
           <option value="Shops">Shopping</option>
           <option value="Groceries">Groceries</option>
-          <option value="others">Others</option>
+          <option value="Others">Others</option>
         </select>
         <Table striped bordered hover>
           <thead>
@@ -81,7 +109,7 @@ class Transactions extends React.Component {
                 <td>{transaction.date}</td>
                 <td>{transaction.name}</td>
                 <td>{transaction.category[0]}</td>
-                <td>${transaction.amount}</td>
+                <td>${transaction.amount.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
@@ -100,7 +128,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchTransactions: () => dispatch(fetchTransactions()),
-    selected: transactions => dispatch(selected(transactions))
+    selected: transactions => dispatch(selected(transactions)),
+    filtered: transactions => dispatch(filtered(transactions))
   }
 }
 
