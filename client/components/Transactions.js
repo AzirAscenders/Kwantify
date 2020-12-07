@@ -52,6 +52,7 @@ class Transactions extends React.Component {
       await this.props.selected(transactions.transactions)
     }
 
+    // CANNOT ERASE!! THIS LINE RESASSIGNS transactions with NEW DATA created from line4 47 to 55!!
     transactions = this.props.transactions
 
     if (category === 'Others') {
