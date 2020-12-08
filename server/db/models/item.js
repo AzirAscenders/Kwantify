@@ -19,7 +19,14 @@ const Item = db.define('item', {
 })
 
 Item.beforeCreate(item => {
+  console.log(item)
   item.price = Math.round(+item.price * 100)
+})
+
+Item.beforeBulkCreate(items => {
+  items.forEach(item => {
+    item.price = Math.round(+item.price * 100)
+  })
 })
 
 module.exports = Item

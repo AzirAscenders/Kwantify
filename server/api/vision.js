@@ -1,23 +1,14 @@
-const vision = require('@google-cloud/vision')
-const {GOOGLE_VISION_CREDENTIALS} = require('../../secrets')
+const router = require('express').Router()
+const {Item} = require('../db/models')
+const starbucksReceiptReader = require('./receipt-parsing')
+module.exports = router
 
-// clarify with Ben if this is a secret or not
-process.env.GOOGLE_APPLICATION_CREDENTIALS = GOOGLE_VISION_CREDENTIALS
-// Creates a client
-const client = new vision.ImageAnnotatorClient()
-
-/**
- * TODO(developer): Uncomment the following line before running the sample.
- */
-const fileName =
-  '/Users/YanNaingLin/Desktop/SeniorPhase/Kwantify/testimages/dog.png'
-
-// Performs text detection on the local file
-async function visionReader() {
-  const [result] = await client.textDetection(fileName)
-  const detections = result.textAnnotations
-  console.log('Text:')
-  detections.forEach(text => console.log(text))
-}
-
-visionReader()
+router.post('/', async (req, res, next) => {
+  try {
+    let itemsToCreate = await starbucksReceiptReader()
+    const items = await Item.bulkCreate(itemsToCreate, {returning: true})
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
