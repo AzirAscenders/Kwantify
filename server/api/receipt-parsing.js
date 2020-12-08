@@ -9,7 +9,8 @@ const client = new vision.ImageAnnotatorClient()
 /**
  * TODO(developer): Uncomment the following line before running the sample.
  */
-const fileName = '/Users/nancykwan/Desktop/Kwantify/testimages/starbucks.jpg'
+const fileName =
+  '/Users/YanNaingLin/Desktop/SeniorPhase/Kwantify/testimages/starbucks.jpg'
 
 // Performs text detection on the local file
 async function visionReader() {
