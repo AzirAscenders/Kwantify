@@ -1,37 +1,44 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import Hamburger from 'hamburger-react'
 
-const Navbar = ({handleClick, isLoggedIn, user}) => (
-  <div>
-    <h1>Kwantify</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-          <Link to="/profile">Profile</Link>
-          <Link to="/accounts">Accounts</Link>
-          <Link to="/budgets">Budgets</Link>
-          <Link to="/transactions">Transactions</Link>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
+const Navbar = ({handleClick, isLoggedIn, user}) => {
+  const [isOpen, setOpen] = useState(false)
+  return (
+    <div>
+      <h1>Kwantify</h1>
+      <Hamburger toggled={isOpen} toggle={setOpen} direction="left" />
+      {isOpen && (
+        <nav>
+          {isLoggedIn ? (
+            <div>
+              {/* The navbar will show these links after you log in */}
+              <Link to="/home">Home</Link>
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
+              <Link to="/profile">Profile</Link>
+              <Link to="/accounts">Accounts</Link>
+              <Link to="/budgets">Budgets</Link>
+              <Link to="/transactions">Transactions</Link>
+            </div>
+          ) : (
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
+          )}
+        </nav>
       )}
-    </nav>
-    <hr />
-  </div>
-)
 
+      <hr />
+    </div>
+  )
+}
 /**
  * CONTAINER
  */
