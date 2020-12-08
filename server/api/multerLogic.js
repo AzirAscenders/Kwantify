@@ -3,7 +3,7 @@ const path = require('path')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, path.join(process.cwd() + '../../public'))
+    cb(null, path.join(process.cwd() + '/public'))
   },
   filename: function(req, file, cb) {
     cb(
@@ -13,7 +13,9 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({storage: storage, fileFilter}).single('image')
+const upload = multer({storage: storage, fileFilter: fileFilter}).single(
+  'image'
+)
 
 function fileFilter(req, file, cb) {
   const fileType = /jpg|jpeg|png/
