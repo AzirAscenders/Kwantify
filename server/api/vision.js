@@ -1,56 +1,11 @@
-const vision = require('@google-cloud/vision')
-const {GOOGLE_VISION_CREDENTIALS} = require('../../secrets')
 const router = require('express').Router()
 const {Item} = require('../db/models')
-
+const starbucksReceiptReader = require('./receipt-parsing')
 module.exports = router
-
-// clarify with Ben if this is a secret or not
-process.env.GOOGLE_APPLICATION_CREDENTIALS = GOOGLE_VISION_CREDENTIALS
-// Creates a client
-const client = new vision.ImageAnnotatorClient()
-
-/**
- * TODO(developer): Uncomment the following line before running the sample.
- */
-const fileName =
-  '/Users/YanNaingLin/Desktop/SeniorPhase/Kwantify/testimages/starbucks.jpg'
-
-// Performs text detection on the local file
-async function visionReader() {
-  const [result] = await client.textDetection(fileName)
-  const detections = result.textAnnotations
-  console.log('Text:')
-  let obj = []
-
-  const arrayOfDescription = detections[0].description.split('\n')
-  const start = arrayOfDescription.indexOf('Order') + 1
-  const end = arrayOfDescription.indexOf('Subtotal')
-  const arrayOfItemsAndPrice = arrayOfDescription.slice(start, end)
-  const arrayOfItemNames = arrayOfItemsAndPrice.slice(
-    0,
-    Math.round(arrayOfItemsAndPrice.length / 2)
-  )
-  const arrayOfPrices = arrayOfItemsAndPrice.slice(
-    Math.round(arrayOfItemsAndPrice.length / 2)
-  )
-
-  for (let i = 0; i < arrayOfItemNames.length; i++) {
-    obj.push({
-      name: arrayOfItemNames[i],
-      price: Number(arrayOfPrices[i]),
-      quantity: 1
-    })
-
-    // detections.forEach((text) => console.log(text.description))
-  }
-  console.log(obj)
-  return obj
-}
 
 router.post('/', async (req, res, next) => {
   try {
-    let itemsToCreate = await visionReader()
+    let itemsToCreate = await starbucksReceiptReader()
     const items = await Item.bulkCreate(itemsToCreate, {returning: true})
     res.json(items)
   } catch (err) {
