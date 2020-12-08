@@ -101,9 +101,9 @@ class PieChart extends React.Component {
     return (
       <ResponsivePie
         data={data}
-        width={900}
-        height={500}
-        margin={{top: 40, right: 200, bottom: 80, left: 350}}
+        // width={900}
+        // height={500}
+        margin={{top: 40, right: 0, bottom: 80, left: 0}}
         theme={{fontSize: 18}}
         innerRadius={0.5}
         padAngle={2}
