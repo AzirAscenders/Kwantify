@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {ResponsiveBar} from '@nivo/bar'
 import {fetchTransactions} from '../store/transactions'
+import expenseCalculator from './expenseCalculator'
 
 class BarGraph extends React.Component {
   // componentDidMount() {
@@ -13,20 +14,27 @@ class BarGraph extends React.Component {
     const lastMonth = this.props.transactions.lastMonth
     const twoMonthsAgo = this.props.transactions.twoMonthsBefore
 
-    const expenseCalculator = (month, category) => {
-      return (
-        month.reduce((accum, current) => {
-          if (current.category[0] === category) {
-            accum += current.amount * 100
-          }
-          return accum
-        }, 0) / 100
-      )
+    const monthBank = {
+      0: 'January',
+      1: 'February',
+      2: 'March',
+      3: 'April',
+      4: 'May',
+      5: 'June',
+      6: 'July',
+      7: 'August',
+      8: 'September',
+      9: 'October',
+      10: 'November',
+      11: 'December'
     }
+
+    const date = new Date()
+    const month = date.getMonth()
 
     const data = [
       {
-        month: 'October',
+        month: monthBank[month - 2],
         Entertainment: expenseCalculator(twoMonthsAgo, 'Recreation'),
         EntertainmentColor: 'hsl(325, 70%, 50%)',
         'Food & Drink': expenseCalculator(twoMonthsAgo, 'Food and Drink'),
@@ -48,7 +56,7 @@ class BarGraph extends React.Component {
         // OthersColor: 'hsl(34, 70%, 50%)',
       },
       {
-        month: 'November',
+        month: monthBank[month - 1],
         Entertainment: expenseCalculator(lastMonth, 'Recreation'),
         EntertainmentColor: 'hsl(191, 70%, 50%)',
         'Food & Drink': expenseCalculator(lastMonth, 'Food and Drink'),
@@ -65,7 +73,7 @@ class BarGraph extends React.Component {
         // OthersColor: 'hsl(34, 70%, 50%)',
       },
       {
-        month: 'December',
+        month: monthBank[month],
         Entertainment: expenseCalculator(currentMonth, 'Recreation'),
         EntertainmentColor: 'hsl(294, 70%, 50%)',
         'Food & Drink': expenseCalculator(currentMonth, 'Food and Drink'),

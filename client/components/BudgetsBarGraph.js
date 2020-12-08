@@ -33,37 +33,37 @@ class BudgetsBarGraph extends React.Component {
 
     const entertainmentExp =
       entertainment.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount * 100,
+        (accumulator, transaction) => (accumulator += transaction.amount * 100),
         0
       ) / 100
 
     const foodAndDrinkExp =
       foodAndDrink.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount * 100,
+        (accumulator, transaction) => (accumulator += transaction.amount * 100),
         0
       ) / 100
 
     const groceriesExp =
       groceries.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount * 100,
+        (accumulator, transaction) => (accumulator += transaction.amount * 100),
         0
       ) / 100
 
     const healthcareExp =
       healthcare.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount * 100,
+        (accumulator, transaction) => (accumulator += transaction.amount * 100),
         0
       ) / 100
 
     const shoppingExp =
       shopping.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount * 100,
+        (accumulator, transaction) => (accumulator += transaction.amount * 100),
         0
       ) / 100
 
     const travelExp =
       travel.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount * 100,
+        (accumulator, transaction) => (accumulator += transaction.amount * 100),
         0
       ) / 100
 
@@ -76,7 +76,7 @@ class BudgetsBarGraph extends React.Component {
       travelExp
 
     const budgets = this.props.budgets
-
+    console.log('TOTALLL', totalSpent)
     const data = [
       {
         category: 'Total Spending',

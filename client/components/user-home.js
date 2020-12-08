@@ -6,7 +6,8 @@ import {connect} from 'react-redux'
 // import { Line } from '@nivo/line'
 import PieChart from './PieChart'
 import BarGraph from './BarGraph'
-import BudgetsBarGraph from './BudgetsBarGraph'
+// import BudgetsBarGraph from './BudgetsBarGraph'
+import BudgetBullet from './BudgetBullet'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
@@ -24,11 +25,12 @@ class UserHome extends React.Component {
 
   render() {
     return (
-      <div style={{height: '450px'}}>
+      <div style={{width: '70%', height: '450px'}}>
         <CreateLink />
         <PieChart />
         <BarGraph />
-        <BudgetsBarGraph />
+        {/* <BudgetsBarGraph /> */}
+        <BudgetBullet />
       </div>
     )
   }
