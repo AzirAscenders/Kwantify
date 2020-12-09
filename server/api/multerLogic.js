@@ -1,5 +1,6 @@
 const multer = require('multer')
 const path = require('path')
+const sharp = require('sharp')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -13,9 +14,11 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({storage: storage, fileFilter: fileFilter}).single(
-  'image'
-)
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter
+  // resizeImage: resizeImage,
+}).single('image')
 
 function fileFilter(req, file, cb) {
   const fileType = /jpg|jpeg|png/
@@ -30,6 +33,24 @@ function fileFilter(req, file, cb) {
     cb('Error: images only')
   }
 }
+
+// const resizeImage = async (req, res, next) => {
+//   if (!req.files) return next()
+//   req.body.images = []
+//   await Promise.all(
+//     req.files.map(async (file) => {
+//       const filename = file.originalname.replace(/\..+$/, '')
+//       const newFilename = `bezkoder-${filename}-${Date.now()}.jpeg`
+//       await sharp(file.buffer)
+//         // .resize(640, 320)
+//         .toFormat('jpeg')
+//         .jpeg({quality: 90})
+//         .toFile(`upload/${newFilename}`)
+//       req.body.images.push(newFilename)
+//     })
+//   )
+//   next()
+// }
 
 const checkError = (req, res, next) => {
   return new Promise((resolve, reject) => {
