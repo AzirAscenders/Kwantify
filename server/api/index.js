@@ -6,6 +6,7 @@ router.use('/plaid', require('./plaid'))
 router.use('/budgets', require('./budgets'))
 router.use('/accounts', require('./accounts'))
 router.use('/transaction', require('./transaction'))
+router.use('/transactions', require('./transactions'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

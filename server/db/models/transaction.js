@@ -34,6 +34,10 @@ Transaction.beforeCreate(transaction => {
   transaction.amount = Math.round(+transaction.amount * 100)
 })
 
+Transaction.beforeUpdate(transaction => {
+  transaction.amount = Math.round(+transaction.amount * 100)
+})
+
 Transaction.beforeBulkCreate(transactions => {
   transactions.forEach(transaction => {
     transaction.amount = Math.round(+transaction.amount * 100)
