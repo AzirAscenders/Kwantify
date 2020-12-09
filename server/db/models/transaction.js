@@ -14,15 +14,30 @@ const Transaction = db.define('transaction', {
     allowNull: false
   },
   date: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   category: {
     type: Sequelize.STRING
+  },
+  account_id: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
+  transaction_id: {
+    type: Sequelize.TEXT,
+    allowNull: false
   }
 })
 
 Transaction.beforeCreate(transaction => {
-  transaction.amount = Math.round(+transaction.price * 100)
+  transaction.amount = Math.round(+transaction.amount * 100)
+})
+
+Transaction.beforeBulkCreate(transactions => {
+  transactions.forEach(transaction => {
+    transaction.amount = Math.round(+transaction.amount * 100)
+  })
 })
 
 module.exports = Transaction
