@@ -70,7 +70,6 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = this.props.transactions.filtered
-    console.log('TRANSACTIONS', transactions)
     return (
       <div>
         <AddReceipt />
@@ -107,8 +106,7 @@ class Transactions extends React.Component {
               <tr key={idx}>
                 <td>{transaction.date}</td>
                 <td>
-                  {console.log('TRANS ID', transaction.id)}
-                  <Link to={`/transaction/${transaction.id}`}>
+                  <Link to={`/transactions/${transaction.id}`}>
                     {transaction.name}
                   </Link>
                 </td>

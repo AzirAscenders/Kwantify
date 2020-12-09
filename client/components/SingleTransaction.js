@@ -5,23 +5,29 @@ import {fetchSingleTransaction} from '../store/transactions'
 class SingleTransaction extends React.Component {
   componentDidMount() {
     const transId = this.props.match.params.transId
-    console.log('THIS MATCH', this.props.match)
+    console.log('THIS PROPS', this.props.match)
     this.props.fetchSingleTransaction(transId)
   }
 
   render() {
     const transaction = this.props.singleTransaction
+    console.log('TRANSACT', this.props.singleTransaction)
     return transaction.name ? (
-      <div>{transaction.name}</div>
+      <div>
+        <h3>Name: {transaction.name}</h3>
+        <p>Date: {transaction.date}</p>
+        <p>Amount: $ {(transaction.amount / 100).toFixed(2)}</p>
+        <p>Category: {transaction.category}</p>
+      </div>
     ) : (
-      <div>Hello World</div>
+      <div>Loading...</div>
     )
   }
 }
 
 const mapState = state => {
   return {
-    singleTransaction: state.singleTransaction
+    singleTransaction: state.transactions.singleTransaction
   }
 }
 
