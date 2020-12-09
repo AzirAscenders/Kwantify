@@ -170,30 +170,34 @@ router.get('/transactions/get', async (req, res, next) => {
       if (accountIds.includes(transaction.account_id)) return transaction
     })
 
-    combinedTransactions.map(async transaction => {
-      transaction.category = transaction.category[0]
-      try {
-        const found = await Transaction.findOne({
-          where: {transaction_id: transaction.transaction_id}
-        })
-
-        if (!found) {
-          const dbTransaction = await Transaction.create({
-            name: transaction.name,
-            date: transaction.date,
-            amount: +transaction.amount,
-            category: transaction.category,
-            account_id: transaction.account_id,
-            transaction_id: transaction.transaction_id
+    combinedTransactions = await Promise.all(
+      combinedTransactions.map(async transaction => {
+        transaction.category = transaction.category[0]
+        try {
+          const found = await Transaction.findOne({
+            where: {transaction_id: transaction.transaction_id}
           })
-          await dbTransaction.setUser(req.user.dataValues.id)
-        }
-        return transaction
-      } catch (err) {
-        console.log(err)
-      }
-    })
 
+          if (!found) {
+            const dbTransaction = await Transaction.create({
+              name: transaction.name,
+              date: transaction.date,
+              amount: +transaction.amount,
+              category: transaction.category,
+              account_id: transaction.account_id,
+              transaction_id: transaction.transaction_id
+            })
+            transaction.id = dbTransaction.dataValues.id
+            await dbTransaction.setUser(req.user.dataValues.id)
+          } else {
+            transaction.id = found.dataValues.id
+          }
+          return transaction
+        } catch (err) {
+          console.log(err)
+        }
+      })
+    )
     res.json(combinedTransactions)
   } catch (err) {
     next(err)
