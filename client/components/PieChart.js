@@ -18,11 +18,11 @@ class PieChart extends React.Component {
     const others = []
 
     this.props.transactions.transactions.map(transaction => {
-      if (transaction.category[0] === 'Travel') travel.push(transaction)
-      else if (transaction.category[0] === 'Shops') shopping.push(transaction)
-      else if (transaction.category[0] === 'Food and Drink')
+      if (transaction.category === 'Travel') travel.push(transaction)
+      else if (transaction.category === 'Shops') shopping.push(transaction)
+      else if (transaction.category === 'Food and Drink')
         foodAndDrink.push(transaction)
-      else if (transaction.category[0] === 'Recreation')
+      else if (transaction.category === 'Recreation')
         entertainment.push(transaction)
       else others.push(transaction)
     })

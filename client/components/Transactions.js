@@ -25,15 +25,13 @@ class Transactions extends React.Component {
 
     if (category === 'Others') {
       this.props.filtered(
-        selectedTransactions.filter(
-          element => element.category[0] === 'Payment'
-        )
+        selectedTransactions.filter(element => element.category === 'Payment')
       )
     } else if (category === 'All') {
       this.props.filtered(selectedTransactions)
     } else {
       this.props.filtered(
-        selectedTransactions.filter(element => element.category[0] === category)
+        selectedTransactions.filter(element => element.category === category)
       )
     }
   }
@@ -57,17 +55,13 @@ class Transactions extends React.Component {
 
     if (category === 'Others') {
       this.props.filtered(
-        transactions.selected.filter(
-          element => element.category[0] === 'Payment'
-        )
+        transactions.selected.filter(element => element.category === 'Payment')
       )
     } else if (category === 'All') {
       this.props.filtered(transactions.selected)
     } else {
       this.props.filtered(
-        transactions.selected.filter(
-          element => element.category[0] === category
-        )
+        transactions.selected.filter(element => element.category === category)
       )
     }
   }
@@ -109,7 +103,7 @@ class Transactions extends React.Component {
               <tr key={idx}>
                 <td>{transaction.date}</td>
                 <td>{transaction.name}</td>
-                <td>{transaction.category[0]}</td>
+                <td>{transaction.category}</td>
                 <td>${transaction.amount.toFixed(2)}</td>
               </tr>
             ))}

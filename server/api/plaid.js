@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Account, Institution} = require('../db/models')
+const {User, Account, Institution, Transaction} = require('../db/models')
 const plaid = require('plaid')
 const {CLIENT_ID, SECRET} = require('../../secrets')
 const moment = require('moment')
@@ -120,6 +120,14 @@ router.get('/transactions/get', async (req, res, next) => {
       group: ['accessToken']
     })
 
+    const accounts = await Account.findAll({
+      where: {
+        userId: req.user.dataValues.id
+      }
+    })
+
+    const accountIds = accounts.map(account => account.dataValues.accountId)
+
     const today = moment().format('YYYY-MM-DD')
     const past = moment()
       .subtract(90, 'days')
@@ -155,7 +163,36 @@ router.get('/transactions/get', async (req, res, next) => {
         )
       })
       .map(bank => combinedTransactions.push(...bank))
+
     combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+    combinedTransactions = combinedTransactions.filter(transaction => {
+      if (accountIds.includes(transaction.account_id)) return transaction
+    })
+
+    combinedTransactions.map(async transaction => {
+      transaction.category = transaction.category[0]
+      try {
+        const found = await Transaction.findOne({
+          where: {transaction_id: transaction.transaction_id}
+        })
+
+        if (!found) {
+          const dbTransaction = await Transaction.create({
+            name: transaction.name,
+            date: transaction.date,
+            amount: +transaction.amount,
+            category: transaction.category,
+            account_id: transaction.account_id,
+            transaction_id: transaction.transaction_id
+          })
+          await dbTransaction.setUser(req.user.dataValues.id)
+        }
+        return transaction
+      } catch (err) {
+        console.log(err)
+      }
+    })
 
     res.json(combinedTransactions)
   } catch (err) {
