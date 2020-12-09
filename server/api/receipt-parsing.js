@@ -1,27 +1,24 @@
 const vision = require('@google-cloud/vision')
 const {GOOGLE_VISION_CREDENTIALS} = require('../../secrets')
+const {checkError} = require('./multerLogic')
 
 // clarify with Ben if this is a secret or not
 process.env.GOOGLE_APPLICATION_CREDENTIALS = GOOGLE_VISION_CREDENTIALS
 // Creates a client
 const client = new vision.ImageAnnotatorClient()
 
-/**
- * TODO(developer): Uncomment the following line before running the sample.
- */
-const fileName = '/Users/nancykwan/Desktop/Kwantify/testimages/starbucks.jpg'
-
 // Performs text detection on the local file
-async function visionReader() {
-  const [result] = await client.textDetection(fileName)
+async function visionReader(req, res) {
+  const imageDesc = await checkError(req, res)
+  const [result] = await client.textDetection(imageDesc.path)
+
   const detections = result.textAnnotations
   console.log('Text:')
   //   console.log(detections)
   return detections
 }
 
-async function starbucksReceiptReader() {
-  const detections = await visionReader()
+function starbucksReceiptReader(detections) {
   let obj = []
 
   const arrayOfDescription = detections[0].description.split('\n')
@@ -45,8 +42,10 @@ async function starbucksReceiptReader() {
 
     // detections.forEach((text) => console.log(text.description))
   }
-  console.log(obj)
   return obj
 }
 
-module.exports = starbucksReceiptReader
+module.exports = {
+  visionReader,
+  starbucksReceiptReader
+}

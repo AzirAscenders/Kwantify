@@ -3,6 +3,7 @@ import React from 'react'
 import {Table} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {fetchTransactions, selected, filtered} from '../store/transactions'
+import AddReceipt from './AddReceipt'
 
 class Transactions extends React.Component {
   constructor() {
@@ -76,6 +77,7 @@ class Transactions extends React.Component {
     const transactions = this.props.transactions.filtered
     return (
       <div>
+        <AddReceipt />
         <h2>All Transactions</h2>
         <label htmlFor="date">Choose Period:</label>
         <select onChange={this.changeOption}>
