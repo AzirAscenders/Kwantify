@@ -1,9 +1,9 @@
 /* eslint-disable complexity */
 import React from 'react'
-import {Table} from 'react-bootstrap'
+import {Table, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {fetchTransactions, selected, filtered} from '../store/transactions'
-import AddReceipt from './AddReceipt'
+import AddTransaction from './AddTransaction'
 
 class Transactions extends React.Component {
   constructor() {
@@ -71,7 +71,6 @@ class Transactions extends React.Component {
     const transactions = this.props.transactions.filtered
     return (
       <div>
-        <AddReceipt />
         <h2>All Transactions</h2>
         <label htmlFor="date">Choose Period:</label>
         <select onChange={this.changeOption}>
@@ -91,6 +90,9 @@ class Transactions extends React.Component {
           <option value="Groceries">Groceries</option>
           <option value="Others">Others</option>
         </select>
+        <Button href="/addTransaction" variant="outline-primary">
+          Add Transactions
+        </Button>{' '}
         <Table striped bordered hover>
           <thead>
             <tr>

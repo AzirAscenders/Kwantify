@@ -9,7 +9,8 @@ import {
   Accounts,
   UserProfile,
   Budgets,
-  Transactions
+  Transactions,
+  AddTransaction
 } from './components'
 import {me} from './store'
 
@@ -37,6 +38,7 @@ class Routes extends Component {
             <Route path="/profile" component={UserProfile} />
             <Route path="/budgets" component={Budgets} />
             <Route path="/transactions" component={Transactions} />
+            <Route exact path="/addTransaction" component={AddTransaction} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

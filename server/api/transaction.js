@@ -1,16 +1,20 @@
 const router = require('express').Router()
 const {Item} = require('../db/models')
+const {Transaction} = require('../db/models')
 const {starbucksReceiptReader, visionReader} = require('./receipt-parsing')
 // const multer = require('multer')
 // const {storage, fileFilter, resizeImage} = require('./multerLogic')
 
 module.exports = router
 
-// const upload = multer({
-//   storage: storage,
-//   fileFilter: fileFilter,
-//   resizeImage: resizeImage,
-// })
+router.post('/addTransaction', async (req, res, next) => {
+  try {
+    const newTransaction = await Transaction.create(req.body)
+    res.json(newTransaction)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.post('/', async (req, res, next) => {
   try {
