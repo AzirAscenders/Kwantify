@@ -4,6 +4,7 @@ import {Table} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {fetchTransactions, selected, filtered} from '../store/transactions'
 import AddReceipt from './AddReceipt'
+import {Link} from 'react-router-dom'
 
 class Transactions extends React.Component {
   constructor() {
@@ -69,6 +70,7 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = this.props.transactions.filtered
+    console.log('TRANSACTIONS', transactions)
     return (
       <div>
         <AddReceipt />
@@ -104,7 +106,12 @@ class Transactions extends React.Component {
             {transactions.map((transaction, idx) => (
               <tr key={idx}>
                 <td>{transaction.date}</td>
-                <td>{transaction.name}</td>
+                <td>
+                  {console.log('TRANS ID', transaction.id)}
+                  <Link to={`/transaction/${transaction.id}`}>
+                    {transaction.name}
+                  </Link>
+                </td>
                 <td>{transaction.category}</td>
                 <td>${transaction.amount.toFixed(2)}</td>
               </tr>

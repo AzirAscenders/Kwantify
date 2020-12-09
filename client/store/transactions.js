@@ -10,6 +10,7 @@ const LAST_MONTH_TRANSACTIONS = 'LAST_MONTH_TRANSACTIONS'
 const TWO_MONTHS_BEFORE_TRANSACTIONS = 'TWO_MONTHS_BEFORE_TRANSACTIONS'
 const SELECTED = 'SELECTED'
 const FILTERED = 'FILTERED'
+const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
 
 /**
  * INITIAL STATE
@@ -20,7 +21,8 @@ const defaultTransactions = {
   lastMonth: [],
   twoMonthsBefore: [],
   selected: [],
-  filtered: []
+  filtered: [],
+  singleTransaction: {}
 }
 
 /**
@@ -29,6 +31,11 @@ const defaultTransactions = {
 const getTransactions = transactions => ({
   type: GET_TRANSACTIONS,
   transactions
+})
+
+const getSingleTransaction = transaction => ({
+  type: GET_SINGLE_TRANSACTION,
+  transaction
 })
 
 const currentMonthTransactions = transactions => ({
@@ -72,7 +79,14 @@ export const fetchTransactions = () => async dispatch => {
     console.error(err)
   }
 }
-
+export const fetchSingleTransaction = transId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/transactions/${transId}`)
+    dispatch(getSingleTransaction(res.data))
+  } catch (err) {
+    console.error('Fetch Single Transactions ERROR', err)
+  }
+}
 let currMonth
 let lastMonth
 let twoMonthsBefore
@@ -83,6 +97,10 @@ export default function(state = defaultTransactions, action) {
   switch (action.type) {
     case GET_TRANSACTIONS:
       return {...state, transactions: action.transactions}
+
+    case GET_SINGLE_TRANSACTION:
+      return {...state, singleTransaction: action.transaction}
+
     case CURRENT_MONTH_TRANSACTIONS:
       currMonth = action.transactions[0].date.split('-')[1]
       return {
@@ -91,6 +109,7 @@ export default function(state = defaultTransactions, action) {
           element => element.date[5] + element.date[6] === currMonth
         )
       }
+
     case LAST_MONTH_TRANSACTIONS:
       lastMonth = String(Number(action.transactions[0].date.split('-')[1] - 1))
       if (lastMonth === '0') {
@@ -104,6 +123,7 @@ export default function(state = defaultTransactions, action) {
           element => element.date[5] + element.date[6] === lastMonth
         )
       }
+
     case TWO_MONTHS_BEFORE_TRANSACTIONS:
       twoMonthsBefore = String(
         Number(action.transactions[0].date.split('-')[1] - 2)
@@ -121,10 +141,13 @@ export default function(state = defaultTransactions, action) {
           element => element.date[5] + element.date[6] === twoMonthsBefore
         )
       }
+
     case SELECTED:
       return {...state, selected: action.transactions}
+
     case FILTERED:
       return {...state, filtered: action.transactions}
+
     default:
       return state
   }
