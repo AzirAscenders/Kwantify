@@ -8,6 +8,7 @@ const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 const CURRENT_MONTH_TRANSACTIONS = 'CURRENT_MONTH_TRANSACTIONS'
 const LAST_MONTH_TRANSACTIONS = 'LAST_MONTH_TRANSACTIONS'
 const TWO_MONTHS_BEFORE_TRANSACTIONS = 'TWO_MONTHS_BEFORE_TRANSACTIONS'
+const ADD_TRANSACTIONS = 'ADD_TRANSACTIONS'
 const SELECTED = 'SELECTED'
 const FILTERED = 'FILTERED'
 const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
@@ -69,6 +70,11 @@ export const filtered = transactions => ({
   transactions
 })
 
+export const addTransactions = transactions => ({
+  type: ADD_TRANSACTIONS,
+  transactions
+})
+
 /**
  * THUNK CREATORS
  */
@@ -85,6 +91,13 @@ export const fetchTransactions = () => async dispatch => {
     console.error(err)
   }
 }
+
+export const addTransactionsThunk = newTransaction => async dispatch => {
+  try {
+    const res = await axios.post('/api/transaction/add', newTransaction)
+    dispatch(addTransactions(res.data))
+  } catch (err) {
+    console.error('Unable to add transactions', err)
 
 export const fetchSingleTransaction = transId => async dispatch => {
   try {
@@ -160,6 +173,12 @@ export default function(state = defaultTransactions, action) {
         twoMonthsBefore: action.transactions.filter(
           element => element.date[5] + element.date[6] === twoMonthsBefore
         )
+      }
+      
+    case ADD_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: action.transactions
       }
 
     case SELECTED:
