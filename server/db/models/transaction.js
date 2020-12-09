@@ -22,15 +22,19 @@ const Transaction = db.define('transaction', {
   },
   account_id: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: true
   },
   transaction_id: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: true
   }
 })
 
 Transaction.beforeCreate(transaction => {
+  transaction.amount = Math.round(+transaction.amount * 100)
+})
+
+Transaction.beforeUpdate(transaction => {
   transaction.amount = Math.round(+transaction.amount * 100)
 })
 

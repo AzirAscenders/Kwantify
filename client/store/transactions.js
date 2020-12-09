@@ -11,6 +11,7 @@ const TWO_MONTHS_BEFORE_TRANSACTIONS = 'TWO_MONTHS_BEFORE_TRANSACTIONS'
 const SELECTED = 'SELECTED'
 const FILTERED = 'FILTERED'
 const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
+const EDIT_TRANSACTION = 'EDIT_TRANSACTION'
 
 /**
  * INITIAL STATE
@@ -35,6 +36,11 @@ const getTransactions = transactions => ({
 
 const getSingleTransaction = transaction => ({
   type: GET_SINGLE_TRANSACTION,
+  transaction
+})
+
+const editTransaction = transaction => ({
+  type: EDIT_TRANSACTION,
   transaction
 })
 
@@ -79,6 +85,7 @@ export const fetchTransactions = () => async dispatch => {
     console.error(err)
   }
 }
+
 export const fetchSingleTransaction = transId => async dispatch => {
   try {
     const res = await axios.get(`/api/transactions/${transId}`)
@@ -87,6 +94,19 @@ export const fetchSingleTransaction = transId => async dispatch => {
     console.error('Fetch Single Transactions ERROR', err)
   }
 }
+
+export const updateTransaction = (transId, update) => async dispatch => {
+  try {
+    const {data: updated} = await axios.put(
+      `/api/transactions/${transId}`,
+      update
+    )
+    dispatch(editTransaction(updated))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 let currMonth
 let lastMonth
 let twoMonthsBefore
@@ -147,6 +167,9 @@ export default function(state = defaultTransactions, action) {
 
     case FILTERED:
       return {...state, filtered: action.transactions}
+
+    case EDIT_TRANSACTION:
+      return {...state, singleTransaction: action.transaction}
 
     default:
       return state
