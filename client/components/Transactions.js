@@ -4,6 +4,7 @@ import {Table, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {fetchTransactions, selected, filtered} from '../store/transactions'
 import AddTransaction from './AddTransaction'
+import {Link} from 'react-router-dom'
 
 class Transactions extends React.Component {
   constructor() {
@@ -90,9 +91,11 @@ class Transactions extends React.Component {
           <option value="Groceries">Groceries</option>
           <option value="Others">Others</option>
         </select>
-        <Button href="/addTransaction" variant="outline-primary">
-          Add Transactions
-        </Button>{' '}
+        <Link to="/transaction/add">
+          <Button type="button" variant="outline-primary">
+            Add Transactions
+          </Button>
+        </Link>
         <Table striped bordered hover>
           <thead>
             <tr>

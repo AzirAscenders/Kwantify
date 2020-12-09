@@ -7,15 +7,6 @@ const {starbucksReceiptReader, visionReader} = require('./receipt-parsing')
 
 module.exports = router
 
-router.post('/addTransaction', async (req, res, next) => {
-  try {
-    const newTransaction = await Transaction.create(req.body)
-    res.json(newTransaction)
-  } catch (error) {
-    next(error)
-  }
-})
-
 router.post('/', async (req, res, next) => {
   try {
     const detections = await visionReader(req, res)
@@ -24,5 +15,15 @@ router.post('/', async (req, res, next) => {
     res.json(items)
   } catch (err) {
     next(err)
+  }
+})
+
+router.post('/add', async (req, res, next) => {
+  try {
+    console.log(req.query)
+    const newTransaction = await Transaction.create(req.body)
+    res.json(newTransaction)
+  } catch (error) {
+    next(error)
   }
 })

@@ -22,11 +22,11 @@ const Transaction = db.define('transaction', {
   },
   account_id: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: true
   },
   transaction_id: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: true
   }
 })
 

@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import {Button} from 'react-bootstrap'
+import {addTransactionsThunk} from '../store/transactions'
+import {connect} from 'react-redux'
 
 class AddTransaction extends React.Component {
   constructor(props) {
@@ -14,17 +17,12 @@ class AddTransaction extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   onFormSubmit(e) {
     e.preventDefault()
     const formData = new FormData()
     formData.append('image', this.state.file)
-    // console.log(formData)
-    // const config = {
-    //   headers: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    // }
     axios
       .post('/api/transaction', formData)
       .then(response => {
@@ -33,6 +31,7 @@ class AddTransaction extends React.Component {
       .catch(error => {
         console.log(error)
       })
+    this.props.history.push('/transactions')
   }
   onChange(e) {
     this.setState({file: e.target.files[0]})
@@ -42,9 +41,17 @@ class AddTransaction extends React.Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  // handleSubmit(e){
+  handleSubmit(e) {
+    let newTransaction = {
+      name: this.state.name,
+      amount: (this.state.amount / 100).toFixed(2),
+      category: this.state.category,
+      date: this.state.date
+    }
+    this.props.addTransaction(newTransaction)
+    this.props.history.push('/transactions')
+  }
 
-  // }
   render() {
     return (
       <div>
@@ -52,12 +59,14 @@ class AddTransaction extends React.Component {
         <form onSubmit={this.onFormSubmit}>
           <h4>Take picture of receipt and upload</h4>
           <input type="file" name="image" onChange={this.onChange} />
-          <button type="submit">Upload</button>
+          <Button variant="outline-success" type="submit">
+            Upload
+          </Button>
         </form>
         <br />
         <br />
         <h4>Manually add transactions</h4>
-        <form onSubmit={this.submitForm}>
+        <form onSubmit={e => this.handleSubmit(e)}>
           <label className="thickfont" htmlFor="name">
             Name
           </label>
@@ -94,10 +103,18 @@ class AddTransaction extends React.Component {
             value={this.state.date}
             onChange={this.onInputChange}
           />
+          <Button variant="outline-success" type="submit">
+            Submit
+          </Button>
         </form>
       </div>
     )
   }
 }
-
-export default AddTransaction
+const mapDispatch = dispatch => {
+  return {
+    addTransaction: newTransaction =>
+      dispatch(addTransactionsThunk(newTransaction))
+  }
+}
+export default connect(null, mapDispatch)(AddTransaction)

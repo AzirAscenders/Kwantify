@@ -34,11 +34,11 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
-            <Route exact path="/accounts" component={Accounts} />
+            <Route path="/accounts" component={Accounts} />
             <Route path="/profile" component={UserProfile} />
             <Route path="/budgets" component={Budgets} />
-            <Route path="/transactions" component={Transactions} />
-            <Route exact path="/addTransaction" component={AddTransaction} />
+            <Route exact path="/transactions" component={Transactions} />
+            <Route exact path="/transaction/add" component={AddTransaction} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
