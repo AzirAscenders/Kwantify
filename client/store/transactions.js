@@ -94,7 +94,7 @@ export const fetchTransactions = () => async dispatch => {
 
 export const addTransactionsThunk = newTransaction => async dispatch => {
   try {
-    const res = await axios.post('/api/transaction/add', newTransaction)
+    const res = await axios.post('/api/transactions/add', newTransaction)
     dispatch(addTransactions(res.data))
   } catch (err) {
     console.error('Unable to add transactions', err)
@@ -180,7 +180,7 @@ export default function(state = defaultTransactions, action) {
     case ADD_TRANSACTIONS:
       return {
         ...state,
-        transactions: action.transactions
+        transactions: [...state.transactions, action.transactions]
       }
 
     case SELECTED:

@@ -24,7 +24,7 @@ class AddTransaction extends React.Component {
     const formData = new FormData()
     formData.append('image', this.state.file)
     axios
-      .post('/api/transaction', formData)
+      .post('/api/transactions', formData)
       .then(response => {
         alert('The file is successfully uploaded')
       })
