@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {Transaction} = require('../db/models')
+const {Item} = require('../db/models')
+const {starbucksReceiptReader, visionReader} = require('./receipt-parsing')
 
 module.exports = router
 
@@ -45,5 +47,28 @@ router.put('/:transId', async (req, res, next) => {
     res.json(updated)
   } catch (err) {
     next(err)
+  }
+})
+
+// POST ROUTE FOR PICTURE RECEIPT //
+router.post('/', async (req, res, next) => {
+  try {
+    const detections = await visionReader(req, res)
+    let itemsToCreate = await starbucksReceiptReader(detections)
+    const items = await Item.bulkCreate(itemsToCreate, {returning: true})
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// POST ROUTE FOR MANUALLY ADDING //
+router.post('/add', async (req, res, next) => {
+  try {
+    console.log(req.query)
+    const newTransaction = await Transaction.create(req.body)
+    res.json(newTransaction)
+  } catch (error) {
+    next(error)
   }
 })
