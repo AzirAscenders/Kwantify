@@ -98,6 +98,8 @@ export const addTransactionsThunk = newTransaction => async dispatch => {
     dispatch(addTransactions(res.data))
   } catch (err) {
     console.error('Unable to add transactions', err)
+  }
+}
 
 export const fetchSingleTransaction = transId => async dispatch => {
   try {
@@ -174,7 +176,7 @@ export default function(state = defaultTransactions, action) {
           element => element.date[5] + element.date[6] === twoMonthsBefore
         )
       }
-      
+
     case ADD_TRANSACTIONS:
       return {
         ...state,

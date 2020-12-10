@@ -4,7 +4,6 @@ import {Table, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {fetchTransactions, selected, filtered} from '../store/transactions'
 import AddTransaction from './AddTransaction'
-import AddReceipt from './AddReceipt'
 import {Link} from 'react-router-dom'
 
 class Transactions extends React.Component {
