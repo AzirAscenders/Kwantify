@@ -71,7 +71,6 @@ router.post('/get_access_token', (req, res, next) => {
     // if it exists update only the access token
     // if it doesn't create new account inside the accounts model assigned to that user
     // const user = await User.findByPk(userId)
-    console.log(metadata)
 
     let dbInstitution = await Institution.findOne({
       where: {institutionId: metadata.institution.institution_id}
@@ -207,7 +206,6 @@ router.get('/transactions/get', async (req, res, next) => {
     })
 
     localData.map(transaction => {
-      console.log('OOOO', transaction.dataValues)
       transaction.amount = transaction.amount / 100
       combinedTransactions.push(transaction.dataValues)
     })
