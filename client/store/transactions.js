@@ -95,6 +95,7 @@ export const fetchTransactions = () => async dispatch => {
 export const addTransactionsThunk = newTransaction => async dispatch => {
   try {
     const res = await axios.post('/api/transactions/add', newTransaction)
+    console.log(res.data)
     dispatch(addTransactions(res.data))
   } catch (err) {
     console.error('Unable to add transactions', err)
@@ -104,6 +105,7 @@ export const addTransactionsThunk = newTransaction => async dispatch => {
 export const addReceiptTransaction = formData => async dispatch => {
   try {
     const res = await axios.post('/api/transactions', formData)
+    console.log(res.data[0])
     dispatch(addTransactions(res.data[0]))
   } catch (err) {
     console.log('Unable to add receipt transaction', err)

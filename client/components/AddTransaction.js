@@ -26,10 +26,12 @@ class AddTransaction extends React.Component {
     e.preventDefault()
     const formData = new FormData()
     formData.append('image', this.state.file)
-    this.props.addReceiptTransaction(formData).then(() => {
-      alert('The file is successfully uploaded')
-    })
-    this.props.history.push('/transactions')
+    this.props
+      .addReceiptTransaction(formData)
+      .then(() => {
+        alert('The file is successfully uploaded')
+      })
+      .then(() => this.props.history.push('/transactions'))
   }
   onChange(e) {
     this.setState({file: e.target.files[0]})
@@ -40,17 +42,19 @@ class AddTransaction extends React.Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault()
     let newTransaction = {
       name: this.state.name,
-      amount: (this.state.amount / 100).toFixed(2),
+      amount: this.state.amount,
       category: this.state.category,
       date: this.state.date
     }
-    this.props.addTransaction(newTransaction).then(() => {
-      alert('The file is successfully uploaded')
-    })
-
-    this.props.history.push('/transactions')
+    this.props
+      .addTransaction(newTransaction)
+      .then(() => {
+        alert('You have succesfully added new transaction')
+      })
+      .then(() => this.props.history.push('/transactions'))
   }
 
   render() {

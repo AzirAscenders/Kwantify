@@ -22,7 +22,14 @@ function starbucksReceiptReader(detections) {
   let items = []
 
   const arrayOfDescription = detections[0].description.split('\n')
-  const date = arrayOfDescription[4].slice(0, 10).split('/')
+  let date
+  for (let i = 0; i < arrayOfDescription.length; i++) {
+    if (arrayOfDescription[i].includes('CHK')) {
+      date = arrayOfDescription[i + 1].slice(0, 10).split('/')
+      break
+    }
+  }
+  console.log(date)
   let year = date.pop()
   date.unshift(year)
 
