@@ -5,10 +5,12 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
+const GET_ITEMS = 'GET_ITEMS'
 const CURRENT_MONTH_TRANSACTIONS = 'CURRENT_MONTH_TRANSACTIONS'
 const LAST_MONTH_TRANSACTIONS = 'LAST_MONTH_TRANSACTIONS'
 const TWO_MONTHS_BEFORE_TRANSACTIONS = 'TWO_MONTHS_BEFORE_TRANSACTIONS'
 const ADD_TRANSACTIONS = 'ADD_TRANSACTIONS'
+const ADD_ITEMS = 'ADD_ITEMS'
 const SELECTED = 'SELECTED'
 const FILTERED = 'FILTERED'
 const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
@@ -18,6 +20,7 @@ const EDIT_TRANSACTION = 'EDIT_TRANSACTION'
  * INITIAL STATE
  */
 const defaultTransactions = {
+  items: [],
   transactions: [],
   currentMonth: [],
   lastMonth: [],
@@ -33,6 +36,11 @@ const defaultTransactions = {
 const getTransactions = transactions => ({
   type: GET_TRANSACTIONS,
   transactions
+})
+
+const getItems = items => ({
+  type: GET_ITEMS,
+  items
 })
 
 const getSingleTransaction = transaction => ({
@@ -75,6 +83,11 @@ export const addTransactions = transactions => ({
   transactions
 })
 
+export const addItems = items => ({
+  type: ADD_ITEMS,
+  items
+})
+
 /**
  * THUNK CREATORS
  */
@@ -105,8 +118,7 @@ export const addTransactionsThunk = newTransaction => async dispatch => {
 export const addReceiptTransaction = formData => async dispatch => {
   try {
     const res = await axios.post('/api/transactions', formData)
-    console.log(res.data[0])
-    dispatch(addTransactions(res.data[0]))
+    await dispatch(addTransactions(res.data[0]))
   } catch (err) {
     console.log('Unable to add receipt transaction', err)
   }
@@ -115,7 +127,8 @@ export const addReceiptTransaction = formData => async dispatch => {
 export const fetchSingleTransaction = transId => async dispatch => {
   try {
     const res = await axios.get(`/api/transactions/${transId}`)
-    dispatch(getSingleTransaction(res.data))
+    await dispatch(getSingleTransaction(res.data[0]))
+    await dispatch(getItems(res.data[1]))
   } catch (err) {
     console.error('Fetch Single Transactions ERROR', err)
   }
@@ -192,6 +205,16 @@ export default function(state = defaultTransactions, action) {
       return {
         ...state,
         transactions: [...state.transactions, action.transactions]
+      }
+    // case ADD_ITEMS:
+    //   return {
+    //     ...state,
+    //     items: [...state.items, ...action.items],
+    //   }
+    case GET_ITEMS:
+      return {
+        ...state,
+        items: action.items
       }
 
     case SELECTED:
