@@ -64,7 +64,11 @@ class AddTransaction extends React.Component {
         <form onSubmit={this.onFormSubmit}>
           <h4>Take picture of receipt and upload</h4>
           <input type="file" name="image" onChange={this.onChange} />
-          <Button variant="outline-success" type="submit">
+          <Button
+            variant="outline-success"
+            type="submit"
+            disabled={!this.state.file}
+          >
             Upload
           </Button>
         </form>
@@ -126,6 +130,9 @@ class AddTransaction extends React.Component {
             onChange={this.onInputChange}
             placeholder="YYYY-MM-DD"
           />
+          <Button type="button" varaint="outline-success">
+            Add Item
+          </Button>
           <Button variant="outline-success" type="submit">
             Submit
           </Button>
