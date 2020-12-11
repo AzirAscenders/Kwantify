@@ -19,9 +19,19 @@ async function visionReader(req, res) {
 }
 
 function starbucksReceiptReader(detections) {
-  let obj = []
+  let items = []
 
   const arrayOfDescription = detections[0].description.split('\n')
+  const date = arrayOfDescription[4].slice(0, 10).split('/')
+  let year = date.pop()
+  date.unshift(year)
+
+  let info = {
+    name: 'Starbucks',
+    amount: arrayOfDescription[27].slice(1),
+    category: 'Food and Drink',
+    date: date.join('-')
+  }
   const start = arrayOfDescription.indexOf('Order') + 1
   const end = arrayOfDescription.indexOf('Subtotal')
   const arrayOfItemsAndPrice = arrayOfDescription.slice(start, end)
@@ -34,7 +44,7 @@ function starbucksReceiptReader(detections) {
   )
 
   for (let i = 0; i < arrayOfItemNames.length; i++) {
-    obj.push({
+    items.push({
       name: arrayOfItemNames[i],
       price: Number(arrayOfPrices[i]),
       quantity: 1
@@ -42,7 +52,7 @@ function starbucksReceiptReader(detections) {
 
     // detections.forEach((text) => console.log(text.description))
   }
-  return obj
+  return [info, items]
 }
 
 module.exports = {

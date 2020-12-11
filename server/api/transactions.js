@@ -55,8 +55,15 @@ router.post('/', async (req, res, next) => {
   try {
     const detections = await visionReader(req, res)
     let itemsToCreate = await starbucksReceiptReader(detections)
-    const items = await Item.bulkCreate(itemsToCreate, {returning: true})
-    res.json(items)
+    let transaction = await Transaction.create(itemsToCreate[0])
+
+    transaction.setUser(req.user.dataValues.id)
+
+    const items = await Item.bulkCreate(itemsToCreate[1], {returning: true})
+    items.forEach(item => {
+      item.setTransaction(transaction.dataValues.id)
+    })
+    res.json([transaction, items])
   } catch (err) {
     next(err)
   }
@@ -65,8 +72,14 @@ router.post('/', async (req, res, next) => {
 // POST ROUTE FOR MANUALLY ADDING //
 router.post('/add', async (req, res, next) => {
   try {
-    console.log(req.query)
-    const newTransaction = await Transaction.create(req.body)
+    const info = {
+      name: req.body.name,
+      amount: req.body.amount,
+      date: req.body.date,
+      category: req.body.category
+    }
+    const newTransaction = await Transaction.create(info)
+    newTransaction.setUser(req.user.dataValues.id)
     res.json(newTransaction)
   } catch (error) {
     next(error)
