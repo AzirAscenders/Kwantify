@@ -36,12 +36,16 @@ const Transaction = db.define('transaction', {
 
 Transaction.beforeCreate(transaction => {
   transaction.amount = Math.round(+transaction.amount * 100)
-  transaction.subtotal = Math.round(+transaction.subtotal * 100)
+  if (transaction.subtotal) {
+    transaction.subtotal = Math.round(+transaction.subtotal * 100)
+  }
 })
 
 Transaction.beforeUpdate(transaction => {
   transaction.amount = Math.round(+transaction.amount * 100)
-  transaction.subtotal = Math.round(+transaction.subtotal * 100)
+  if (transaction.subtotal) {
+    transaction.subtotal = Math.round(+transaction.subtotal * 100)
+  }
 })
 
 Transaction.beforeBulkCreate(transactions => {
