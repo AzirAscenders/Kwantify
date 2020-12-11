@@ -1,7 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 import {Button} from 'react-bootstrap'
-import {addTransactionsThunk} from '../store/transactions'
+import {
+  addTransactionsThunk,
+  addReceiptTransaction
+} from '../store/transactions'
 import {connect} from 'react-redux'
 
 class AddTransaction extends React.Component {
@@ -23,14 +26,9 @@ class AddTransaction extends React.Component {
     e.preventDefault()
     const formData = new FormData()
     formData.append('image', this.state.file)
-    axios
-      .post('/api/transactions', formData)
-      .then(response => {
-        alert('The file is successfully uploaded')
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.props.addReceiptTransaction(formData).then(() => {
+      alert('The file is successfully uploaded')
+    })
     this.props.history.push('/transactions')
   }
   onChange(e) {
@@ -48,7 +46,10 @@ class AddTransaction extends React.Component {
       category: this.state.category,
       date: this.state.date
     }
-    this.props.addTransaction(newTransaction)
+    this.props.addTransaction(newTransaction).then(() => {
+      alert('The file is successfully uploaded')
+    })
+
     this.props.history.push('/transactions')
   }
 
@@ -86,14 +87,31 @@ class AddTransaction extends React.Component {
             onChange={this.onInputChange}
           />
           <label className="thickfont" htmlFor="category">
-            Category
+            Choose a Category:
           </label>
-          <input
-            name="category"
-            type="text"
-            value={this.state.category}
-            onChange={this.onInputChange}
-          />
+          <select name="category" onChange={this.onInputChange}>
+            <option name="category" value="Select Category">
+              Select Category
+            </option>
+            <option name="category" value="Food and Drink">
+              Food and Drink
+            </option>
+            <option name="category" value="Recreation">
+              Entertainment
+            </option>
+            <option name="category" value="Healthcare">
+              Healthcare
+            </option>
+            <option name="category" value="Shops">
+              Shopping
+            </option>
+            <option name="category" value="Travel">
+              Travel
+            </option>
+            <option name="category" value="Groceries">
+              Groceries
+            </option>
+          </select>
           <label className="thickfont" htmlFor="date">
             Date
           </label>
@@ -102,6 +120,7 @@ class AddTransaction extends React.Component {
             type="text"
             value={this.state.date}
             onChange={this.onInputChange}
+            placeholder="YYYY-MM-DD"
           />
           <Button variant="outline-success" type="submit">
             Submit
@@ -114,7 +133,9 @@ class AddTransaction extends React.Component {
 const mapDispatch = dispatch => {
   return {
     addTransaction: newTransaction =>
-      dispatch(addTransactionsThunk(newTransaction))
+      dispatch(addTransactionsThunk(newTransaction)),
+    addReceiptTransaction: newTransaction =>
+      dispatch(addReceiptTransaction(newTransaction))
   }
 }
 export default connect(null, mapDispatch)(AddTransaction)
