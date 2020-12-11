@@ -164,17 +164,6 @@ router.get('/transactions/get', async (req, res, next) => {
       })
       .map(bank => combinedTransactions.push(...bank))
 
-    const localData = await Transaction.findAll({
-      where: {userId: req.user.dataValues.id, account_id: null}
-    })
-
-    localData.map(transaction => {
-      transaction.amount = transaction.amount / 100
-      combinedTransactions.push(transaction.dataValues)
-    })
-
-    combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
-
     combinedTransactions = combinedTransactions.filter(transaction => {
       if (
         accountIds.includes(transaction.account_id) ||
@@ -212,6 +201,18 @@ router.get('/transactions/get', async (req, res, next) => {
         }
       })
     )
+
+    const localData = await Transaction.findAll({
+      where: {userId: req.user.dataValues.id, account_id: null}
+    })
+
+    localData.map(transaction => {
+      console.log('OOOO', transaction.dataValues)
+      transaction.amount = transaction.amount / 100
+      combinedTransactions.push(transaction.dataValues)
+    })
+
+    combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
 
     res.json(combinedTransactions)
   } catch (err) {
