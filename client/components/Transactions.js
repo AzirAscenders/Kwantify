@@ -91,7 +91,7 @@ class Transactions extends React.Component {
           <option value="Groceries">Groceries</option>
           <option value="Others">Others</option>
         </select>
-        <Link to="/transaction/add">
+        <Link to="/transactions/add">
           <Button type="button" variant="outline-primary">
             Add Transactions
           </Button>
