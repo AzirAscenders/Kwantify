@@ -71,7 +71,6 @@ router.post('/get_access_token', (req, res, next) => {
     // if it exists update only the access token
     // if it doesn't create new account inside the accounts model assigned to that user
     // const user = await User.findByPk(userId)
-    console.log(metadata)
 
     let dbInstitution = await Institution.findOne({
       where: {institutionId: metadata.institution.institution_id}
@@ -164,17 +163,6 @@ router.get('/transactions/get', async (req, res, next) => {
       })
       .map(bank => combinedTransactions.push(...bank))
 
-    const localData = await Transaction.findAll({
-      where: {userId: req.user.dataValues.id, account_id: null}
-    })
-
-    localData.map(transaction => {
-      transaction.amount = transaction.amount / 100
-      combinedTransactions.push(transaction.dataValues)
-    })
-
-    combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
-
     combinedTransactions = combinedTransactions.filter(transaction => {
       if (
         accountIds.includes(transaction.account_id) ||
@@ -212,6 +200,17 @@ router.get('/transactions/get', async (req, res, next) => {
         }
       })
     )
+
+    const localData = await Transaction.findAll({
+      where: {userId: req.user.dataValues.id, account_id: null}
+    })
+
+    localData.map(transaction => {
+      transaction.amount = transaction.amount / 100
+      combinedTransactions.push(transaction.dataValues)
+    })
+
+    combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
 
     res.json(combinedTransactions)
   } catch (err) {
