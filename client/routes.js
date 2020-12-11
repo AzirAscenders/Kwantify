@@ -39,9 +39,10 @@ class Routes extends Component {
             <Route path="/profile" component={UserProfile} />
             <Route path="/budgets" component={Budgets} />
             <Route exact path="/transactions" component={Transactions} />
-            <Route exact path="/transaction/add" component={AddTransaction} />
+            <Route exact path="/transactions/add" component={AddTransaction} />
             <Route
-              exact path="/transactions/:transId"
+              exact
+              path="/transactions/:transId"
               component={SingleTransaction}
             />
           </Switch>

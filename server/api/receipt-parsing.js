@@ -22,20 +22,29 @@ function starbucksReceiptReader(detections) {
   let items = []
 
   const arrayOfDescription = detections[0].description.split('\n')
+  //console.log(arrayOfDescription)
+  let subtotal
   let date
+  let amount
   for (let i = 0; i < arrayOfDescription.length; i++) {
     if (arrayOfDescription[i].includes('CHK')) {
       date = arrayOfDescription[i + 1].slice(0, 10).split('/')
-      break
+    }
+    if (arrayOfDescription[i] === 'Change Due') {
+      subtotal = arrayOfDescription[i + 1]
+    }
+    if (arrayOfDescription[i] === 'Payments') {
+      amount = arrayOfDescription[i - 2]
     }
   }
-  console.log(date)
+
   let year = date.pop()
   date.unshift(year)
 
   let info = {
     name: 'Starbucks',
-    amount: arrayOfDescription[27].slice(1),
+    amount: amount.slice(1),
+    subtotal: subtotal.slice(1),
     category: 'Food and Drink',
     date: date.join('-')
   }

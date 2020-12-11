@@ -10,7 +10,10 @@ router.get('/:transId', async (req, res, next) => {
     const transaction = await Transaction.findOne({
       where: {id: req.params.transId}
     })
-
+    const items = await Item.findAll({
+      where: {transactionId: req.params.transId}
+    })
+    console.log(req.params.transId)
     if (!transaction) {
       return res.sendStatus(404)
     }
@@ -19,7 +22,7 @@ router.get('/:transId', async (req, res, next) => {
       return res.sendStatus(401)
     }
 
-    res.json(transaction)
+    res.json([transaction, items])
   } catch (err) {
     next(err)
   }
