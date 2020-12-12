@@ -80,7 +80,7 @@ class Budgets extends React.Component {
     )
 
     return (
-      <div>
+      <div id="main">
         <form onSubmit={this.handleSubmit}>
           <Table size="sm">
             <thead>

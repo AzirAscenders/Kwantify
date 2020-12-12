@@ -25,12 +25,19 @@ class UserHome extends React.Component {
 
   render() {
     return (
-      <div style={{width: '70%', height: '450px'}}>
+      // <div style={{width: '70%', height: '450px'}}>
+      <div id="charts">
         <CreateLink />
+        {/* <div> */}
         <PieChart />
-        <BarGraph />
-        {/* <BudgetsBarGraph /> */}
+        {/* </div> */}
+        {/* <div> */}
         <BudgetBullet />
+        {/* </div> */}
+        {/* <div> */}
+        <BarGraph />
+        {/* </div> */}
+        {/* <BudgetsBarGraph /> */}
       </div>
     )
   }

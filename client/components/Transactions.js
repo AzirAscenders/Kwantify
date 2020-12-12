@@ -71,7 +71,7 @@ class Transactions extends React.Component {
   render() {
     const transactions = this.props.transactions.filtered
     return (
-      <div>
+      <div id="main">
         <h2>All Transactions</h2>
         <label htmlFor="date">Choose Period:</label>
         <select onChange={this.changeOption}>
@@ -96,7 +96,7 @@ class Transactions extends React.Component {
             Add Transactions
           </Button>
         </Link>
-        <Table striped bordered hover>
+        <Table responsive striped bordered hover>
           <thead>
             <tr>
               <th>Date</th>
