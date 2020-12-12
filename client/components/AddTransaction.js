@@ -130,12 +130,12 @@ class AddTransaction extends React.Component {
             onChange={this.onInputChange}
             placeholder="YYYY-MM-DD"
           />
-          <Button type="button" varaint="outline-success">
-            Add Item
-          </Button>
-          <Button variant="outline-success" type="submit">
-            Submit
-          </Button>
+          <br />
+          <div>
+            <Button variant="outline-success" type="submit">
+              Submit
+            </Button>
+          </div>
         </form>
       </div>
     )
