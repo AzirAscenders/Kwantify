@@ -45,11 +45,19 @@ class UserProfile extends React.Component {
   render() {
     const {imageUrl, firstName, lastName, email} = this.props.user
     return (
-      <div>
+      <div className="profile-container">
+        <div className="profile-header">Profile</div>
         <img src={imageUrl} />
-        <p>First Name: {firstName} </p>
-        <p>Last Name: {lastName} </p>
-        <p>Email: {email} </p>
+        <div className="profile-hero-info-container">
+          <div className="profile-hero-info-field">
+            <h6>Name</h6>
+            {`${firstName} ${lastName}`}
+          </div>
+          <div className="profile-hero-info-field">
+            <h6>Email</h6>
+            {email}
+          </div>
+        </div>
         <Button
           variant="outline-primary"
           type="button"
@@ -58,7 +66,7 @@ class UserProfile extends React.Component {
           Edit User Info
         </Button>
         {this.state.toggling && (
-          <form onSubmit={e => this.handleSubmit(e)}>
+          <form className="profile-form" onSubmit={e => this.handleSubmit(e)}>
             <label className="thickfont" htmlFor="firstName">
               First Name
             </label>

@@ -78,3 +78,61 @@ form div {
 .login-form {
   margin-top: 100px;
 }
+
+/* PROFILE */
+
+.profile-container {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-container img {
+  width: 300px;
+  border-radius: 100%;
+  margin-bottom: 24px;
+}
+.profile-container button {
+  margin-bottom: 24px;
+}
+
+.profile-header {
+  padding: 24px;
+}
+
+.profile-hero-info-container {
+  display: flex;
+  margin-bottom: 24px;
+  width: 20em;
+  margin-left: 20px;
+  justify-content: space-around;
+}
+
+.profile-hero-info-field {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.profile-hero-info-field h6 {
+  color: #a5a5af;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #a5a5af;
+  border-radius: 4px;
+  padding: 24px 24px 0 24px;
+}
+
+.profile-form input {
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.profile-form button {
+  margin-top: 1rem;
+}
