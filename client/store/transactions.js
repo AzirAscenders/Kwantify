@@ -115,6 +115,15 @@ export const addTransactionsThunk = newTransaction => async dispatch => {
   }
 }
 
+export const addItemThunk = (items, transactionId) => async dispatch => {
+  try {
+    const res = await axios.post('/api/items', {items, transactionId})
+    dispatch(addItems(res.data))
+  } catch (err) {
+    console.error('Unable to add items', err)
+  }
+}
+
 export const addReceiptTransaction = formData => async dispatch => {
   try {
     const res = await axios.post('/api/transactions', formData)
@@ -216,7 +225,11 @@ export default function(state = defaultTransactions, action) {
         ...state,
         items: action.items
       }
-
+    case ADD_ITEMS:
+      return {
+        ...state,
+        items: [...state.items, ...action.items]
+      }
     case SELECTED:
       return {...state, selected: action.transactions}
 

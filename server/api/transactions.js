@@ -13,7 +13,7 @@ router.get('/:transId', async (req, res, next) => {
     const items = await Item.findAll({
       where: {transactionId: req.params.transId}
     })
-    console.log(req.params.transId)
+
     if (!transaction) {
       return res.sendStatus(404)
     }
