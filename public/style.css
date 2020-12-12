@@ -1,3 +1,5 @@
+/* Color Schemes feather #77C9D4 marine #57BC90 forest #015249 sleek grey #A5A5AF*/
+
 body {
   font-family: sans-serif;
   width: 100vw;
@@ -48,10 +50,11 @@ form div {
   flex-direction: column;
   position: fixed;
   z-index: 10;
-  background-color: blueviolet;
+  background-color: #77c9d4;
   top: 60px;
   -webkit-backface-visibility: hidden;
   left: 0px;
+  height: 100vh;
 }
 
 #nav-bar-container {
@@ -60,7 +63,7 @@ form div {
   flex-direction: row;
   width: 100%;
   justify-content: center;
-  background-color: aqua;
+  background-image: linear-gradient(to right, #77c9d4, #57bc90);
   position: fixed;
   z-index: 10;
   height: 60px;
@@ -70,4 +73,8 @@ form div {
 #hamburger {
   justify-self: flex-start;
   align-self: flex-start;
+}
+
+.login-form {
+  margin-top: 100px;
 }
