@@ -3,7 +3,8 @@ const {GOOGLE_VISION_CREDENTIALS} = require('../../secrets')
 const {checkError} = require('./multerLogic')
 
 // clarify with Ben if this is a secret or not
-process.env.GOOGLE_APPLICATION_CREDENTIALS = GOOGLE_VISION_CREDENTIALS
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  process.env.GOOGLE_APPLICATION_CREDENTIALS || GOOGLE_VISION_CREDENTIALS
 // Creates a client
 const client = new vision.ImageAnnotatorClient()
 
