@@ -45,7 +45,7 @@ router.put('/', async (req, res, next) => {
       })
     )
 
-    res.send(updated)
+    res.send(updated.sort((a, b) => a.id - b.id))
   } catch (err) {
     next(err)
   }

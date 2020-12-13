@@ -143,7 +143,7 @@ export const fetchSingleTransaction = transId => async dispatch => {
   try {
     const res = await axios.get(`/api/transactions/${transId}`)
     await dispatch(getSingleTransaction(res.data[0]))
-    await dispatch(getItems(res.data[1]))
+    await dispatch(getItems(res.data[1].sort((a, b) => a.id - b.id)))
   } catch (err) {
     console.error('Fetch Single Transactions ERROR', err)
   }
@@ -241,7 +241,7 @@ export default function(state = defaultTransactions, action) {
     case GET_ITEMS:
       return {
         ...state,
-        items: action.items.sort((a, b) => a.id - b.id)
+        items: action.items
       }
 
     case ADD_ITEMS:
@@ -259,7 +259,7 @@ export default function(state = defaultTransactions, action) {
       return {...state, singleTransaction: action.transaction}
 
     case EDIT_ITEMS:
-      return {...state, items: action.items.sort((a, b) => a.id - b.id)}
+      return {...state, items: action.items}
 
     default:
       return state

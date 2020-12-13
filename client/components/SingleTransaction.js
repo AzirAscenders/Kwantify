@@ -106,7 +106,7 @@ class SingleTransaction extends React.Component {
 
     if (this.state.editItem) {
       await this.props.editTransactionItems(this.state.rows)
-      await this.setState({rows: this.props.items, editItem: false})
+      await this.setState({rows: [], editItem: false})
 
       console.log(this.state)
     }
@@ -153,6 +153,7 @@ class SingleTransaction extends React.Component {
         >
           {this.state.editItem ? `Cancel Edit` : `Edit Item(s)`}
         </Button>
+
         {items && (
           <div>
             <Table striped bordered hover>
@@ -163,6 +164,7 @@ class SingleTransaction extends React.Component {
                   <th>Quantity</th>
                 </tr>
               </thead>
+
               <tbody id="item-tbody">
                 {this.state.editItem
                   ? this.state.rows.map(
@@ -245,6 +247,7 @@ class SingleTransaction extends React.Component {
                       </td>
                     </tr>
                   ))}
+
                 {(items.length || transaction.subtotal) && (
                   <tr>
                     <td>Subtotal</td>
