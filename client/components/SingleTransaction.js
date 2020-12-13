@@ -247,30 +247,47 @@ class SingleTransaction extends React.Component {
                       </td>
                     </tr>
                   ))}
-
                 {(items.length || transaction.subtotal) && (
                   <tr>
-                    <td>Subtotal</td>
+                    <td>
+                      <strong>Subtotal</strong>
+                    </td>
                     {transaction.subtotal ? (
-                      <td>$ {(transaction.subtotal / 100).toFixed(2)}</td>
+                      <td>
+                        <strong>
+                          $ {(transaction.subtotal / 100).toFixed(2)}
+                        </strong>
+                      </td>
                     ) : (
-                      <td>$ {(subTotal / 100).toFixed(2)}</td>
+                      <td>
+                        <strong>$ {(subTotal / 100).toFixed(2)}</strong>
+                      </td>
                     )}
                   </tr>
                 )}
                 <tr>
-                  <td>Tax</td>
+                  <td>
+                    <strong>Tax</strong>
+                  </td>
                   {subTotal ? (
                     <td>
-                      $ {((transaction.amount - subTotal) / 100).toFixed(2)}
+                      <strong>
+                        $ {((transaction.amount - subTotal) / 100).toFixed(2)}
+                      </strong>
                     </td>
                   ) : (
-                    <td>$ 0.00</td>
+                    <td>
+                      <strong>$ 0.00</strong>
+                    </td>
                   )}
                 </tr>
                 <tr>
-                  <td>Total</td>
-                  <td>$ {(transaction.amount / 100).toFixed(2)}</td>
+                  <td>
+                    <strong>Total</strong>
+                  </td>
+                  <td>
+                    <strong>$ {(transaction.amount / 100).toFixed(2)}</strong>
+                  </td>
                 </tr>
               </tbody>
             </Table>
