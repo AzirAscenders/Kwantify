@@ -184,46 +184,65 @@ export default function(state = defaultTransactions, action) {
       return {...state, singleTransaction: action.transaction}
 
     case CURRENT_MONTH_TRANSACTIONS:
-      currMonth = action.transactions[0].date.split('-')[1]
-      return {
-        ...state,
-        currentMonth: action.transactions.filter(
-          element => element.date[5] + element.date[6] === currMonth
-        )
+      if (action.transactions.length) {
+        currMonth = action.transactions[0].date.split('-')[1]
+        return {
+          ...state,
+          currentMonth: action.transactions.filter(
+            element => element.date[5] + element.date[6] === currMonth
+          )
+        }
+      } else {
+        return {
+          ...state
+        }
       }
 
     case LAST_MONTH_TRANSACTIONS:
-      lastMonth = String(Number(action.transactions[0].date.split('-')[1] - 1))
-      if (lastMonth === '0') {
-        lastMonth = '12'
-      } else if (lastMonth.length === 1) {
-        lastMonth = '0' + lastMonth
-      }
-      return {
-        ...state,
-        lastMonth: action.transactions.filter(
-          element => element.date[5] + element.date[6] === lastMonth
+      if (action.transactions.length) {
+        lastMonth = String(
+          Number(action.transactions[0].date.split('-')[1] - 1)
         )
-      }
+        if (lastMonth === '0') {
+          lastMonth = '12'
+        } else if (lastMonth.length === 1) {
+          lastMonth = '0' + lastMonth
+        }
 
+        return {
+          ...state,
+          lastMonth: action.transactions.filter(
+            element => element.date[5] + element.date[6] === lastMonth
+          )
+        }
+      } else {
+        return {
+          ...state
+        }
+      }
     case TWO_MONTHS_BEFORE_TRANSACTIONS:
-      twoMonthsBefore = String(
-        Number(action.transactions[0].date.split('-')[1] - 2)
-      )
-      if (twoMonthsBefore === '0') {
-        twoMonthsBefore = '12'
-      } else if (twoMonthsBefore === '-1') {
-        twoMonthsBefore = '11'
-      } else if (twoMonthsBefore.length === 1) {
-        twoMonthsBefore = '0' + twoMonthsBefore
-      }
-      return {
-        ...state,
-        twoMonthsBefore: action.transactions.filter(
-          element => element.date[5] + element.date[6] === twoMonthsBefore
+      if (action.transactions.length) {
+        twoMonthsBefore = String(
+          Number(action.transactions[0].date.split('-')[1] - 2)
         )
+        if (twoMonthsBefore === '0') {
+          twoMonthsBefore = '12'
+        } else if (twoMonthsBefore === '-1') {
+          twoMonthsBefore = '11'
+        } else if (twoMonthsBefore.length === 1) {
+          twoMonthsBefore = '0' + twoMonthsBefore
+        }
+        return {
+          ...state,
+          twoMonthsBefore: action.transactions.filter(
+            element => element.date[5] + element.date[6] === twoMonthsBefore
+          )
+        }
+      } else {
+        return {
+          ...state
+        }
       }
-
     case ADD_TRANSACTIONS:
       return {
         ...state,

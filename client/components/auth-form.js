@@ -116,9 +116,6 @@ const mapDispatch = dispatch => {
       if (formName === 'signup') {
         formDataObj.firstName = evt.target.firstName.value
         formDataObj.lastName = evt.target.lastName.value
-        if (evt.target.imageUrl.value) {
-          formDataObj.imageUrl = evt.target.imageUrl.value
-        }
       }
       dispatch(auth(formDataObj, formName))
     }
