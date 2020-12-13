@@ -6,10 +6,12 @@ import {Table, Button} from 'react-bootstrap'
 class SingleTransaction extends React.Component {
   constructor() {
     super()
-    this.state = {rows: []}
-    this.handleClick = this.handleClick.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.state = {rows: [], transaction: {}, edit: false, add: false}
+
+    this.handleClickAdd = this.handleClickAdd.bind(this)
+    this.handleClickEdit = this.handleClickEdit.bind(this)
+    this.handleSubmitItem = this.handleSubmitItem.bind(this)
+    this.handleChangeItem = this.handleChangeItem.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
 
@@ -18,42 +20,67 @@ class SingleTransaction extends React.Component {
     this.props.fetchSingleTransaction(transId)
   }
 
-  handleClick(e) {
-    this.setState(prevState => {
-      console.log(prevState)
-      return {rows: [...prevState.rows, {name: '', price: '', quantity: ''}]}
+  async handleClickAdd() {
+    await this.setState(prevState => {
+      return {
+        rows: [...prevState.rows, {name: '', price: '', quantity: ''}],
+        add: true
+      }
     })
+    console.log('ADD', this.state)
   }
 
-  async handleChange(e, idx) {
-    // console.log('targeeettt', e.target.name)
+  async handleClickEdit() {
+    if (!this.state.edit) {
+      const rows = this.props.items.map(item => {
+        const copy = {...item}
+        copy.price = (copy.price / 100).toFixed(2)
 
-    // console.log('TYPE', e.target.type)
+        return copy
+      })
+
+      await this.setState({
+        rows,
+        transaction: this.props.singleTransaction,
+        edit: true
+      })
+    } else {
+      await this.setState({rows: [], transaction: {}, edit: false})
+    }
+
+    console.log('EDIT', this.state)
+    console.log('EDIT2', this.props.items)
+  }
+
+  async handleChangeItem(e, idx) {
     let copy = [...this.state.rows]
     let itemObj = copy[+idx]
+
     itemObj[e.target.name] = e.target.value
+
     await this.setState({rows: copy})
-    console.log(this.state.rows)
+    console.log('CHANGE', this.state)
   }
 
   async handleDelete(idx) {
     const updatedItems = [...this.state.rows].filter(
       (itemObj, index) => index !== idx
     )
+
     await this.setState({rows: updatedItems})
-    // console.log(this.state.rows)
+
+    if (!this.state.rows.length) await this.setState({add: false})
+    console.log('DEL', this.state)
   }
 
-  async handleSubmit(e) {
-    console.log('THIS IS RUNNING ')
+  handleSubmitItem(e) {
     e.preventDefault()
-    await this.props.addItemThunk(
-      this.state.rows,
-      this.props.singleTransaction.id
-    )
-    await this.setState({rows: []})
-    console.log('rowsssss', this.state.rows)
+
+    this.props.addItemThunk(this.state.rows, this.props.singleTransaction.id)
+
+    this.setState({rows: [], add: false})
   }
+
   render() {
     const transaction = this.props.singleTransaction
     const items = this.props.items
@@ -66,9 +93,18 @@ class SingleTransaction extends React.Component {
         <Button
           type="button"
           variant="outline-primary"
-          onClick={this.handleClick}
+          onClick={this.handleClickAdd}
+          disabled={this.state.edit}
         >
           Add Item
+        </Button>
+        <Button
+          type="button"
+          variant="outline-primary"
+          onClick={this.handleClickEdit}
+          disabled={this.state.add}
+        >
+          Edit Transaction / Item
         </Button>
         {items && (
           <div>
@@ -81,47 +117,83 @@ class SingleTransaction extends React.Component {
                 </tr>
               </thead>
               <tbody id="item-tbody">
-                {items.map(item => (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>$ {(item.price / 100).toFixed(2)}</td>
-                    <td>{item.quantity}</td>
-                  </tr>
-                ))}
-                {this.state.rows.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>
-                      <input
-                        name="name"
-                        value={this.state.rows[idx].name}
-                        type="text"
-                        onChange={e => this.handleChange(e, idx)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        name="price"
-                        value={this.state.rows[idx].price}
-                        type="text"
-                        onChange={e => this.handleChange(e, idx)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        name="quantity"
-                        value={this.state.rows[idx].quantity}
-                        type="text"
-                        onChange={e => this.handleChange(e, idx)}
-                      />
-                      <Button
-                        onClick={() => this.handleDelete(idx)}
-                        type="button"
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {this.state.edit
+                  ? this.state.rows.map((item, idx) => (
+                      <tr key={idx}>
+                        <td>
+                          <input
+                            name="name"
+                            value={this.state.rows[idx].name}
+                            type="text"
+                            onChange={e => this.handleChangeItem(e, idx)}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            name="price"
+                            value={this.state.rows[idx].price}
+                            type="text"
+                            onChange={e => this.handleChangeItem(e, idx)}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            name="quantity"
+                            value={this.state.rows[idx].quantity}
+                            type="text"
+                            onChange={e => this.handleChangeItem(e, idx)}
+                          />
+                          <Button
+                            onClick={() => this.handleDelete(idx)}
+                            type="button"
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  : items.map(item => (
+                      <tr key={item.id}>
+                        <td>{item.name}</td>
+                        <td>$ {(item.price / 100).toFixed(2)}</td>
+                        <td>{item.quantity}</td>
+                      </tr>
+                    ))}
+                {this.state.add &&
+                  this.state.rows.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>
+                        <input
+                          name="name"
+                          value={this.state.rows[idx].name}
+                          type="text"
+                          onChange={e => this.handleChangeItem(e, idx)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="price"
+                          value={this.state.rows[idx].price}
+                          type="text"
+                          onChange={e => this.handleChangeItem(e, idx)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="quantity"
+                          value={this.state.rows[idx].quantity}
+                          type="text"
+                          onChange={e => this.handleChangeItem(e, idx)}
+                        />
+                        <Button
+                          onClick={() => this.handleDelete(idx)}
+                          type="button"
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
                 <tr>
                   <td>Subtotal</td>
                   <td>$ {(transaction.subtotal / 100).toFixed(2)}</td>
@@ -142,7 +214,7 @@ class SingleTransaction extends React.Component {
                 </tr>
               </tbody>
             </Table>
-            <Button type="submit" onClick={this.handleSubmit}>
+            <Button type="submit" onClick={this.handleSubmitItem}>
               Submit
             </Button>
           </div>
