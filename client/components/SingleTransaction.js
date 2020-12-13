@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleTransaction, addItemThunk} from '../store/transactions'
@@ -45,18 +46,24 @@ class SingleTransaction extends React.Component {
   }
 
   async handleSubmit(e) {
-    console.log('THIS IS RUNNING ')
     e.preventDefault()
     await this.props.addItemThunk(
       this.state.rows,
       this.props.singleTransaction.id
     )
     await this.setState({rows: []})
-    console.log('rowsssss', this.state.rows)
   }
   render() {
     const transaction = this.props.singleTransaction
     const items = this.props.items
+    let subTotal = 0
+    if (transaction.subtotal) {
+      subTotal = transaction.subtotal
+    } else if (items) {
+      for (let i = 0; i < items.length; i++) {
+        subTotal += items[i].price
+      }
+    }
     return transaction.name ? (
       <div>
         <h3>Name: {transaction.name}</h3>
@@ -122,19 +129,25 @@ class SingleTransaction extends React.Component {
                     </td>
                   </tr>
                 ))}
-                <tr>
-                  <td>Subtotal</td>
-                  <td>$ {(transaction.subtotal / 100).toFixed(2)}</td>
-                </tr>
+                {(items.length || transaction.subtotal) && (
+                  <tr>
+                    <td>Subtotal</td>
+                    {transaction.subtotal ? (
+                      <td>$ {(transaction.subtotal / 100).toFixed(2)}</td>
+                    ) : (
+                      <td>$ {(subTotal / 100).toFixed(2)}</td>
+                    )}
+                  </tr>
+                )}
                 <tr>
                   <td>Tax</td>
-                  <td>
-                    ${' '}
-                    {(
-                      (transaction.amount - transaction.subtotal) /
-                      100
-                    ).toFixed(2)}
-                  </td>
+                  {subTotal ? (
+                    <td>
+                      $ {((transaction.amount - subTotal) / 100).toFixed(2)}
+                    </td>
+                  ) : (
+                    <td>$ 0.00</td>
+                  )}
                 </tr>
                 <tr>
                   <td>Total</td>
