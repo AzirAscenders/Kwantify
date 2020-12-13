@@ -4,6 +4,7 @@ body {
   font-family: sans-serif;
   width: 100vw;
   height: 100vh;
+  background-color: #dee8f3;
 }
 
 a {
@@ -30,7 +31,7 @@ form div {
   flex-direction: column;
   width: 100%;
   padding-top: 70px;
-  background-color: coral;
+  /* background-color: coral; */
   /* height: 550px; */
   height: 100%;
 }
@@ -169,4 +170,32 @@ form div {
 
 .profile-form button {
   margin-top: 1rem;
+}
+
+#credit-card {
+  margin: 10px;
+}
+
+#credit-card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 425px) {
+  #credit-card-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.logo-size > h2 {
+  display: inline-block;
+}
+
+.logo-size > img {
+  max-width: 10%;
+  height: auto;
 }

@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAllAccounts} from '../store/accounts'
+import Cards from 'react-credit-cards'
+import 'react-credit-cards/es/styles-compiled.css'
 
 class Accounts extends React.Component {
   componentDidMount() {
@@ -8,6 +10,9 @@ class Accounts extends React.Component {
   }
 
   render() {
+    let issuer = ''
+    let preview = true
+    let image
     const accounts = this.props.accounts || []
     const bankName = accounts.map(
       account => account.institution.institutionName
@@ -18,20 +23,58 @@ class Accounts extends React.Component {
         uniqueBankName.push(bankName[i])
       }
     }
-
+    console.log(bankName)
     return (
-      <div>
+      <div id="main">
         {accounts.length ? (
-          uniqueBankName.map((bank, idx) => (
-            <div key={idx}>
-              <h2>{bank}</h2>
-              {accounts.map(account => {
-                if (account.institution.institutionName === bank) {
-                  return <div key={account.id}>{account.name}</div>
-                }
-              })}
-            </div>
-          ))
+          uniqueBankName.map((bank, idx) => {
+            if (bank === 'Bank of America') {
+              image = './institutionlogos/BOA.png'
+            } else if (bank === 'Chase') {
+              image = './institutionlogos/chase.png'
+            } else if (bank === 'Citi') {
+              image = './institutionlogos/Citi.png'
+            } else if (bank === 'Capital One') {
+              image = './institutionlogos/Capital_One.png'
+            } else if (bank === 'TD Bank') {
+              image = './institutionlogos/TD.png'
+            } else if (bank === 'Wells Fargo') {
+              image = './institutionlogos/Wells_Fargo.png'
+            }
+            return (
+              <div key={idx} id="bank-logo">
+                <span className="logo-size">
+                  <img src={image} /> <h2>{bank}</h2>
+                </span>
+                <div id="credit-card-container">
+                  {accounts.map(account => {
+                    if (account.institution.institutionName === bank) {
+                      if (bank === 'Chase') {
+                        issuer = 'visa'
+                      } else if (bank === 'Bank of America') {
+                        issuer = 'mastercard'
+                      } else {
+                        issuer = ''
+                      }
+                      return (
+                        <div key={account.id} id="credit-card">
+                          {' '}
+                          <Cards
+                            preview={preview}
+                            issuer={issuer}
+                            cvc="123"
+                            expiry=""
+                            name={account.name.slice(6)}
+                            number="XXXX XXXX XXXX XXXX"
+                          />
+                        </div>
+                      )
+                    }
+                  })}
+                </div>
+              </div>
+            )
+          })
         ) : (
           <div>Loading</div>
         )}
