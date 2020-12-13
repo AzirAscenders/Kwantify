@@ -180,6 +180,7 @@ export default function(state = defaultTransactions, action) {
       return {...state, transactions: action.transactions}
 
     case GET_SINGLE_TRANSACTION:
+      action.transaction.amount = (action.transaction.amount / 100).toFixed(2)
       return {...state, singleTransaction: action.transaction}
 
     case CURRENT_MONTH_TRANSACTIONS:

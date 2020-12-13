@@ -68,8 +68,11 @@ class SingleTransaction extends React.Component {
 
   async handleClickEditTrans() {
     if (!this.state.editTrans) {
+      const transaction = {...this.props.singleTransaction}
+      transaction.amount = (transaction.amount / 100).toFixed(2)
+
       await this.setState({
-        transaction: this.props.singleTransaction,
+        transaction,
         editTrans: true
       })
     } else {
@@ -179,7 +182,7 @@ class SingleTransaction extends React.Component {
               Amount: ${' '}
               <input
                 name="amount"
-                value={(this.state.transaction.amount / 100).toFixed(2)}
+                value={this.state.transaction.amount}
                 type="text"
                 onChange={this.handleChangeTrans}
               />
