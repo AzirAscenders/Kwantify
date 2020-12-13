@@ -17,6 +17,7 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  color: #fff;
 }
 
 form div {
@@ -50,11 +51,13 @@ form div {
   flex-direction: column;
   position: fixed;
   z-index: 10;
-  background-color: #77c9d4;
+  /* background-color: #77c9d4; */
+  background-color: rgb(48, 69, 91);
   top: 60px;
   -webkit-backface-visibility: hidden;
   left: 0px;
   height: 100vh;
+  font-weight: bold;
 }
 
 #nav-bar-container {
@@ -67,6 +70,7 @@ form div {
   position: fixed;
   z-index: 10;
   height: 60px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
   -webkit-backface-visibility: hidden;
 }
 
@@ -75,8 +79,38 @@ form div {
   align-self: flex-start;
 }
 
-.login-form {
+.auth-form-container {
+  background: url('./background/money.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.login-form-container {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-field-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 100px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+  padding: 24px;
+  width: 300px;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field p {
+  margin-bottom: 0;
 }
 
 /* PROFILE */
