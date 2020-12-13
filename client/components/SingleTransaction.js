@@ -1,18 +1,31 @@
 /* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleTransaction, addItemThunk} from '../store/transactions'
+import {
+  fetchSingleTransaction,
+  addItemThunk,
+  editTransactionItems,
+  updateTransaction
+} from '../store/transactions'
 import {Table, Button} from 'react-bootstrap'
 
 class SingleTransaction extends React.Component {
   constructor() {
     super()
-    this.state = {rows: [], transaction: {}, edit: false, add: false}
+    this.state = {
+      rows: [],
+      transaction: {},
+      editItem: false,
+      add: false,
+      editTrans: false
+    }
 
     this.handleClickAdd = this.handleClickAdd.bind(this)
-    this.handleClickEdit = this.handleClickEdit.bind(this)
+    this.handleClickEditItem = this.handleClickEditItem.bind(this)
+    this.handleClickEditTrans = this.handleClickEditTrans.bind(this)
     this.handleSubmitItem = this.handleSubmitItem.bind(this)
     this.handleChangeItem = this.handleChangeItem.bind(this)
+    this.handleChangeTrans = this.handleChangeTrans.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
 
@@ -31,8 +44,8 @@ class SingleTransaction extends React.Component {
     console.log('ADD', this.state)
   }
 
-  async handleClickEdit() {
-    if (!this.state.edit) {
+  async handleClickEditItem() {
+    if (!this.state.editItem) {
       const rows = this.props.items.map(item => {
         const copy = {...item}
         copy.price = (copy.price / 100).toFixed(2)
@@ -43,14 +56,29 @@ class SingleTransaction extends React.Component {
       await this.setState({
         rows,
         transaction: this.props.singleTransaction,
-        edit: true
+        editItem: true
       })
     } else {
-      await this.setState({rows: [], transaction: {}, edit: false})
+      await this.setState({rows: [], transaction: {}, editItem: false})
     }
 
     console.log('EDIT', this.state)
     console.log('EDIT2', this.props.items)
+  }
+
+  async handleClickEditTrans() {
+    if (!this.state.editTrans) {
+      const transaction = {...this.props.singleTransaction}
+      transaction.amount = (transaction.amount / 100).toFixed(2)
+
+      await this.setState({
+        transaction,
+        editTrans: true
+      })
+    } else {
+      await this.setState({transaction: {}, editTrans: false})
+    }
+    console.log('EDIT TRANS', this.state)
   }
 
   async handleChangeItem(e, idx) {
@@ -63,23 +91,58 @@ class SingleTransaction extends React.Component {
     console.log('CHANGE', this.state)
   }
 
-  async handleDelete(idx) {
-    const updatedItems = [...this.state.rows].filter(
-      (itemObj, index) => index !== idx
-    )
+  async handleChangeTrans(e) {
+    let transaction = {...this.state.transaction}
+    transaction[e.target.name] = e.target.value
 
-    await this.setState({rows: updatedItems})
-
-    if (!this.state.rows.length) await this.setState({add: false})
-    console.log('DEL', this.state)
+    await this.setState({transaction})
   }
 
-  handleSubmitItem(e) {
+  async handleDelete(idx) {
+    if (this.state.add) {
+      const updatedItems = [...this.state.rows].filter(
+        (itemObj, index) => index !== idx
+      )
+
+      await this.setState({rows: updatedItems})
+
+      if (!this.state.rows.length) await this.setState({add: false})
+      console.log('DEL', this.state)
+    }
+
+    if (this.state.editItem) {
+      const copy = [...this.state.rows]
+      copy[idx].delete = true
+
+      await this.setState({rows: copy})
+      // await this.props.deleteTransactionItem(this.state.rows[idx])
+      // await this.setState({rows: this.props.items})
+      console.log('DELETE EDIT', this.state)
+    }
+  }
+
+  async handleSubmitItem(e) {
     e.preventDefault()
 
-    this.props.addItemThunk(this.state.rows, this.props.singleTransaction.id)
+    if (this.state.add) {
+      this.props.addItemThunk(this.state.rows, this.props.singleTransaction.id)
 
-    this.setState({rows: [], add: false})
+      this.setState({rows: [], add: false})
+    }
+
+    if (this.state.editItem) {
+      await this.props.editTransactionItems(this.state.rows)
+      await this.setState({rows: [], editItem: false})
+
+      console.log(this.state)
+    }
+
+    if (this.state.editTrans) {
+      await this.props.updateTransaction(this.state.transaction)
+      await this.setState({transaction: {}, editTrans: false})
+
+      console.log(this.state)
+    }
   }
 
   render() {
@@ -94,27 +157,89 @@ class SingleTransaction extends React.Component {
       }
     }
     return transaction.name ? (
-      <div>
-        <h3>Name: {transaction.name}</h3>
-        <p>Date: {transaction.date}</p>
-        <p>Amount: $ {(transaction.amount / 100).toFixed(2)}</p>
-        <p>Category: {transaction.category}</p>
+      <div id="main">
+        {this.state.editTrans ? (
+          <div>
+            <h3>
+              Name:{' '}
+              <input
+                name="name"
+                value={this.state.transaction.name}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </h3>
+            <p>
+              Date:{' '}
+              <input
+                name="date"
+                value={this.state.transaction.date}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </p>
+            <p>
+              Amount: ${' '}
+              <input
+                name="amount"
+                value={this.state.transaction.amount}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </p>
+            <p>
+              Category:{' '}
+              <input
+                name="category"
+                value={this.state.transaction.category}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </p>
+          </div>
+        ) : (
+          <div>
+            <h3>Name: {transaction.name}</h3>
+            <p>Date: {transaction.date}</p>
+            <p>Amount: $ {(transaction.amount / 100).toFixed(2)}</p>
+            <p>Category: {transaction.category}</p>
+          </div>
+        )}
+
+        <Button
+          type="button"
+          variant="outline-primary"
+          onClick={this.handleClickEditTrans}
+          disabled={
+            (this.state.add || this.state.editItem) &&
+            (this.state.add || this.state.editItem)
+          }
+        >
+          Edit Transaction
+        </Button>
         <Button
           type="button"
           variant="outline-primary"
           onClick={this.handleClickAdd}
-          disabled={this.state.edit}
+          disabled={
+            (this.state.editTrans || this.state.editItem) &&
+            (this.state.editTrans || this.state.editItem)
+          }
         >
           Add Item
         </Button>
         <Button
           type="button"
           variant="outline-primary"
-          onClick={this.handleClickEdit}
-          disabled={this.state.add}
+          onClick={this.handleClickEditItem}
+          disabled={
+            (this.state.add || this.state.editTrans) &&
+            (this.state.add || this.state.editTrans)
+          }
         >
-          Edit Transaction / Item
+          {this.state.editItem ? `Cancel Edit` : `Edit Item(s)`}
         </Button>
+
         {items && (
           <div>
             <Table striped bordered hover>
@@ -125,42 +250,46 @@ class SingleTransaction extends React.Component {
                   <th>Quantity</th>
                 </tr>
               </thead>
+
               <tbody id="item-tbody">
-                {this.state.edit
-                  ? this.state.rows.map((item, idx) => (
-                      <tr key={idx}>
-                        <td>
-                          <input
-                            name="name"
-                            value={this.state.rows[idx].name}
-                            type="text"
-                            onChange={e => this.handleChangeItem(e, idx)}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            name="price"
-                            value={this.state.rows[idx].price}
-                            type="text"
-                            onChange={e => this.handleChangeItem(e, idx)}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            name="quantity"
-                            value={this.state.rows[idx].quantity}
-                            type="text"
-                            onChange={e => this.handleChangeItem(e, idx)}
-                          />
-                          <Button
-                            onClick={() => this.handleDelete(idx)}
-                            type="button"
-                          >
-                            Delete
-                          </Button>
-                        </td>
-                      </tr>
-                    ))
+                {this.state.editItem
+                  ? this.state.rows.map(
+                      (item, idx) =>
+                        !item.delete && (
+                          <tr key={idx}>
+                            <td>
+                              <input
+                                name="name"
+                                value={this.state.rows[idx].name}
+                                type="text"
+                                onChange={e => this.handleChangeItem(e, idx)}
+                              />
+                            </td>
+                            <td>
+                              <input
+                                name="price"
+                                value={this.state.rows[idx].price}
+                                type="text"
+                                onChange={e => this.handleChangeItem(e, idx)}
+                              />
+                            </td>
+                            <td>
+                              <input
+                                name="quantity"
+                                value={this.state.rows[idx].quantity}
+                                type="text"
+                                onChange={e => this.handleChangeItem(e, idx)}
+                              />
+                              <Button
+                                onClick={() => this.handleDelete(idx)}
+                                type="button"
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                          </tr>
+                        )
+                    )
                   : items.map(item => (
                       <tr key={item.id}>
                         <td>{item.name}</td>
@@ -168,6 +297,7 @@ class SingleTransaction extends React.Component {
                         <td>{item.quantity}</td>
                       </tr>
                     ))}
+
                 {this.state.add &&
                   this.state.rows.map((item, idx) => (
                     <tr key={idx}>
@@ -205,33 +335,55 @@ class SingleTransaction extends React.Component {
                   ))}
                 {(items.length || transaction.subtotal) && (
                   <tr>
-                    <td>Subtotal</td>
+                    <td>
+                      <strong>Subtotal</strong>
+                    </td>
                     {transaction.subtotal ? (
-                      <td>$ {(transaction.subtotal / 100).toFixed(2)}</td>
+                      <td>
+                        <strong>
+                          $ {(transaction.subtotal / 100).toFixed(2)}
+                        </strong>
+                      </td>
                     ) : (
-                      <td>$ {(subTotal / 100).toFixed(2)}</td>
+                      <td>
+                        <strong>$ {(subTotal / 100).toFixed(2)}</strong>
+                      </td>
                     )}
                   </tr>
                 )}
                 <tr>
-                  <td>Tax</td>
+                  <td>
+                    <strong>Tax</strong>
+                  </td>
                   {subTotal ? (
                     <td>
-                      $ {((transaction.amount - subTotal) / 100).toFixed(2)}
+                      <strong>
+                        $ {((transaction.amount - subTotal) / 100).toFixed(2)}
+                      </strong>
                     </td>
                   ) : (
-                    <td>$ 0.00</td>
+                    <td>
+                      <strong>$ 0.00</strong>
+                    </td>
                   )}
                 </tr>
                 <tr>
-                  <td>Total</td>
-                  <td>$ {(transaction.amount / 100).toFixed(2)}</td>
+                  <td>
+                    <strong>Total</strong>
+                  </td>
+                  <td>
+                    <strong>$ {(transaction.amount / 100).toFixed(2)}</strong>
+                  </td>
                 </tr>
               </tbody>
             </Table>
-            <Button type="submit" onClick={this.handleSubmitItem}>
-              Submit
-            </Button>
+            {(this.state.add ||
+              this.state.editItem ||
+              this.state.editTrans) && (
+              <Button type="submit" onClick={this.handleSubmitItem}>
+                Submit
+              </Button>
+            )}
           </div>
         )}
       </div>
@@ -253,7 +405,9 @@ const mapDispatch = dispatch => {
     fetchSingleTransaction: transId =>
       dispatch(fetchSingleTransaction(transId)),
     addItemThunk: (items, transactionId) =>
-      dispatch(addItemThunk(items, transactionId))
+      dispatch(addItemThunk(items, transactionId)),
+    editTransactionItems: items => dispatch(editTransactionItems(items)),
+    updateTransaction: update => dispatch(updateTransaction(update))
   }
 }
 

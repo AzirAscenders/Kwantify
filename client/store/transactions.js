@@ -15,6 +15,7 @@ const SELECTED = 'SELECTED'
 const FILTERED = 'FILTERED'
 const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
 const EDIT_TRANSACTION = 'EDIT_TRANSACTION'
+const EDIT_ITEMS = 'EDIT_ITEMS'
 
 /**
  * INITIAL STATE
@@ -88,6 +89,11 @@ export const addItems = items => ({
   items
 })
 
+const editItems = items => ({
+  type: EDIT_ITEMS,
+  items
+})
+
 /**
  * THUNK CREATORS
  */
@@ -137,19 +143,26 @@ export const fetchSingleTransaction = transId => async dispatch => {
   try {
     const res = await axios.get(`/api/transactions/${transId}`)
     await dispatch(getSingleTransaction(res.data[0]))
-    await dispatch(getItems(res.data[1]))
+    await dispatch(getItems(res.data[1].sort((a, b) => a.id - b.id)))
   } catch (err) {
     console.error('Fetch Single Transactions ERROR', err)
   }
 }
 
-export const updateTransaction = (transId, update) => async dispatch => {
+export const updateTransaction = update => async dispatch => {
   try {
-    const {data: updated} = await axios.put(
-      `/api/transactions/${transId}`,
-      update
-    )
+    const {data: updated} = await axios.put('/api/transactions/', update)
     dispatch(editTransaction(updated))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const editTransactionItems = items => async dispatch => {
+  try {
+    const res = await axios.put('/api/items', items)
+    console.log(res.data)
+    dispatch(editItems(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -167,6 +180,7 @@ export default function(state = defaultTransactions, action) {
       return {...state, transactions: action.transactions}
 
     case GET_SINGLE_TRANSACTION:
+      action.transaction.amount = (action.transaction.amount / 100).toFixed(2)
       return {...state, singleTransaction: action.transaction}
 
     case CURRENT_MONTH_TRANSACTIONS:
@@ -215,16 +229,19 @@ export default function(state = defaultTransactions, action) {
         ...state,
         transactions: [...state.transactions, action.transactions]
       }
+
     // case ADD_ITEMS:
     //   return {
     //     ...state,
     //     items: [...state.items, ...action.items],
     //   }
+
     case GET_ITEMS:
       return {
         ...state,
         items: action.items
       }
+
     case ADD_ITEMS:
       return {
         ...state,
@@ -238,6 +255,9 @@ export default function(state = defaultTransactions, action) {
 
     case EDIT_TRANSACTION:
       return {...state, singleTransaction: action.transaction}
+
+    case EDIT_ITEMS:
+      return {...state, items: action.items}
 
     default:
       return state

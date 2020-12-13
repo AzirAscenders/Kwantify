@@ -28,10 +28,10 @@ router.get('/:transId', async (req, res, next) => {
   }
 })
 
-router.put('/:transId', async (req, res, next) => {
+router.put('/', async (req, res, next) => {
   try {
     const transaction = await Transaction.findOne({
-      where: {id: req.params.transId}
+      where: {id: req.body.id}
     })
 
     if (transaction.userId !== req.user.dataValues.id) {
