@@ -69,7 +69,6 @@ class SingleTransaction extends React.Component {
   async handleClickEditTrans() {
     if (!this.state.editTrans) {
       const transaction = {...this.props.singleTransaction}
-      transaction.amount = (transaction.amount / 100).toFixed(2)
 
       await this.setState({
         transaction,
@@ -201,7 +200,7 @@ class SingleTransaction extends React.Component {
           <div>
             <h3>Name: {transaction.name}</h3>
             <p>Date: {transaction.date}</p>
-            <p>Amount: $ {(transaction.amount / 100).toFixed(2)}</p>
+            <p>Total: $ {transaction.amount}</p>
             <p>Category: {transaction.category}</p>
           </div>
         )}
@@ -358,7 +357,7 @@ class SingleTransaction extends React.Component {
                   {subTotal ? (
                     <td>
                       <strong>
-                        $ {((transaction.amount - subTotal) / 100).toFixed(2)}
+                        $ {(transaction.amount - subTotal / 100).toFixed(2)}
                       </strong>
                     </td>
                   ) : (
@@ -372,7 +371,7 @@ class SingleTransaction extends React.Component {
                     <strong>Total</strong>
                   </td>
                   <td>
-                    <strong>$ {(transaction.amount / 100).toFixed(2)}</strong>
+                    <strong>$ {transaction.amount}</strong>
                   </td>
                 </tr>
               </tbody>
