@@ -11,14 +11,24 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: none;
+  color: white;
+  margin: 0;
+  padding: 16px;
+  background-color: rgb(34, 48, 64);
+}
+
 label {
   display: block;
 }
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 0;
+  padding: 16px;
   color: #fff;
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
 }
 
 form div {
@@ -52,13 +62,27 @@ form div {
   flex-direction: column;
   position: fixed;
   z-index: 10;
-  /* background-color: #77c9d4; */
   background-color: rgb(48, 69, 91);
   top: 60px;
   -webkit-backface-visibility: hidden;
   left: 0px;
-  height: 100vh;
+  height: 100%;
   font-weight: bold;
+  width: 10rem;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.burger-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.burger-bottom {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.05);
 }
 
 #nav-bar-container {
@@ -103,6 +127,7 @@ form div {
   box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
   padding: 24px;
   width: 300px;
+  border-radius: 10px;
 }
 
 .input-field {
@@ -172,6 +197,7 @@ form div {
   margin-top: 1rem;
 }
 
+/* CREDIT CARD */
 #credit-card {
   margin: 10px;
 }
