@@ -70,7 +70,7 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = this.props.transactions.filtered
-    return (
+    return transactions.length ? (
       <div id="main">
         <h2>All Transactions</h2>
         <label htmlFor="date">Choose Period:</label>
@@ -121,6 +121,8 @@ class Transactions extends React.Component {
           </tbody>
         </Table>
       </div>
+    ) : (
+      <div>Loading...</div>
     )
   }
 }
