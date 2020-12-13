@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import {
   fetchSingleTransaction,
   addItemThunk,
-  editTransactionItems
+  editTransactionItems,
+  updateTransaction
 } from '../store/transactions'
 import {Table, Button} from 'react-bootstrap'
 
@@ -15,13 +16,16 @@ class SingleTransaction extends React.Component {
       rows: [],
       transaction: {},
       editItem: false,
-      add: false
+      add: false,
+      editTrans: false
     }
 
     this.handleClickAdd = this.handleClickAdd.bind(this)
     this.handleClickEditItem = this.handleClickEditItem.bind(this)
+    this.handleClickEditTrans = this.handleClickEditTrans.bind(this)
     this.handleSubmitItem = this.handleSubmitItem.bind(this)
     this.handleChangeItem = this.handleChangeItem.bind(this)
+    this.handleChangeTrans = this.handleChangeTrans.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
 
@@ -62,6 +66,18 @@ class SingleTransaction extends React.Component {
     console.log('EDIT2', this.props.items)
   }
 
+  async handleClickEditTrans() {
+    if (!this.state.editTrans) {
+      await this.setState({
+        transaction: this.props.singleTransaction,
+        editTrans: true
+      })
+    } else {
+      await this.setState({transaction: {}, editTrans: false})
+    }
+    console.log('EDIT TRANS', this.state)
+  }
+
   async handleChangeItem(e, idx) {
     let copy = [...this.state.rows]
     let itemObj = copy[+idx]
@@ -70,6 +86,13 @@ class SingleTransaction extends React.Component {
 
     await this.setState({rows: copy})
     console.log('CHANGE', this.state)
+  }
+
+  async handleChangeTrans(e) {
+    let transaction = {...this.state.transaction}
+    transaction[e.target.name] = e.target.value
+
+    await this.setState({transaction})
   }
 
   async handleDelete(idx) {
@@ -110,6 +133,13 @@ class SingleTransaction extends React.Component {
 
       console.log(this.state)
     }
+
+    if (this.state.editTrans) {
+      await this.props.updateTransaction(this.state.transaction)
+      await this.setState({transaction: {}, editTrans: false})
+
+      console.log(this.state)
+    }
   }
 
   render() {
@@ -124,16 +154,63 @@ class SingleTransaction extends React.Component {
       }
     }
     return transaction.name ? (
-      <div>
-        <h3>Name: {transaction.name}</h3>
-        <p>Date: {transaction.date}</p>
-        <p>Amount: $ {(transaction.amount / 100).toFixed(2)}</p>
-        <p>Category: {transaction.category}</p>
+      <div id="main">
+        {this.state.editTrans ? (
+          <div>
+            <h3>
+              Name:{' '}
+              <input
+                name="name"
+                value={this.state.transaction.name}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </h3>
+            <p>
+              Date:{' '}
+              <input
+                name="date"
+                value={this.state.transaction.date}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </p>
+            <p>
+              Amount: ${' '}
+              <input
+                name="amount"
+                value={(this.state.transaction.amount / 100).toFixed(2)}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </p>
+            <p>
+              Category:{' '}
+              <input
+                name="category"
+                value={this.state.transaction.category}
+                type="text"
+                onChange={this.handleChangeTrans}
+              />
+            </p>
+          </div>
+        ) : (
+          <div>
+            <h3>Name: {transaction.name}</h3>
+            <p>Date: {transaction.date}</p>
+            <p>Amount: $ {(transaction.amount / 100).toFixed(2)}</p>
+            <p>Category: {transaction.category}</p>
+          </div>
+        )}
+
         <Button
           type="button"
           variant="outline-primary"
-          onClick={this.handleClickAdd}
-          disabled={this.state.add || this.state.editItem}
+          onClick={this.handleClickEditTrans}
+          disabled={
+            (this.state.add || this.state.editItem) &&
+            (this.state.add || this.state.editItem)
+          }
         >
           Edit Transaction
         </Button>
@@ -141,7 +218,10 @@ class SingleTransaction extends React.Component {
           type="button"
           variant="outline-primary"
           onClick={this.handleClickAdd}
-          disabled={this.state.editItem}
+          disabled={
+            (this.state.editTrans || this.state.editItem) &&
+            (this.state.editTrans || this.state.editItem)
+          }
         >
           Add Item
         </Button>
@@ -149,7 +229,10 @@ class SingleTransaction extends React.Component {
           type="button"
           variant="outline-primary"
           onClick={this.handleClickEditItem}
-          disabled={this.state.add}
+          disabled={
+            (this.state.add || this.state.editTrans) &&
+            (this.state.add || this.state.editTrans)
+          }
         >
           {this.state.editItem ? `Cancel Edit` : `Edit Item(s)`}
         </Button>
@@ -291,7 +374,9 @@ class SingleTransaction extends React.Component {
                 </tr>
               </tbody>
             </Table>
-            {(this.state.add || this.state.editItem) && (
+            {(this.state.add ||
+              this.state.editItem ||
+              this.state.editTrans) && (
               <Button type="submit" onClick={this.handleSubmitItem}>
                 Submit
               </Button>
@@ -318,7 +403,8 @@ const mapDispatch = dispatch => {
       dispatch(fetchSingleTransaction(transId)),
     addItemThunk: (items, transactionId) =>
       dispatch(addItemThunk(items, transactionId)),
-    editTransactionItems: items => dispatch(editTransactionItems(items))
+    editTransactionItems: items => dispatch(editTransactionItems(items)),
+    updateTransaction: update => dispatch(updateTransaction(update))
   }
 }
 

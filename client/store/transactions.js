@@ -149,12 +149,9 @@ export const fetchSingleTransaction = transId => async dispatch => {
   }
 }
 
-export const updateTransaction = (transId, update) => async dispatch => {
+export const updateTransaction = update => async dispatch => {
   try {
-    const {data: updated} = await axios.put(
-      `/api/transactions/${transId}`,
-      update
-    )
+    const {data: updated} = await axios.put('/api/transactions/', update)
     dispatch(editTransaction(updated))
   } catch (err) {
     console.error(err)
