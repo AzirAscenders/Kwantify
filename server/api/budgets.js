@@ -47,9 +47,15 @@ router.put('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const budget = await Budget.findOne({
+    let budget = await Budget.findOne({
       where: {userId: req.user.dataValues.id}
     })
+
+    if (!budget) {
+      budget = await Budget.create()
+      budget.setUser(req.user.dataValues.id)
+    }
+
     const {
       totalSpending,
       foodAndDrink,
@@ -59,6 +65,7 @@ router.get('/', async (req, res, next) => {
       shopping,
       groceries
     } = budget.dataValues
+
     res.json({
       totalSpending,
       foodAndDrink,

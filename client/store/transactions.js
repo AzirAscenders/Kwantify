@@ -15,6 +15,7 @@ const SELECTED = 'SELECTED'
 const FILTERED = 'FILTERED'
 const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
 const EDIT_TRANSACTION = 'EDIT_TRANSACTION'
+const EDIT_ITEMS = 'EDIT_ITEMS'
 
 /**
  * INITIAL STATE
@@ -88,6 +89,11 @@ export const addItems = items => ({
   items
 })
 
+const editItems = items => ({
+  type: EDIT_ITEMS,
+  items
+})
+
 /**
  * THUNK CREATORS
  */
@@ -155,6 +161,16 @@ export const updateTransaction = (transId, update) => async dispatch => {
   }
 }
 
+export const editTransactionItems = items => async dispatch => {
+  try {
+    const res = await axios.put('/api/items', items)
+    console.log(res.data)
+    dispatch(editItems(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 let currMonth
 let lastMonth
 let twoMonthsBefore
@@ -215,16 +231,19 @@ export default function(state = defaultTransactions, action) {
         ...state,
         transactions: [...state.transactions, action.transactions]
       }
+
     // case ADD_ITEMS:
     //   return {
     //     ...state,
     //     items: [...state.items, ...action.items],
     //   }
+
     case GET_ITEMS:
       return {
         ...state,
-        items: action.items
+        items: action.items.sort((a, b) => a.id - b.id)
       }
+
     case ADD_ITEMS:
       return {
         ...state,
@@ -238,6 +257,9 @@ export default function(state = defaultTransactions, action) {
 
     case EDIT_TRANSACTION:
       return {...state, singleTransaction: action.transaction}
+
+    case EDIT_ITEMS:
+      return {...state, items: action.items.sort((a, b) => a.id - b.id)}
 
     default:
       return state
