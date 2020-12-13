@@ -1,24 +1,43 @@
 const multer = require('multer')
 const path = require('path')
-const sharp = require('sharp')
+// const sharp = require('sharp')
+const MulterGoogleCloudStorage = require('multer-google-storage')
+const {
+  GCS_BUCKET,
+  GCS_PROJECT_ID,
+  GCS_EMAIL,
+  GCS_PRIVATE_KEY,
+  GCS_CREDENTIALS
+} = require('../../secrets')
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, path.join(process.cwd() + '/public'))
-  },
-  filename: function(req, file, cb) {
-    cb(
-      null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-    )
+// const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, path.join(process.cwd() + '/public'))
+//   },
+//   filename: function(req, file, cb) {
+//     cb(
+//       null,
+//       file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+//     )
+//   }
+// })
+
+const storage = new MulterGoogleCloudStorage.storageEngine({
+  bucket: process.env.GCS_BUCKET || GCS_BUCKET,
+  projectId: process.env.GCS_PROJECT_ID || GCS_PROJECT_ID,
+  keyFilename: GCS_CREDENTIALS,
+  credentials: {
+    client_email: process.env.GCS_EMAIL || GCS_EMAIL,
+    private_key: process.env.GCS_PRIVATE_KEY || GCS_PRIVATE_KEY
   }
 })
 
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter
-  // resizeImage: resizeImage,
 }).single('image')
+
+// const bucket = storage.bucket(GCS_BUCKET)
 
 function fileFilter(req, file, cb) {
   const fileType = /jpg|jpeg|png/
