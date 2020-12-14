@@ -64,8 +64,8 @@ class BudgetBullet extends React.Component {
       currentMonth.length && (
         <ResponsiveBullet
           data={data}
-          width={900}
-          height={500}
+          // width={900}
+          // height={500}
           margin={{top: 50, right: 90, bottom: 50, left: 90}}
           titleAlign="start"
           titleOffsetX={-70}

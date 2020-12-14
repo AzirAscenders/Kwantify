@@ -103,7 +103,7 @@ class PieChart extends React.Component {
         data={data}
         // width={1500}
         // height={500}
-        margin={{top: 40, right: 0, bottom: 80, left: 0}}
+        margin={{top: 40, right: 100, bottom: 80, left: 0}}
         theme={{fontSize: 18}}
         innerRadius={0.5}
         padAngle={2}
@@ -122,7 +122,7 @@ class PieChart extends React.Component {
         legends={[
           {
             anchor: 'bottom',
-            direction: 'row',
+            direction: 'column',
             justify: false,
             translateX: 0,
             translateY: 56,
