@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAllAccounts} from '../store/accounts'
+import {Carousel} from 'react-bootstrap'
 import Cards from 'react-credit-cards'
 import 'react-credit-cards/es/styles-compiled.css'
 
@@ -43,34 +44,44 @@ class Accounts extends React.Component {
             }
             return (
               <div key={idx} id="bank-logo">
-                <span className="logo-size">
+                <div className="logo-size">
                   <img src={image} /> <h2>{bank}</h2>
-                </span>
+                </div>
                 <div id="credit-card-container">
-                  {accounts.map(account => {
-                    if (account.institution.institutionName === bank) {
-                      if (bank === 'Chase') {
-                        issuer = 'visa'
-                      } else if (bank === 'Bank of America') {
-                        issuer = 'mastercard'
-                      } else {
-                        issuer = ''
+                  <Carousel interval={null}>
+                    {accounts.map(account => {
+                      if (account.institution.institutionName === bank) {
+                        if (bank === 'Chase') {
+                          issuer = 'visa'
+                        } else if (bank === 'Bank of America') {
+                          issuer = 'boa'
+                        } else if (bank === 'Citi') {
+                          issuer = 'citi'
+                        } else if (bank === 'Capital One') {
+                          issuer = 'capitalone'
+                        } else if (bank === 'TD Bank') {
+                          issuer = 'td'
+                        } else if (bank === 'Wells Fargo') {
+                          issuer = 'wellsfargo'
+                        }
+                        return (
+                          <Carousel.Item interval={null}>
+                            <div key={account.id} id="credit-card">
+                              {' '}
+                              <Cards
+                                preview={preview}
+                                issuer={issuer}
+                                cvc="123"
+                                expiry=""
+                                name={account.name.slice(6)}
+                                number="XXXX XXXX XXXX XXXX"
+                              />
+                            </div>
+                          </Carousel.Item>
+                        )
                       }
-                      return (
-                        <div key={account.id} id="credit-card">
-                          {' '}
-                          <Cards
-                            preview={preview}
-                            issuer={issuer}
-                            cvc="123"
-                            expiry=""
-                            name={account.name.slice(6)}
-                            number="XXXX XXXX XXXX XXXX"
-                          />
-                        </div>
-                      )
-                    }
-                  })}
+                    })}
+                  </Carousel>
                 </div>
               </div>
             )
