@@ -40,16 +40,16 @@ class UserHome extends React.Component {
           <header className="flex bg-gray-900 m-5 p-5 shadow-lg rounded-lg">
             <h1 className="text-2xl text-teal-400">Summary Dashboard</h1>
           </header>
-          {/* <div id="pie">
-            <PieChart />
-          </div> */}
+
           <ResponsiveGridLayout
-            // className="my-5 mx-8"
+            className="my-5 mx-8"
+            id="visualization"
             breakpoints={breakpoints}
             cols={cols}
           >
             <div
               className="grid-cell"
+              id="pie"
               key="3"
               data-grid={{x: 0, y: 3, w: 1, h: 2, static: true}}
             >
@@ -69,7 +69,7 @@ class UserHome extends React.Component {
             <div
               className="grid-cell"
               key="2"
-              data-grid={{x: 2, y: 3, w: 3, h: 2, static: true}}
+              data-grid={{x: 2, y: 3, w: 5, h: 2, static: true}}
             >
               <h3 className="grid-header">Current Month Budget vs Expenses</h3>
               <BudgetBullet />
