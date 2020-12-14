@@ -71,33 +71,40 @@ class Transactions extends React.Component {
   render() {
     const transactions = this.props.transactions.filtered
     return transactions.length ? (
-      <div>
-        <h2>All Transactions</h2>
-        <label htmlFor="date">Choose Period:</label>
-        <select onChange={this.changeOption}>
-          <option value="all">All</option>
-          <option value="currentMonth">Current Month</option>
-          <option value="lastMonth">Last Month</option>
-          <option value="twoMonthsAgo">2 Month Ago</option>
-        </select>
-        <label htmlFor="category">Choose Category:</label>
-        <select onChange={this.changeCategory}>
-          <option value="All">All</option>
-          <option value="Food and Drink">Food And Drinks</option>
-          <option value="Travel">Travel</option>
-          <option value="Recreation">Entertainment</option>
-          <option value="Healthcare">Healthcare</option>
-          <option value="Shops">Shopping</option>
-          <option value="Groceries">Groceries</option>
-          <option value="Others">Others</option>
-        </select>
-        <Link to="/transactions/add">
-          <Button type="button" variant="outline-primary">
-            Add Transactions
-          </Button>
-        </Link>
+      <div className="all-transactions-container">
+        <div className="all-transactions-header-container">
+          <div className="left-transactions-header">
+            <h3>All Transactions</h3>
+          </div>
+
+          <div className="right-transactions-header">
+            <label htmlFor="date">Choose Period:</label>
+            <select onChange={this.changeOption}>
+              <option value="all">All</option>
+              <option value="currentMonth">Current Month</option>
+              <option value="lastMonth">Last Month</option>
+              <option value="twoMonthsAgo">2 Month Ago</option>
+            </select>
+            <label htmlFor="category">Choose Category:</label>
+            <select onChange={this.changeCategory}>
+              <option value="All">All</option>
+              <option value="Food and Drink">Food And Drinks</option>
+              <option value="Travel">Travel</option>
+              <option value="Recreation">Entertainment</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Shops">Shopping</option>
+              <option value="Groceries">Groceries</option>
+              <option value="Others">Others</option>
+            </select>
+            <Link to="/transactions/add">
+              <Button type="button" variant="outline-primary">
+                Add Transactions
+              </Button>
+            </Link>
+          </div>
+        </div>
         <Table responsive striped bordered hover>
-          <thead>
+          <thead className="transactions-head-row">
             <tr>
               <th>Date</th>
               <th>Name</th>
@@ -105,7 +112,7 @@ class Transactions extends React.Component {
               <th>Amount</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="body-rows">
             {transactions.map((transaction, idx) => (
               <tr key={idx}>
                 <td>{transaction.date}</td>
