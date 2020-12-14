@@ -64,6 +64,11 @@ rect {
   flex-direction: column;
 }
 
+/* #pie {
+  width: 100vw;
+  height: 100vh;
+} */
+
 /* div.react-grid-item.grid-cell.react-draggable.cssTransforms.react-resizable
   > * {
   margin-top: 20px;
@@ -73,7 +78,13 @@ rect {
 } */
 
 .w-full > * {
-  margin-top: 20px;
+  /* margin-left: 20px; */
+  /* padding-top: 0px; */
+  /* width: 100vw; */
+}
+
+div.react-grid-layout.my-5.mx-8 {
+  margin: 0px;
 }
 
 #charts {

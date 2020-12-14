@@ -59,6 +59,7 @@ class BudgetBullet extends React.Component {
       }
     ]
 
+    console.log(currentMonth)
     return (
       budgets.totalSpending !== 'undefined' &&
       currentMonth.length && (
