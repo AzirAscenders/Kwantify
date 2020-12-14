@@ -94,8 +94,8 @@ class BarGraph extends React.Component {
     return (
       <ResponsiveBar
         data={data}
-        width={900}
-        height={500}
+        // width={900}
+        // height={500}
         keys={[
           'Entertainment',
           'Food & Drink',
@@ -106,8 +106,14 @@ class BarGraph extends React.Component {
           'Others'
         ].reverse()}
         indexBy="month"
-        margin={{top: 50, right: 130, bottom: 50, left: 60}}
-        padding={0.3}
+        // margin={{top: 50, right: 110, bottom: 50, left: 60}}
+        margin={{
+          top: 110,
+          right: 110,
+          bottom: 50,
+          left: 10
+        }}
+        padding={0.02}
         valueScale={{type: 'linear'}}
         indexScale={{type: 'band', round: true}}
         colors={{scheme: 'nivo'}}
@@ -173,14 +179,14 @@ class BarGraph extends React.Component {
             anchor: 'bottom-right',
             direction: 'column',
             justify: false,
-            translateX: 120,
+            translateX: 100,
             translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 100,
+            itemsSpacing: 0,
+            itemWidth: 80,
             itemHeight: 20,
             itemDirection: 'left-to-right',
-            itemOpacity: 0.85,
-            symbolSize: 20,
+            itemOpacity: 0.75,
+            symbolSize: 12,
             effects: [
               {
                 on: 'hover',
@@ -191,9 +197,9 @@ class BarGraph extends React.Component {
             ]
           }
         ]}
-        animate={true}
-        motionStiffness={90}
-        motionDamping={15}
+        // animate={true}
+        // motionStiffness={90}
+        // motionDamping={15}
       />
     )
   }

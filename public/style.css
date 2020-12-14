@@ -35,9 +35,37 @@ form div {
   /* height: 550px; */
   height: 100%;
 }
+
 #summary-page {
   padding-top: 70px;
+  width: 100%;
 }
+
+rect {
+  padding: 0px;
+  width: 20%;
+}
+
+.App {
+  /* width: 250vw; */
+  /* height: 200vh; */
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+}
+
+/* div.react-grid-item.grid-cell.react-draggable.cssTransforms.react-resizable
+  > * {
+  margin-top: 20px;
+} */
+/* div.react-grid-layout.my-5.mx-8 > * {
+  margin-top: 20px;
+} */
+
+.w-full > * {
+  margin-top: 20px;
+}
+
 #charts {
   /* display: flex;
   flex-direction: column; */
@@ -46,6 +74,21 @@ form div {
 
   height: 450px;
   /* height: 100%; */
+}
+
+.grid-cell {
+  border: 1px solid #eee;
+  box-shadow: 1px 5px 5px #eee;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 20px 0;
+  /* margin: 100px; */
+}
+
+.grid-header {
+  margin: 0 2rem;
+  font-size: large;
+  font-weight: 700;
 }
 
 .burger {
