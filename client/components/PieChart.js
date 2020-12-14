@@ -101,9 +101,9 @@ class PieChart extends React.Component {
     return (
       <ResponsivePie
         data={data}
-        // width={900}
+        // width={1500}
         // height={500}
-        margin={{top: 40, right: 0, bottom: 80, left: 0}}
+        margin={{top: 40, right: 100, bottom: 80, left: 0}}
         theme={{fontSize: 18}}
         innerRadius={0.5}
         padAngle={2}
@@ -119,37 +119,37 @@ class PieChart extends React.Component {
         sliceLabelsTextColor="#333333"
         radialLabelsLinkColor={{from: 'color', modifiers: []}}
         radialLabelsLinkStrokeWidth={2}
-        // legends={[
-        //   {
-        //     anchor: 'bottom',
-        //     direction: 'row',
-        //     justify: false,
-        //     translateX: 0,
-        //     translateY: 56,
-        //     itemsSpacing: 0,
-        //     itemWidth: 100,
-        //     itemHeight: 18,
-        //     itemTextColor: '#999',
-        //     itemDirection: 'left-to-right',
-        //     itemOpacity: 1,
-        //     symbolSize: 18,
-        //     symbolShape: 'circle',
-        //     effects: [
-        //       {
-        //         on: 'hover',
-        //         style: {
-        //           itemTextColor: '#000',
-        //         },
-        //       },
-        //       {
-        //         on: 'mouseEnter',
-        //         style: {
-        //           itemTextColor: 'white',
-        //         },
-        //       },
-        //     ],
-        //   },
-        // ]}
+        legends={[
+          {
+            anchor: 'bottom',
+            direction: 'column',
+            justify: false,
+            translateX: 0,
+            translateY: 56,
+            itemsSpacing: 0,
+            itemWidth: 150,
+            itemHeight: 18,
+            itemTextColor: '#999',
+            itemDirection: 'left-to-right',
+            itemOpacity: 1,
+            symbolSize: 18,
+            symbolShape: 'circle',
+            effects: [
+              {
+                on: 'hover',
+                style: {
+                  itemTextColor: '#000'
+                }
+              },
+              {
+                on: 'mouseEnter',
+                style: {
+                  itemTextColor: 'white'
+                }
+              }
+            ]
+          }
+        ]}
       />
     )
   }

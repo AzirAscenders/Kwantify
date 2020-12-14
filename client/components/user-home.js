@@ -11,7 +11,10 @@ import BudgetBullet from './BudgetBullet'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
-import CreateLink from './create-link'
+// import {Card} from 'react-bootstrap'
+import {Responsive, WidthProvider} from 'react-grid-layout'
+
+import 'react-resizable/css/styles.css'
 
 /**
  * COMPONENT
@@ -24,20 +27,57 @@ class UserHome extends React.Component {
   }
 
   render() {
+    // Handles the responsive nature of the grid
+    const ResponsiveGridLayout = WidthProvider(Responsive)
+    // Determines the screen breakpoints for the columns
+    const breakpoints = {lg: 1200, md: 996, sm: 768, xs: 480, xxs: 320}
+    // How many columns are available at each breakpoint
+    const cols = {lg: 4, md: 4, sm: 1, xs: 1, xxs: 1}
+
     return (
-      // <div style={{width: '70%', height: '450px'}}>
-      <div id="charts">
-        <CreateLink />
-        {/* <div> */}
-        <PieChart />
-        {/* </div> */}
-        {/* <div> */}
-        <BudgetBullet />
-        {/* </div> */}
-        {/* <div> */}
-        <BarGraph />
-        {/* </div> */}
-        {/* <BudgetsBarGraph /> */}
+      <div className="App">
+        <div className="w-full">
+          <header className="flex bg-gray-900 m-5 p-5 shadow-lg rounded-lg">
+            <h1 className="text-2xl text-teal-400">Summary Dashboard</h1>
+          </header>
+          <ResponsiveGridLayout
+            className="my-5 mx-8"
+            breakpoints={breakpoints}
+            cols={cols}
+          >
+            <div
+              className="grid-cell"
+              key="3"
+              data-grid={{x: 0, y: 3, w: 1, h: 2}}
+            >
+              <h3 className="grid-header">Current Month Expenses</h3>
+              <PieChart />
+            </div>
+
+            <div
+              className="grid-cell"
+              key="4"
+              data-grid={{x: 2, y: 3, w: 3, h: 2}}
+            >
+              <h3 className="grid-header">Month by Month Expenses</h3>
+              <BarGraph />
+            </div>
+
+            {/* <div id="charts"> */}
+            {/* <div id="charts"> */}
+            {/* <div id="pie-chart">
+              <PieChart />
+            </div>
+            <div id="bullet">
+              <BudgetBullet />
+            </div>
+            <div id="bar-graph">
+              <BarGraph />
+            </div> */}
+          </ResponsiveGridLayout>
+          {/* <BudgetsBarGraph /> */}
+          {/* </div> */}
+        </div>
       </div>
     )
   }
