@@ -21,7 +21,6 @@ async function visionReader(req, res) {
 
 function starbucksReceiptReader(detections) {
   let items = []
-
   const arrayOfDescription = detections[0].description.split('\n')
   //console.log(arrayOfDescription)
   let subtotal

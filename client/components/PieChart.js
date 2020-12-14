@@ -103,7 +103,7 @@ class PieChart extends React.Component {
         data={data}
         // width={1500}
         // height={500}
-        margin={{top: 40, right: 100, bottom: 80, left: 0}}
+        margin={{top: 40, right: 100, bottom: 80, left: -55}}
         theme={{fontSize: 18}}
         innerRadius={0.5}
         padAngle={2}
@@ -112,6 +112,7 @@ class PieChart extends React.Component {
         borderWidth={3}
         borderColor={{from: 'color', modifiers: [['darker', 0.2]]}}
         enableSliceLabels={false}
+        // sliceLabelsRadiusOffset={1.65}
         enableRadialLabels={false}
         radialLabelsLinkDiagonalLength={24}
         radialLabelsTextXOffset={7}
@@ -121,12 +122,13 @@ class PieChart extends React.Component {
         radialLabelsLinkStrokeWidth={2}
         legends={[
           {
-            anchor: 'bottom',
+            fill: 'none',
+            anchor: 'right',
             direction: 'column',
             justify: false,
-            translateX: 0,
-            translateY: 56,
-            itemsSpacing: 0,
+            translateX: 95,
+            translateY: 12,
+            itemsSpacing: 20,
             itemWidth: 150,
             itemHeight: 18,
             itemTextColor: '#999',
@@ -144,7 +146,7 @@ class PieChart extends React.Component {
               {
                 on: 'mouseEnter',
                 style: {
-                  itemTextColor: 'white'
+                  itemTextColor: '#000'
                 }
               }
             ]

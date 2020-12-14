@@ -108,12 +108,12 @@ class BarGraph extends React.Component {
         indexBy="month"
         // margin={{top: 50, right: 110, bottom: 50, left: 60}}
         margin={{
-          top: 110,
-          right: 110,
+          top: 50,
+          right: 123,
           bottom: 50,
           left: 10
         }}
-        padding={0.02}
+        padding={0.01}
         valueScale={{type: 'linear'}}
         indexScale={{type: 'band', round: true}}
         colors={{scheme: 'nivo'}}

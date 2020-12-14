@@ -74,27 +74,39 @@ rect {
   flex-direction: column;
 }
 
+/* #pie {
+  width: 100vw;
+  height: 100vh;
+} */
+
 /* div.react-grid-item.grid-cell.react-draggable.cssTransforms.react-resizable
   > * {
   margin-top: 20px;
 } */
-/* div.react-grid-layout.my-5.mx-8 > * {
-  margin-top: 20px;
-} */
 
-.w-full > * {
-  margin-top: 20px;
+div.react-grid-layout {
+  margin-top: 0px;
 }
 
-#charts {
-  /* display: flex;
-  flex-direction: column; */
+/* .w-full > * {
+  margin-left: 20px;
+  padding-top: 0px;
+  width: 100vw;
+} */
+
+div.react-grid-layout.my-5.mx-8 {
+  margin: 0px;
+}
+
+/* #charts {
+  display: flex;
+  flex-direction: column;
   width: 70%;
   margin: 20%;
 
   height: 450px;
-  /* height: 100%; */
-}
+  height: 100%;
+} */
 
 .grid-cell {
   border: 1px solid #eee;
@@ -103,7 +115,16 @@ rect {
   background-color: #fff;
   padding: 20px 0;
   /* margin: 100px; */
+  transform: translate(0px, 0px) !important;
+  position: relative !important;
+  width: 100% !important;
+  /* margin-right: 20px; */
+  margin-bottom: 26px;
 }
+
+/* #pie {
+  transform: translate(0px, 0px) !important;
+} */
 
 .grid-header {
   margin: 0 2rem;
@@ -284,21 +305,38 @@ rect {
     justify-content: center;
     flex-wrap: wrap;
   }
-  #bank-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-style: ridge;
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: 10px;
-    background-color: white;
-    box-shadow: black;
-    height: auto;
-    padding-top: 10%;
-    padding-bottom: 10%;
+}
+
+@media screen and (min-width: 425px) {
+  .grid-cell {
+    width: 30% !important;
   }
+
+  div.react-grid-layout.my-5.mx-8 {
+    display: flex !important;
+    justify-content: space-around !important;
+    height: 100% !important;
+  }
+
+  #visualization {
+    background-color: black;
+  }
+}
+
+#bank-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-style: ridge;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: black;
+  height: auto;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }
 
 .logo-size {
