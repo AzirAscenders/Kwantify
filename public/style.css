@@ -46,6 +46,16 @@ form div {
   height: 100%;
 }
 
+#main-account {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 70px;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+}
+
 #summary-page {
   padding-top: 70px;
   width: 100%;
@@ -241,7 +251,7 @@ rect {
   margin-top: 1rem;
 }
 
-/* CREDIT CARD */
+/* CREDIT CARD ACCOUNTS */
 #credit-card {
   margin: 10px;
 }
@@ -251,6 +261,21 @@ rect {
   flex-direction: row;
   flex-wrap: wrap;
 }
+#bank-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-style: ridge;
+  width: 30%;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: black;
+  height: auto;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
 
 @media screen and (max-width: 425px) {
   #credit-card-container {
@@ -259,12 +284,21 @@ rect {
     justify-content: center;
     flex-wrap: wrap;
   }
-}
-
-#bank-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  #bank-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-style: ridge;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: black;
+    height: auto;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
 }
 
 .logo-size {
@@ -272,6 +306,7 @@ rect {
   flex-direction: row;
   align-items: center;
   width: 100%;
+  justify-content: center;
 }
 
 .logo-size > h2 {
