@@ -94,8 +94,8 @@ class BarGraph extends React.Component {
     return (
       <ResponsiveBar
         data={data}
-        // width={900}
-        // height={500}
+        width={900}
+        height={500}
         keys={[
           'Entertainment',
           'Food & Drink',

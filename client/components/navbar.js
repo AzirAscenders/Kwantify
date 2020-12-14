@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import Hamburger from 'hamburger-react'
 import {Navbar} from 'react-bootstrap'
+import CreateLink from './create-link'
 
 const NavBar = ({handleClick, isLoggedIn, user}) => {
   const [isOpen, setOpen] = useState(false)
@@ -31,6 +32,7 @@ const NavBar = ({handleClick, isLoggedIn, user}) => {
                 <Link to="/accounts">Accounts</Link>
                 <Link to="/budgets">Budgets</Link>
                 <Link to="/transactions">Transactions</Link>
+                <CreateLink />
               </div>
             ) : (
               <div className="burger">

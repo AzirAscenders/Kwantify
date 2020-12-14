@@ -35,15 +35,16 @@ form div {
   /* height: 550px; */
   height: 100%;
 }
-
-#charts {
-  background-color: crimson;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+#summary-page {
   padding-top: 70px;
-  /* background-color: coral; */
-  height: 5000px;
+}
+#charts {
+  /* display: flex;
+  flex-direction: column; */
+  width: 100%;
+  margin: 20%;
+
+  height: 450px;
   /* height: 100%; */
 }
 
@@ -172,6 +173,7 @@ form div {
   margin-top: 1rem;
 }
 
+/* CREDIT CARD */
 #credit-card {
   margin: 10px;
 }

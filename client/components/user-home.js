@@ -11,7 +11,7 @@ import BudgetBullet from './BudgetBullet'
 import {fetchLink} from '../store/link'
 import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
-import CreateLink from './create-link'
+import {Card} from 'react-bootstrap'
 
 /**
  * COMPONENT
@@ -25,19 +25,20 @@ class UserHome extends React.Component {
 
   render() {
     return (
-      // <div style={{width: '70%', height: '450px'}}>
-      <div id="charts">
-        <CreateLink />
-        {/* <div> */}
-        <PieChart />
-        {/* </div> */}
-        {/* <div> */}
-        <BudgetBullet />
-        {/* </div> */}
-        {/* <div> */}
-        <BarGraph />
-        {/* </div> */}
-        {/* <BudgetsBarGraph /> */}
+      <div id="summary-page">
+        <div id="charts">
+          {/* <div id="charts"> */}
+          {/* <div> */}
+          <PieChart />
+          {/* </div> */}
+          {/* <div> */}
+          <BudgetBullet />
+          {/* </div> */}
+          {/* <div> */}
+          <BarGraph />
+          {/* </div> */}
+          {/* <BudgetsBarGraph /> */}
+        </div>
       </div>
     )
   }
