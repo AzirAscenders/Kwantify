@@ -11,7 +11,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+nav a:hover {
   text-decoration: none;
   color: white;
   margin: 0;
@@ -139,7 +139,7 @@ rect {
   position: fixed;
   z-index: 10;
   height: 60px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
   -webkit-backface-visibility: hidden;
 }
 
@@ -284,6 +284,8 @@ rect {
   height: auto;
 }
 
+/* LOGIN PAGE */
+
 .wave {
   position: fixed;
   bottom: 0;
@@ -352,7 +354,10 @@ rect {
   .login-content img {
     height: 100px;
   }
-  
+}
+
+/* CREDIT CARD */
+
 .rccs__card--capitalone .rccs__card__background {
   background: rgb(0, 72, 118);
 }
