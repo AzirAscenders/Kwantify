@@ -11,72 +11,78 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div className="auth-form-container">
-      <form
-        className="login-form-container"
-        onSubmit={handleSubmit}
-        name={name}
-      >
-        {name === 'signup' && (
-          <div className="signup-field-container">
-            <h3>SIGN UP</h3>
-            <div className="input-field">
-              <label htmlFor="firstName">
-                <p>First Name </p>
-              </label>
-              <input name="firstName" type="text" />
+    <div>
+      <img className="wave" src="./wave.png" />
+      <div className="container">
+        <div className="img">
+          <img src="./loginTest8.svg" />
+        </div>
+        <form
+          className="login-form-container"
+          onSubmit={handleSubmit}
+          name={name}
+        >
+          {name === 'signup' && (
+            <div className="signup-field-container">
+              <h3>SIGN UP</h3>
+              <div className="input-field">
+                <label htmlFor="firstName">
+                  <p>First Name </p>
+                </label>
+                <input name="firstName" type="text" />
+              </div>
+              <div className="input-field">
+                <label htmlFor="lastName">
+                  <p>Last Name </p>
+                </label>
+                <input name="lastName" type="text" />
+              </div>
+              <div className="input-field">
+                <label htmlFor="email">
+                  <p>Email </p>
+                </label>
+                <input name="email" type="text" />
+              </div>
+              <div className="input-field">
+                <label htmlFor="password">
+                  <p>Password </p>
+                </label>
+                <input name="password" type="password" />
+              </div>
+              <div>
+                <Button variant="outline-primary" type="submit">
+                  {displayName}
+                </Button>
+              </div>
+              <a href="/auth/google">{displayName} with Google</a>
             </div>
-            <div className="input-field">
-              <label htmlFor="lastName">
-                <p>Last Name </p>
-              </label>
-              <input name="lastName" type="text" />
+          )}
+          {name === 'login' && (
+            <div className="signup-field-container">
+              <h3>LOG IN</h3>
+              <div className="input-field">
+                <label htmlFor="email">
+                  <p>Email </p>
+                </label>
+                <input name="email" type="text" />
+              </div>
+              <div className="input-field">
+                <label htmlFor="password">
+                  <p>Password </p>
+                </label>
+                <input name="password" type="password" />
+              </div>
+              <div>
+                <Button variant="outline-primary" type="submit">
+                  {displayName}
+                </Button>
+              </div>
+              <a href="/auth/google">{displayName} with Google</a>
             </div>
-            <div className="input-field">
-              <label htmlFor="email">
-                <p>Email </p>
-              </label>
-              <input name="email" type="text" />
-            </div>
-            <div className="input-field">
-              <label htmlFor="password">
-                <p>Password </p>
-              </label>
-              <input name="password" type="password" />
-            </div>
-            <div>
-              <Button variant="outline-primary" type="submit">
-                {displayName}
-              </Button>
-            </div>
-            <a href="/auth/google">{displayName} with Google</a>
-          </div>
-        )}
-        {name === 'login' && (
-          <div className="signup-field-container">
-            <h3>LOG IN</h3>
-            <div className="input-field">
-              <label htmlFor="email">
-                <p>Email </p>
-              </label>
-              <input name="email" type="text" />
-            </div>
-            <div className="input-field">
-              <label htmlFor="password">
-                <p>Password </p>
-              </label>
-              <input name="password" type="password" />
-            </div>
-            <div>
-              <Button variant="outline-primary" type="submit">
-                {displayName}
-              </Button>
-            </div>
-            <a href="/auth/google">{displayName} with Google</a>
-          </div>
-        )}
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
+          )}
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
     </div>
   )
 }
