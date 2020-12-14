@@ -80,17 +80,20 @@ class Budgets extends React.Component {
     )
 
     return (
-      <div id="main">
-        <form onSubmit={this.handleSubmit}>
+      <div className="budget-container">
+        <div className="budget-header">
+          <h3>Set your Budget</h3>
+        </div>
+        <form className="budget-form" onSubmit={this.handleSubmit}>
           <Table size="sm">
-            <thead>
+            <thead className="head-row">
               <tr>
                 <th />
                 <th>Current Budget</th>
                 <th>Edit your Budget</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="body-rows">
               <tr>
                 <td>Entertainment</td>
                 <td>{`$ ${(budgets.entertainment / 100 || 0).toFixed(2)}`}</td>
@@ -170,15 +173,19 @@ class Budgets extends React.Component {
                 </td>
               </tr>
             </tbody>
-            <tbody>
+            <tbody className="totals-row">
               <tr>
-                <td>Total Spending</td>
-                <td>{`$ ${(
-                  filteredBudget.reduce(
-                    (accumulator, budget) => accumulator + budgets[budget],
-                    0
-                  ) / 100
-                ).toFixed(2)}`}</td>
+                <td>
+                  <strong>Total Spending</strong>
+                </td>
+                <td>
+                  <strong>{`$ ${(
+                    filteredBudget.reduce(
+                      (accumulator, budget) => accumulator + budgets[budget],
+                      0
+                    ) / 100
+                  ).toFixed(2)}`}</strong>
+                </td>
               </tr>
             </tbody>
           </Table>

@@ -1,7 +1,7 @@
 /* Color Schemes feather #77C9D4 marine #57BC90 forest #015249 sleek grey #A5A5AF*/
 
 body {
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
   width: 100vw;
   height: 100vh;
   background-color: #dee8f3;
@@ -461,4 +461,68 @@ rect {
 
 .rccs__card--td .rccs__expiry {
   opacity: 1;
+}
+
+/* BUDGET */
+.budget-container {
+  display: flex;
+  flex-direction: column;
+  margin: 100px 100px 0 100px;
+  background-color: white;
+  border-collapse: collapse;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+}
+
+.head-row th,
+.body-rows td,
+.totals-row td,
+.budget-header h3 {
+  vertical-align: middle;
+  padding-left: 15px;
+}
+
+.head-row th {
+  background-color: rgb(23, 162, 184);
+  color: #fff;
+  line-height: 1.4;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.body-rows td,
+.body-rows input {
+  color: rgb(71, 73, 72) !important;
+}
+
+.budget-form button {
+  background-color: rgb(23, 162, 184);
+  color: #fff;
+  align-items: end;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  width: 10rem;
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 425px) {
+  .budget-container {
+    margin: 100px 0 0 0;
+  }
+
+  .head-row th,
+  .body-rows td,
+  .totals-row td,
+  .budget-header h3 {
+    padding-left: 5px;
+  }
+  .table {
+    width: 100vw;
+  }
+
+  input {
+    width: 90%;
+  }
 }
