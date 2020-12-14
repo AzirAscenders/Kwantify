@@ -273,6 +273,7 @@ export default function(state = defaultTransactions, action) {
       return {...state, filtered: action.transactions}
 
     case EDIT_TRANSACTION:
+      action.transaction.amount = (action.transaction.amount / 100).toFixed(2)
       return {...state, singleTransaction: action.transaction}
 
     case EDIT_ITEMS:

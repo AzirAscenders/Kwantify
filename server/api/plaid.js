@@ -193,6 +193,7 @@ router.get('/transactions/get', async (req, res, next) => {
             await dbTransaction.setUser(req.user.dataValues.id)
           } else {
             transaction.id = found.dataValues.id
+            transaction.amount = found.dataValues.amount / 100
           }
           return transaction
         } catch (err) {
