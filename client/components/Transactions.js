@@ -71,7 +71,7 @@ class Transactions extends React.Component {
   render() {
     const transactions = this.props.transactions.filtered
     return transactions.length ? (
-      <div id="main">
+      <div>
         <h2>All Transactions</h2>
         <label htmlFor="date">Choose Period:</label>
         <select onChange={this.changeOption}>
