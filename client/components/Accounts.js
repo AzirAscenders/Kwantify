@@ -24,9 +24,9 @@ class Accounts extends React.Component {
         uniqueBankName.push(bankName[i])
       }
     }
-    console.log(bankName)
+
     return (
-      <div id="main">
+      <div id="main-account">
         {accounts.length ? (
           uniqueBankName.map((bank, idx) => {
             if (bank === 'Bank of America') {
