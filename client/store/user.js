@@ -7,7 +7,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const EDIT_USER = 'EDIT_USER'
-const REMOVE_USER = 'REMOVE_USER'
+export const REMOVE_USER = 'REMOVE_USER'
 
 /**
  * INITIAL STATE

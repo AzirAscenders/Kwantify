@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import axios from 'axios'
+import {REMOVE_USER} from './user'
 
 /**
  * ACTION TYPES
@@ -301,6 +302,9 @@ export default function(state = defaultTransactions, action) {
 
     case SINGLE_TRANSACTION_LOADING:
       return {...state, singleTransaction: {}}
+
+    case REMOVE_USER:
+      return defaultTransactions
 
     default:
       return state
