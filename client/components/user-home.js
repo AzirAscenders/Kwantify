@@ -82,7 +82,7 @@ class UserHome extends React.Component {
               key="1"
               data-grid={{x: 2, y: 3, w: 3, h: 2}}
             >
-              <h3 className="grid-header">Members' Favorite Transportion</h3>
+              <h3 className="grid-header">Monthly Total Spending</h3>
               <Line />
             </div>
 
