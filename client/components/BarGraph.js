@@ -32,9 +32,20 @@ class BarGraph extends React.Component {
     const date = new Date()
     const month = date.getMonth()
 
+    const month_2 = month => {
+      if (month - 2 === -1) return 11
+      else if (month - 2 === -2) return 10
+      else return month - 2
+    }
+
+    const month_1 = month => {
+      if (month - 1 === -1) return 11
+      else return month - 1
+    }
+
     const data = [
       {
-        month: monthBank[month - 2],
+        month: monthBank[month_2(month)],
         Entertainment: expenseCalculator(twoMonthsAgo, 'Recreation'),
         EntertainmentColor: 'hsl(325, 70%, 50%)',
         'Food & Drink': expenseCalculator(twoMonthsAgo, 'Food and Drink'),
@@ -56,7 +67,7 @@ class BarGraph extends React.Component {
         // OthersColor: 'hsl(34, 70%, 50%)',
       },
       {
-        month: monthBank[month - 1],
+        month: monthBank[month_1(month)],
         Entertainment: expenseCalculator(lastMonth, 'Recreation'),
         EntertainmentColor: 'hsl(191, 70%, 50%)',
         'Food & Drink': expenseCalculator(lastMonth, 'Food and Drink'),

@@ -100,7 +100,9 @@ class Accounts extends React.Component {
             )
           })
         ) : (
-          <div>Loading</div>
+          <div id="main-account">
+            <h3>Currently, you do not have a bank linked to your account.</h3>
+          </div>
         )}
       </div>
     )
