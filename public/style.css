@@ -647,6 +647,8 @@ div.react-grid-layout.my-5.mx-8 {
   }
   .filter-dropdown {
     padding-left: 5px;
+    align-items: flex-end;
+    margin-bottom: 5px;
   }
   .filter-container label {
     margin-top: 7px;
@@ -654,5 +656,11 @@ div.react-grid-layout.my-5.mx-8 {
 
   .filter-container button {
     margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .filter-container select,
+  .filter-container button {
+    width: 95%;
   }
 }
