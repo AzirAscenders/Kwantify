@@ -78,29 +78,38 @@ class Transactions extends React.Component {
           </div>
 
           <div className="right-transactions-header">
-            <label htmlFor="date">Choose Period:</label>
-            <select onChange={this.changeOption}>
-              <option value="all">All</option>
-              <option value="currentMonth">Current Month</option>
-              <option value="lastMonth">Last Month</option>
-              <option value="twoMonthsAgo">2 Month Ago</option>
-            </select>
-            <label htmlFor="category">Choose Category:</label>
-            <select onChange={this.changeCategory}>
-              <option value="All">All</option>
-              <option value="Food and Drink">Food And Drinks</option>
-              <option value="Travel">Travel</option>
-              <option value="Recreation">Entertainment</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Shops">Shopping</option>
-              <option value="Groceries">Groceries</option>
-              <option value="Others">Others</option>
-            </select>
-            <Link to="/transactions/add">
-              <Button type="button" variant="outline-primary">
-                Add Transactions
-              </Button>
-            </Link>
+            <div />
+            <div className="filter-dropdown">
+              <div className="filter-container">
+                <label htmlFor="date">Choose Period:</label>
+                <select onChange={this.changeOption}>
+                  <option value="all">All</option>
+                  <option value="currentMonth">Current Month</option>
+                  <option value="lastMonth">Last Month</option>
+                  <option value="twoMonthsAgo">2 Month Ago</option>
+                </select>
+              </div>
+              <div className="filter-container">
+                <label htmlFor="category">Choose Category:</label>
+                <select onChange={this.changeCategory}>
+                  <option value="All">All</option>
+                  <option value="Food and Drink">Food And Drinks</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Recreation">Entertainment</option>
+                  <option value="Healthcare">Healthcare</option>
+                  <option value="Shops">Shopping</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+              <div className="filter-container">
+                <Link to="/transactions/add">
+                  <Button type="button" variant="outline-primary">
+                    Add Transactions
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
         <Table responsive striped bordered hover>

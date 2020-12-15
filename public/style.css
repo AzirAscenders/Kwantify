@@ -540,7 +540,8 @@ div.react-grid-layout.my-5.mx-8 {
 .body-rows td,
 .totals-row td,
 .budget-header h3,
-.transactions-head-row th {
+.transactions-head-row th,
+.left-transactions-header h3 {
   vertical-align: middle;
   padding-left: 15px;
 }
@@ -582,21 +583,43 @@ div.react-grid-layout.my-5.mx-8 {
 
 .all-transactions-header-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 .right-transactions-header {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .transactions-head-row th {
-  background-color: #015249;
+  background-color: #57d4c9;
   color: #fff;
   line-height: 1.4;
   padding-top: 18px;
   padding-bottom: 18px;
+}
+
+.filter-dropdown {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-container {
+  padding-right: 10px;
+}
+
+.filter-container label {
+  margin-bottom: 4px;
+}
+
+.filter-container button {
+  margin-top: 5px;
+}
+
+.filter-container select {
+  margin-bottom: 5px;
 }
 
 /* MEDIA QUERY */
@@ -614,11 +637,22 @@ div.react-grid-layout.my-5.mx-8 {
   .left-transactions-header h3 {
     padding-left: 5px;
   }
-  .table {
+  .table,
+  .all-transactions-container {
     width: 100vw;
   }
 
   input {
     width: 90%;
+  }
+  .filter-dropdown {
+    padding-left: 5px;
+  }
+  .filter-container label {
+    margin-top: 7px;
+  }
+
+  .filter-container button {
+    margin-top: 0;
   }
 }
