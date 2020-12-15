@@ -24,7 +24,7 @@ const NavBar = ({handleClick, isLoggedIn, user}) => {
             {isLoggedIn ? (
               <div className="burger">
                 {/* The navbar will show these links after you log in */}
-                
+
                 <div className="burger-top">
                   <Link to="/home">Home</Link>
                   <Link to="/profile">Profile</Link>
@@ -52,9 +52,8 @@ const NavBar = ({handleClick, isLoggedIn, user}) => {
           </nav>
         )}
         <div>
-          <h1>Kwantify</h1>
+          <img src="./kwantify.png" />
         </div>
-        <hr />
         {/* </Navbar> */}
       </div>
     </>
