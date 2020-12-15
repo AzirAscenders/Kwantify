@@ -25,7 +25,7 @@ const {
 const storage = new MulterGoogleCloudStorage.storageEngine({
   bucket: process.env.GCS_BUCKET || GCS_BUCKET,
   projectId: process.env.GCS_PROJECT_ID || GCS_PROJECT_ID,
-  keyFilename: GCS_CREDENTIALS,
+  keyFilename: process.env.GCS_CREDENTIALS || GCS_CREDENTIALS,
   credentials: {
     client_email: process.env.GCS_EMAIL || GCS_EMAIL,
     private_key: process.env.GCS_PRIVATE_KEY || GCS_PRIVATE_KEY
