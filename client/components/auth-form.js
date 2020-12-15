@@ -50,9 +50,9 @@ const AuthForm = props => {
                 <input name="password" type="password" />
               </div>
               <div>
-                <Button variant="outline-primary" type="submit">
+                <button className="login-button" type="submit">
                   {displayName}
-                </Button>
+                </button>
               </div>
               <a href="/auth/google">{displayName} with Google</a>
             </div>
@@ -73,7 +73,7 @@ const AuthForm = props => {
                 <input name="password" type="password" />
               </div>
               <div>
-                <button className="btn" type="submit">
+                <button className="login-button" type="submit">
                   {displayName}
                 </button>
               </div>
