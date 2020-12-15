@@ -58,11 +58,10 @@ class AddTransaction extends React.Component {
 
   render() {
     return (
-      <div id="main">
-        <h2>Add Transactions</h2>
+      <div id="main-add">
         <div className="add-transaction">
-          <form onSubmit={this.onFormSubmit}>
-            <h4>Take picture of receipt and upload</h4>
+          <h2 className="center">Receipt Upload</h2>
+          <form className="receipt-form" onSubmit={this.onFormSubmit}>
             <input type="file" name="image" onChange={this.onChange} />
             <Button
               variant="outline-success"
@@ -76,7 +75,7 @@ class AddTransaction extends React.Component {
         <br />
         <br />
         <div className="add-transaction">
-          <h4>Manually add transactions</h4>
+          <h2>Manual Upload</h2>
           <form onSubmit={e => this.handleSubmit(e)}>
             <label className="thickfont" htmlFor="name">
               Name
@@ -134,7 +133,16 @@ class AddTransaction extends React.Component {
             />
             <br />
             <div>
-              <Button variant="outline-success" type="submit">
+              <Button
+                variant="outline-success"
+                type="submit"
+                disabled={
+                  !this.state.name &&
+                  !this.state.amount &&
+                  !this.state.category &&
+                  !this.state.date
+                }
+              >
                 Submit
               </Button>
             </div>
