@@ -194,13 +194,42 @@ div.react-grid-layout.my-5.mx-8 {
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: center;
-  background-image: linear-gradient(to right, #77c9d4, #57bc90);
+  justify-content: space-between;
+  background: linear-gradient(to right, #57bc90, white);
   position: fixed;
   z-index: 10;
   height: 60px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
   -webkit-backface-visibility: hidden;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+#nav-bar-container img {
+  width: 191px;
+  height: 55px;
+  padding-top: 3px;
+}
+
+.hamburger-react {
+  border: 3px solid;
+  background: white;
+  top: 6px;
+  border-radius: 5px 15px;
+  left: 3px;
+}
+
+.hamburger-react div:nth-child(1) {
+  top: 10px !important;
+  left: 6px !important;
+}
+.hamburger-react div:nth-child(2) {
+  top: 20px !important;
+  left: 6px !important;
+}
+.hamburger-react div:nth-child(3) {
+  top: 30px !important;
+  left: 6px !important;
 }
 
 #hamburger {
