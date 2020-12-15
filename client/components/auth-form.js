@@ -59,7 +59,7 @@ const AuthForm = props => {
           )}
           {name === 'login' && (
             <div className="signup-field-container">
-              <h3>LOG IN</h3>
+              <h3>WELCOME</h3>
               <div className="input-field">
                 <label htmlFor="email">
                   <p>Email </p>
@@ -73,9 +73,9 @@ const AuthForm = props => {
                 <input name="password" type="password" />
               </div>
               <div>
-                <Button variant="outline-primary" type="submit">
+                <button className="btn" type="submit">
                   {displayName}
-                </Button>
+                </button>
               </div>
               <a href="/auth/google">{displayName} with Google</a>
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAllAccounts} from '../store/accounts'
@@ -41,6 +42,8 @@ class Accounts extends React.Component {
               image = './institutionlogos/TD.png'
             } else if (bank === 'Wells Fargo') {
               image = './institutionlogos/Wells_Fargo.png'
+            } else if (bank === 'American Express') {
+              image = './institutionlogos/AMEX.png'
             }
             return (
               <div key={idx} id="bank-logo">
@@ -63,6 +66,8 @@ class Accounts extends React.Component {
                           issuer = 'td'
                         } else if (bank === 'Wells Fargo') {
                           issuer = 'wellsfargo'
+                        } else if (bank === 'American Express') {
+                          issuer = 'amex'
                         }
                         return (
                           <Carousel.Item interval={null}>

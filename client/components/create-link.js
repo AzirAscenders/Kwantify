@@ -16,12 +16,16 @@ class CreateLink extends React.Component {
               metadata
               // {institution, accounts, link_session_id}
             ) =>
-              this.props.generateLinkTransactions(
-                public_token,
-                this.props.user.id,
-                metadata
-                // {institution, accounts, link_session_id}
-              )
+              this.props
+                .generateLinkTransactions(
+                  public_token,
+                  this.props.user.id,
+                  metadata
+                  // {institution, accounts, link_session_id}
+                )
+                .then(() => {
+                  alert('You have succesfully linked your bank account')
+                })
             }
           >
             Connect a bank account
