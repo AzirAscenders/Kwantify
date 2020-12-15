@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {REMOVE_USER} from './user'
 
 /**
  * ACTION TYPES
@@ -34,6 +35,10 @@ export default function(state = defaultLink, action) {
   switch (action.type) {
     case GET_LINK:
       return action.link
+
+    case REMOVE_USER:
+      return defaultLink
+
     default:
       return state
   }

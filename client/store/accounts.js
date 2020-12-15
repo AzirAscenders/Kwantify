@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {REMOVE_USER} from './user'
 
 //ACTION TYPES
 const GET_ALL_ACCOUNTS = 'GET_ALL_ACCOUNTS'
@@ -37,6 +38,9 @@ const accountsReducer = (state = initialState, action) => {
 
     case LOAD_ACCOUNTS:
       return {...state, loading: true}
+
+    case REMOVE_USER:
+      return initialState
 
     default:
       return state
