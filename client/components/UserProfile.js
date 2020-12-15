@@ -46,7 +46,9 @@ class UserProfile extends React.Component {
     const {imageUrl, firstName, lastName, email} = this.props.user
     return (
       <div className="profile-container">
-        <div className="profile-header">Profile</div>
+        <div className="profile-header">
+          <h2>Profile</h2>
+        </div>
         <img src={imageUrl} />
         <div className="profile-hero-info-container">
           <div className="profile-hero-info-field">
