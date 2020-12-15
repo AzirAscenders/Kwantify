@@ -156,93 +156,103 @@ class SingleTransaction extends React.Component {
       }
     }
     return transaction.name ? (
-      <div id="main">
+      <div className="single-transaction-container">
         {this.state.editTrans ? (
-          <div>
-            <h3>
-              Name:{' '}
-              <input
-                name="name"
-                value={this.state.transaction.name}
-                type="text"
-                onChange={this.handleChangeTrans}
-              />
-            </h3>
-            <p>
-              Date:{' '}
-              <input
-                name="date"
-                value={this.state.transaction.date}
-                type="text"
-                onChange={this.handleChangeTrans}
-              />
-            </p>
-            <p>
-              Amount: ${' '}
-              <input
-                name="amount"
-                value={this.state.transaction.amount}
-                type="text"
-                onChange={this.handleChangeTrans}
-              />
-            </p>
-            <p>
-              Category:{' '}
-              <input
-                name="category"
-                value={this.state.transaction.category}
-                type="text"
-                onChange={this.handleChangeTrans}
-              />
-            </p>
+          <div className="transaction-info-container">
+            <div className="left-transaction-info-container">
+              <h4>
+                {' '}
+                <input
+                  name="name"
+                  value={this.state.transaction.name}
+                  type="text"
+                  onChange={this.handleChangeTrans}
+                />
+              </h4>
+            </div>
+            <div className="right-transaction-info-container">
+              <p>
+                Amount: ${' '}
+                <input
+                  name="amount"
+                  value={this.state.transaction.amount}
+                  type="text"
+                  onChange={this.handleChangeTrans}
+                />
+              </p>
+              <p>
+                Date:{' '}
+                <input
+                  name="date"
+                  value={this.state.transaction.date}
+                  type="text"
+                  onChange={this.handleChangeTrans}
+                />
+              </p>
+              <p>
+                Category:{' '}
+                <input
+                  name="category"
+                  value={this.state.transaction.category}
+                  type="text"
+                  onChange={this.handleChangeTrans}
+                />
+              </p>
+            </div>
           </div>
         ) : (
-          <div>
-            <h3>Name: {transaction.name}</h3>
-            <p>Date: {transaction.date}</p>
-            <p>Total: $ {transaction.amount}</p>
-            <p>Category: {transaction.category}</p>
+          <div className="transaction-info-container">
+            <div className="left-transaction-info-container">
+              <h4>{transaction.name}</h4>
+            </div>
+
+            <div className="right-transaction-info-container">
+              <p>Total: $ {transaction.amount}</p>
+              <p>Date: {transaction.date}</p>
+              <p>Category: {transaction.category}</p>
+            </div>
           </div>
         )}
-
-        <Button
-          type="button"
-          variant="outline-primary"
-          onClick={this.handleClickEditTrans}
-          disabled={
-            (this.state.add || this.state.editItem) &&
-            (this.state.add || this.state.editItem)
-          }
-        >
-          Edit Transaction
-        </Button>
-        <Button
-          type="button"
-          variant="outline-primary"
-          onClick={this.handleClickAdd}
-          disabled={
-            (this.state.editTrans || this.state.editItem) &&
-            (this.state.editTrans || this.state.editItem)
-          }
-        >
-          Add Item
-        </Button>
-        <Button
-          type="button"
-          variant="outline-primary"
-          onClick={this.handleClickEditItem}
-          disabled={
-            (this.state.add || this.state.editTrans) &&
-            (this.state.add || this.state.editTrans)
-          }
-        >
-          {this.state.editItem ? `Cancel Edit` : `Edit Item(s)`}
-        </Button>
+        <div className="single-transaction-button">
+          <Button
+            type="button"
+            variant="outline-primary"
+            onClick={this.handleClickEditTrans}
+            disabled={
+              (this.state.add || this.state.editItem) &&
+              (this.state.add || this.state.editItem)
+            }
+          >
+            Edit Transaction
+          </Button>
+          <Button
+            type="button"
+            variant="outline-primary"
+            onClick={this.handleClickAdd}
+            disabled={
+              (this.state.editTrans || this.state.editItem) &&
+              (this.state.editTrans || this.state.editItem)
+            }
+          >
+            Add Item
+          </Button>
+          <Button
+            type="button"
+            variant="outline-primary"
+            onClick={this.handleClickEditItem}
+            disabled={
+              (this.state.add || this.state.editTrans) &&
+              (this.state.add || this.state.editTrans)
+            }
+          >
+            {this.state.editItem ? `Cancel Edit` : `Edit Item(s)`}
+          </Button>
+        </div>
 
         {items && (
-          <div>
+          <div className="single-transaction-table">
             <Table striped bordered hover>
-              <thead>
+              <thead className="single-transaction-head-row">
                 <tr>
                   <th>Product Name</th>
                   <th>Price</th>
@@ -250,7 +260,7 @@ class SingleTransaction extends React.Component {
                 </tr>
               </thead>
 
-              <tbody id="item-tbody">
+              <tbody id="item-tbody" className="item-row">
                 {this.state.editItem
                   ? this.state.rows.map(
                       (item, idx) =>
@@ -379,9 +389,11 @@ class SingleTransaction extends React.Component {
             {(this.state.add ||
               this.state.editItem ||
               this.state.editTrans) && (
-              <Button type="submit" onClick={this.handleSubmitItem}>
-                Submit
-              </Button>
+              <div className="single-transaction-submit">
+                <Button type="submit" onClick={this.handleSubmitItem}>
+                  Submit
+                </Button>
+              </div>
             )}
           </div>
         )}
