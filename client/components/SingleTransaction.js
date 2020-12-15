@@ -5,9 +5,11 @@ import {
   fetchSingleTransaction,
   addItemThunk,
   editTransactionItems,
-  updateTransaction
+  updateTransaction,
+  singleTransLoad
 } from '../store/transactions'
 import {Table, Button} from 'react-bootstrap'
+import Loading from './Loading'
 
 class SingleTransaction extends React.Component {
   constructor() {
@@ -32,6 +34,10 @@ class SingleTransaction extends React.Component {
   componentDidMount() {
     const transId = this.props.match.params.transId
     this.props.fetchSingleTransaction(transId)
+  }
+
+  componentWillUnmount() {
+    this.props.singleTransLoad()
   }
 
   async handleClickAdd() {
@@ -155,6 +161,7 @@ class SingleTransaction extends React.Component {
         subTotal += items[i].price
       }
     }
+
     return transaction.name ? (
       <div className="single-transaction-container">
         {this.state.editTrans ? (
@@ -213,6 +220,7 @@ class SingleTransaction extends React.Component {
             </div>
           </div>
         )}
+
         <div className="single-transaction-button">
           <Button
             type="button"
@@ -223,7 +231,7 @@ class SingleTransaction extends React.Component {
               (this.state.add || this.state.editItem)
             }
           >
-            Edit Transaction
+            {this.state.editTrans ? `Cancel Edit` : `Edit Transaction`}
           </Button>
           <Button
             type="button"
@@ -399,7 +407,7 @@ class SingleTransaction extends React.Component {
         )}
       </div>
     ) : (
-      <div>Loading...</div>
+      <Loading />
     )
   }
 }
@@ -407,6 +415,7 @@ class SingleTransaction extends React.Component {
 const mapState = state => {
   return {
     singleTransaction: state.transactions.singleTransaction,
+    singleTransloading: state.transactions.singleTransLoading,
     items: state.transactions.items
   }
 }
@@ -418,7 +427,8 @@ const mapDispatch = dispatch => {
     addItemThunk: (items, transactionId) =>
       dispatch(addItemThunk(items, transactionId)),
     editTransactionItems: items => dispatch(editTransactionItems(items)),
-    updateTransaction: update => dispatch(updateTransaction(update))
+    updateTransaction: update => dispatch(updateTransaction(update)),
+    singleTransLoad: () => dispatch(singleTransLoad())
   }
 }
 

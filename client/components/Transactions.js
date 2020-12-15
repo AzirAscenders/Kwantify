@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {fetchTransactions, selected, filtered} from '../store/transactions'
 import AddTransaction from './AddTransaction'
 import {Link} from 'react-router-dom'
+import Loading from './Loading'
 
 class Transactions extends React.Component {
   constructor() {
@@ -70,7 +71,14 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = this.props.transactions.filtered
-    return transactions.length ? (
+
+    const loading = this.props.transactions.loading
+
+    if (loading) {
+      return <Loading />
+    }
+
+    return (
       <div className="all-transactions-container">
         <div className="all-transactions-header-container">
           <div className="left-transactions-header">
@@ -137,8 +145,6 @@ class Transactions extends React.Component {
           </tbody>
         </Table>
       </div>
-    ) : (
-      <div>Loading...</div>
     )
   }
 }

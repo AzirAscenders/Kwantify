@@ -59,7 +59,7 @@ class BudgetBullet extends React.Component {
       }
     ]
 
-    console.log(currentMonth)
+    console.log(expenseCalculator(currentMonth, 'Recreation'))
     return (
       budgets.totalSpending !== 'undefined' &&
       currentMonth.length && (
