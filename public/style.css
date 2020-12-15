@@ -46,6 +46,15 @@ form div {
   height: 100%;
 }
 
+#main-add {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 70px;
+  justify-content: center;
+  height: 100%;
+}
+
 #main-account {
   display: flex;
   flex-direction: row;
@@ -251,6 +260,16 @@ div.react-grid-layout.my-5.mx-8 {
 .profile-container button {
   margin-bottom: 24px;
 }
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 30%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+  align-items: center;
+}
 
 .profile-header {
   padding: 24px;
@@ -319,7 +338,7 @@ div.react-grid-layout.my-5.mx-8 {
   padding-bottom: 5%;
 }
 
-@media screen and (max-width: 425px) {
+/* @media screen and (max-width: 425px) {
   #credit-card-container {
     width: 100%;
     justify-content: center;
@@ -341,7 +360,14 @@ div.react-grid-layout.my-5.mx-8 {
   div.react-grid-layout.my-5.mx-8 {
     height: 100% !important;
   }
-}
+  .profile-card {
+    width: 100%;
+  }
+  .profile-container {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+} */
 
 @media screen and (min-width: 425px) {
   .grid-cell {
@@ -427,13 +453,13 @@ div.react-grid-layout.my-5.mx-8 {
   background-position: right;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1050px) {
   .container {
     grid-gap: 5rem;
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1000px) {
   form {
     width: 290px;
   }
@@ -448,7 +474,7 @@ div.react-grid-layout.my-5.mx-8 {
   }
 }
 
-@media screen and (max-width: 425px) {
+/* @media screen and (max-width: 425px) {
   .container {
     grid-template-columns: 1fr;
   }
@@ -468,7 +494,7 @@ div.react-grid-layout.my-5.mx-8 {
   .login-content img {
     height: 100px;
   }
-}
+} */
 
 /* CREDIT CARD */
 
@@ -711,6 +737,30 @@ div.react-grid-layout.my-5.mx-8 {
   margin-left: 10px;
 }
 
+.add-transaction {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+  margin: 10px;
+  padding: 50px;
+  background-color: white;
+}
+
+.receipt-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-content: center;
+  justify-content: center;
+  border: 5px dashed #57d4c9;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
 /* MEDIA QUERY */
 @media screen and (max-width: 425px) {
   .budget-container,
@@ -788,5 +838,59 @@ div.react-grid-layout.my-5.mx-8 {
 
   .item-row input {
     width: 100%;
+  }
+  #main-add {
+    flex-direction: column;
+  }
+  .add-transaction {
+    padding: 8.5%;
+  }
+  #credit-card-container {
+    width: 100%;
+    justify-content: center;
+  }
+  #bank-logo {
+    width: 100%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
+
+  .centered-container {
+    margin-top: 0px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+  }
+
+  div.react-grid-layout.my-5.mx-8 {
+    height: 100% !important;
+  }
+  .profile-card {
+    width: 100%;
+  }
+  .profile-container {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .img {
+    display: none;
+  }
+
+  .wave {
+    display: none;
+  }
+
+  .login-content {
+    justify-content: center;
+  }
+
+  .login-content img {
+    height: 100px;
   }
 }
