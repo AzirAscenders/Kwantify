@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import {Button} from 'react-bootstrap'
 import {
   addTransactionsThunk,
@@ -59,84 +58,88 @@ class AddTransaction extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="main">
         <h2>Add Transactions</h2>
-        <form onSubmit={this.onFormSubmit}>
-          <h4>Take picture of receipt and upload</h4>
-          <input type="file" name="image" onChange={this.onChange} />
-          <Button
-            variant="outline-success"
-            type="submit"
-            disabled={!this.state.file}
-          >
-            Upload
-          </Button>
-        </form>
-        <br />
-        <br />
-        <h4>Manually add transactions</h4>
-        <form onSubmit={e => this.handleSubmit(e)}>
-          <label className="thickfont" htmlFor="name">
-            Name
-          </label>
-          <input
-            name="name"
-            type="text"
-            value={this.state.name}
-            onChange={this.onInputChange}
-          />
-          <label className="thickfont" htmlFor="amount">
-            Amount
-          </label>
-          <input
-            name="amount"
-            type="text"
-            value={this.state.amount}
-            onChange={this.onInputChange}
-          />
-          <label className="thickfont" htmlFor="category">
-            Choose a Category:
-          </label>
-          <select name="category" onChange={this.onInputChange}>
-            <option name="category" value="Select Category">
-              Select Category
-            </option>
-            <option name="category" value="Food and Drink">
-              Food and Drink
-            </option>
-            <option name="category" value="Recreation">
-              Entertainment
-            </option>
-            <option name="category" value="Healthcare">
-              Healthcare
-            </option>
-            <option name="category" value="Shops">
-              Shopping
-            </option>
-            <option name="category" value="Travel">
-              Travel
-            </option>
-            <option name="category" value="Groceries">
-              Groceries
-            </option>
-          </select>
-          <label className="thickfont" htmlFor="date">
-            Date
-          </label>
-          <input
-            name="date"
-            type="text"
-            value={this.state.date}
-            onChange={this.onInputChange}
-            placeholder="YYYY-MM-DD"
-          />
-          <br />
-          <div>
-            <Button variant="outline-success" type="submit">
-              Submit
+        <div className="add-transaction">
+          <form onSubmit={this.onFormSubmit}>
+            <h4>Take picture of receipt and upload</h4>
+            <input type="file" name="image" onChange={this.onChange} />
+            <Button
+              variant="outline-success"
+              type="submit"
+              disabled={!this.state.file}
+            >
+              Upload
             </Button>
-          </div>
-        </form>
+          </form>
+        </div>
+        <br />
+        <br />
+        <div className="add-transaction">
+          <h4>Manually add transactions</h4>
+          <form onSubmit={e => this.handleSubmit(e)}>
+            <label className="thickfont" htmlFor="name">
+              Name
+            </label>
+            <input
+              name="name"
+              type="text"
+              value={this.state.name}
+              onChange={this.onInputChange}
+            />
+            <label className="thickfont" htmlFor="amount">
+              Amount
+            </label>
+            <input
+              name="amount"
+              type="text"
+              value={this.state.amount}
+              onChange={this.onInputChange}
+            />
+            <label className="thickfont" htmlFor="category">
+              Choose a Category:
+            </label>
+            <select name="category" onChange={this.onInputChange}>
+              <option name="category" value="Select Category">
+                Select Category
+              </option>
+              <option name="category" value="Food and Drink">
+                Food and Drink
+              </option>
+              <option name="category" value="Recreation">
+                Entertainment
+              </option>
+              <option name="category" value="Healthcare">
+                Healthcare
+              </option>
+              <option name="category" value="Shops">
+                Shopping
+              </option>
+              <option name="category" value="Travel">
+                Travel
+              </option>
+              <option name="category" value="Groceries">
+                Groceries
+              </option>
+            </select>
+            <label className="thickfont" htmlFor="date">
+              Date
+            </label>
+            <input
+              name="date"
+              type="text"
+              value={this.state.date}
+              onChange={this.onInputChange}
+              placeholder="YYYY-MM-DD"
+            />
+            <br />
+            <div>
+              <Button variant="outline-success" type="submit">
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     )
   }
