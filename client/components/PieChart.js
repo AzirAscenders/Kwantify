@@ -98,61 +98,72 @@ class PieChart extends React.Component {
       // },
     ]
 
+    if (this.props.transactions.currentMonth.length) {
+      return (
+        <ResponsivePie
+          data={data}
+          // width={1500}
+          // height={500}
+          margin={{top: 40, right: 100, bottom: 80, left: -55}}
+          theme={{fontSize: 18}}
+          innerRadius={0.5}
+          padAngle={2}
+          cornerRadius={3}
+          colors={{scheme: 'pastel1'}}
+          borderWidth={3}
+          borderColor={{from: 'color', modifiers: [['darker', 0.2]]}}
+          enableSliceLabels={false}
+          // sliceLabelsRadiusOffset={1.65}
+          enableRadialLabels={false}
+          radialLabelsLinkDiagonalLength={24}
+          radialLabelsTextXOffset={7}
+          radialLabelsLinkHorizontalLength={29}
+          sliceLabelsTextColor="#333333"
+          radialLabelsLinkColor={{from: 'color', modifiers: []}}
+          radialLabelsLinkStrokeWidth={2}
+          legends={[
+            {
+              fill: 'none',
+              anchor: 'right',
+              direction: 'column',
+              justify: false,
+              translateX: 95,
+              translateY: 12,
+              itemsSpacing: 20,
+              itemWidth: 150,
+              itemHeight: 18,
+              itemTextColor: '#999',
+              itemDirection: 'left-to-right',
+              itemOpacity: 1,
+              symbolSize: 18,
+              symbolShape: 'circle',
+              effects: [
+                {
+                  on: 'hover',
+                  style: {
+                    itemTextColor: '#000'
+                  }
+                },
+                {
+                  on: 'mouseEnter',
+                  style: {
+                    itemTextColor: '#000'
+                  }
+                }
+              ]
+            }
+          ]}
+        />
+      )
+    }
+
     return (
-      <ResponsivePie
-        data={data}
-        // width={1500}
-        // height={500}
-        margin={{top: 40, right: 100, bottom: 80, left: -55}}
-        theme={{fontSize: 18}}
-        innerRadius={0.5}
-        padAngle={2}
-        cornerRadius={3}
-        colors={{scheme: 'pastel1'}}
-        borderWidth={3}
-        borderColor={{from: 'color', modifiers: [['darker', 0.2]]}}
-        enableSliceLabels={false}
-        // sliceLabelsRadiusOffset={1.65}
-        enableRadialLabels={false}
-        radialLabelsLinkDiagonalLength={24}
-        radialLabelsTextXOffset={7}
-        radialLabelsLinkHorizontalLength={29}
-        sliceLabelsTextColor="#333333"
-        radialLabelsLinkColor={{from: 'color', modifiers: []}}
-        radialLabelsLinkStrokeWidth={2}
-        legends={[
-          {
-            fill: 'none',
-            anchor: 'right',
-            direction: 'column',
-            justify: false,
-            translateX: 95,
-            translateY: 12,
-            itemsSpacing: 20,
-            itemWidth: 150,
-            itemHeight: 18,
-            itemTextColor: '#999',
-            itemDirection: 'left-to-right',
-            itemOpacity: 1,
-            symbolSize: 18,
-            symbolShape: 'circle',
-            effects: [
-              {
-                on: 'hover',
-                style: {
-                  itemTextColor: '#000'
-                }
-              },
-              {
-                on: 'mouseEnter',
-                style: {
-                  itemTextColor: '#000'
-                }
-              }
-            ]
-          }
-        ]}
-      />
+      <div className="no-data-message">
+        <h3>
+          You do not have any data.
+          <br /> Please add transactions or connect to a bank.
+        </h3>
+      </div>
     )
   }
 }

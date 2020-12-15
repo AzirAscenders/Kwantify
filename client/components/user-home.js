@@ -13,6 +13,7 @@ import {fetchBudget} from '../store/budgets'
 import {fetchTransactions} from '../store/transactions'
 // import {Card} from 'react-bootstrap'
 import {Responsive, WidthProvider} from 'react-grid-layout'
+import Line from './Line'
 
 import 'react-resizable/css/styles.css'
 
@@ -76,6 +77,14 @@ class UserHome extends React.Component {
               <h3 className="grid-header">Current Month Budget vs Expenses</h3>
               <BudgetBullet />
             </div> */}
+            <div
+              className="grid-cell"
+              key="1"
+              data-grid={{x: 2, y: 3, w: 3, h: 2}}
+            >
+              <h3 className="grid-header">Members' Favorite Transportion</h3>
+              <Line />
+            </div>
 
             {/* <div id="charts"> */}
             {/* <div id="charts"> */}
