@@ -1,20 +1,26 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchAllAccounts} from '../store/accounts'
+import {fetchAllAccounts, loadAccounts} from '../store/accounts'
 import {Carousel} from 'react-bootstrap'
 import Cards from 'react-credit-cards'
 import 'react-credit-cards/es/styles-compiled.css'
+import Loading from './Loading'
 
 class Accounts extends React.Component {
   componentDidMount() {
     this.props.fetchAllAccounts()
   }
 
+  componentWillUnmount() {
+    this.props.loadAccounts()
+  }
+
   render() {
     let issuer = ''
     let preview = true
     let image
-    const accounts = this.props.accounts || []
+    const loading = this.props.accounts.loading
+    const accounts = this.props.accounts.accounts || []
     const bankName = accounts.map(
       account => account.institution.institutionName
     )
@@ -24,6 +30,8 @@ class Accounts extends React.Component {
         uniqueBankName.push(bankName[i])
       }
     }
+
+    if (loading) return <Loading />
 
     return (
       <div id="main-account">
@@ -103,7 +111,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchAllAccounts: () => dispatch(fetchAllAccounts())
+    fetchAllAccounts: () => dispatch(fetchAllAccounts()),
+    loadAccounts: () => dispatch(loadAccounts())
   }
 }
 

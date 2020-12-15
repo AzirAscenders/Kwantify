@@ -16,6 +16,7 @@ const FILTERED = 'FILTERED'
 const GET_SINGLE_TRANSACTION = 'GET_SINGLE_TRANSACTION'
 const EDIT_TRANSACTION = 'EDIT_TRANSACTION'
 const EDIT_ITEMS = 'EDIT_ITEMS'
+const SINGLE_TRANSACTION_LOADING = 'SINGLE_TRANSACTION_LOADING'
 
 /**
  * INITIAL STATE
@@ -28,7 +29,8 @@ const defaultTransactions = {
   twoMonthsBefore: [],
   selected: [],
   filtered: [],
-  singleTransaction: {}
+  singleTransaction: {},
+  loading: true
 }
 
 /**
@@ -92,6 +94,10 @@ export const addItems = items => ({
 const editItems = items => ({
   type: EDIT_ITEMS,
   items
+})
+
+export const singleTransLoad = () => ({
+  type: SINGLE_TRANSACTION_LOADING
 })
 
 /**
@@ -181,7 +187,11 @@ export default function(state = defaultTransactions, action) {
 
     case GET_SINGLE_TRANSACTION:
       action.transaction.amount = (action.transaction.amount / 100).toFixed(2)
-      return {...state, singleTransaction: action.transaction}
+      return {
+        ...state,
+        singleTransaction: action.transaction,
+        singleTransLoading: false
+      }
 
     case CURRENT_MONTH_TRANSACTIONS:
       if (action.transactions.length) {
@@ -246,7 +256,8 @@ export default function(state = defaultTransactions, action) {
     case ADD_TRANSACTIONS:
       return {
         ...state,
-        transactions: [...state.transactions, action.transactions]
+        transactions: [...state.transactions, action.transactions],
+        loading: true
       }
 
     // case ADD_ITEMS:
@@ -264,13 +275,22 @@ export default function(state = defaultTransactions, action) {
     case ADD_ITEMS:
       return {
         ...state,
-        items: [...state.items, ...action.items]
+        items: [...state.items, ...action.items],
+        loading: true
       }
+
     case SELECTED:
-      return {...state, selected: action.transactions}
+      return {
+        ...state,
+        selected: action.transactions
+      }
 
     case FILTERED:
-      return {...state, filtered: action.transactions}
+      return {
+        ...state,
+        filtered: action.transactions,
+        loading: false
+      }
 
     case EDIT_TRANSACTION:
       action.transaction.amount = (action.transaction.amount / 100).toFixed(2)
@@ -278,6 +298,9 @@ export default function(state = defaultTransactions, action) {
 
     case EDIT_ITEMS:
       return {...state, items: action.items}
+
+    case SINGLE_TRANSACTION_LOADING:
+      return {...state, singleTransaction: {}}
 
     default:
       return state
