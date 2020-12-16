@@ -282,7 +282,7 @@ div.react-grid-layout.my-5.mx-8 {
 }
 
 .profile-container img {
-  width: 300px;
+  width: 250px;
   border-radius: 100%;
   margin-bottom: 24px;
 }
@@ -293,7 +293,7 @@ div.react-grid-layout.my-5.mx-8 {
   display: flex;
   flex-direction: column;
   margin-top: 50px;
-  width: 30%;
+  /* width: 30%; */
   background-color: white;
   border-radius: 10px;
   box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
@@ -400,7 +400,7 @@ div.react-grid-layout.my-5.mx-8 {
 
 @media screen and (min-width: 425px) {
   .grid-cell {
-    width: 30% !important;
+    width: 30%;
   }
 
   div.react-grid-layout.my-5.mx-8 {
@@ -489,10 +489,6 @@ div.react-grid-layout.my-5.mx-8 {
 }
 
 @media screen and (max-width: 1000px) {
-  form {
-    width: 290px;
-  }
-
   .login-content h2 {
     font-size: 2.4rem;
     margin: 8px 0;
@@ -791,6 +787,17 @@ div.react-grid-layout.my-5.mx-8 {
 }
 
 /* MEDIA QUERY */
+
+@media screen and (max-width: 1025px) {
+  #bank-logo {
+    width: 50%;
+  }
+
+  .item-row input {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 425px) {
   .budget-container,
   .all-transactions-container,
