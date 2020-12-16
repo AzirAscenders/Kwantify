@@ -41,8 +41,7 @@ const upload = multer({
 
 function fileFilter(req, file, cb) {
   const fileType = /jpg|jpeg|png/
-  console.log('111111111', req)
-  console.log('222222222', req._readableState.buffer.head)
+
   const extname = fileType.test(path.extname(file.originalname).toLowerCase())
 
   const mimeType = fileType.test(file.mimetype)
@@ -76,16 +75,10 @@ const checkError = (req, res, next) => {
   return new Promise((resolve, reject) => {
     upload(req, res, err => {
       if (err) {
-        console.log('33333333', req)
-        console.log('4444444444', req._readableState.buffer.head)
         res.send(err)
       } else if (req.file === undefined) {
-        console.log('555555555', req)
-        console.log('666666666', req._readableState.buffer.head)
         res.send('no file selected')
       }
-      console.log('777777777', req.file)
-      console.log('888888888', req._readableState.buffer.head)
       resolve(req.file)
     })
   })
