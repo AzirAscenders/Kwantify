@@ -41,7 +41,7 @@ const upload = multer({
 
 function fileFilter(req, file, cb) {
   const fileType = /jpg|jpeg|png/
-
+  console.log('FIRST REQQQQQ', req)
   const extname = fileType.test(path.extname(file.originalname).toLowerCase())
 
   const mimeType = fileType.test(file.mimetype)
@@ -75,10 +75,13 @@ const checkError = (req, res, next) => {
   return new Promise((resolve, reject) => {
     upload(req, res, err => {
       if (err) {
+        console.log('SECOND REQ', req)
         res.send(err)
       } else if (req.file === undefined) {
+        console.log('SECONDDDDDDDDDDDDD REQ', req)
         res.send('no file selected')
       }
+      console.log('THIRD REQQQQ', req)
       resolve(req.file)
     })
   })
