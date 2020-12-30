@@ -1,7 +1,7 @@
 # Welcome to Kwantify
 
 An all-in-one personalized expense and budget tracking app. Kwantify is a cross-platform Progressive Web Application (PWA) that encourages better spending habits and budget tracking. It connects to all your bank accounts, allows you to easily visualize monthly spending, and has a unique receipt scanning feature to record cash transactions. It is built using React, Redux, Node/Express, Nivo, Plaid, Google Cloud Vision and Google Cloud Storage API.
-<img src="./mockup3.gif" >
+<img src="./public/mockup3.gif" >
 
 ## Deployed App
 
